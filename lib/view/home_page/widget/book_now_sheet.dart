@@ -6,6 +6,7 @@ import 'package:dr_ashraf_clinic/view/home_page/widget/label_text_widget.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/page_title_widget.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/pick_date_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class BookNowSheet extends StatelessWidget {
   const BookNowSheet({super.key});
@@ -90,11 +91,14 @@ class BookNowSheet extends StatelessWidget {
                 const SizedBox(
                   width: HSizes.spaceBtwSections,
                 ),
-                const Column(
+                Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     HFilledButton(
                       text: 'save_button',
+                      onPressed: () {
+                        Get.back();
+                      },
                     )
                   ],
                 )

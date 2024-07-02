@@ -7,15 +7,15 @@ class HFilledButton extends StatelessWidget {
   const HFilledButton({
     super.key,
     required this.text,
+    required this.onPressed,
   });
   final String text;
+  final VoidCallback onPressed;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       iconAlignment: IconAlignment.end,
-      onPressed: () {
-        Get.back();
-      },
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.all(12), elevation: 5),
       child: Text(text.tr,

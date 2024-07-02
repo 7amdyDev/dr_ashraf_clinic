@@ -36,7 +36,7 @@ class ClinicPage extends StatelessWidget {
                       const SizedBox(
                         height: HSizes.spaceBtwSections,
                       ),
-                      HDropDownMenu(),
+                      const HDropDownMenu(),
                     ],
                   ),
                 ),
