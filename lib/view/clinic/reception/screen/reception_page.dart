@@ -2,7 +2,7 @@ import 'package:dr_ashraf_clinic/model/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
-import 'package:dr_ashraf_clinic/view/clinic/reception/screen/reception_schedule_page.dart';
+import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/reception_schedule_page.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/navigation_drawer.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/change_lang_button_widget.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/clinic_name_logo.dart';
@@ -48,7 +48,7 @@ class ReceptionPage extends StatelessWidget {
                                     ? controller.updateCollapsed(true)
                                     : null;
                               },
-                              child: ReceptionSchedulePage()),
+                              child: const ReceptionSchedulePage()),
                         )
                       ],
                     ),

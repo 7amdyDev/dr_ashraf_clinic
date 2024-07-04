@@ -1,3 +1,5 @@
+import 'package:dr_ashraf_clinic/utils/theme/custom_themes/card_theme.dart';
+
 import '/../utils/theme/custom_themes/appbar_theme.dart';
 import '/../utils/theme/custom_themes/bottom_sheet_theme.dart';
 import '/../utils/theme/custom_themes/checkbox_theme.dart';
@@ -19,9 +21,11 @@ class HAppTheme {
     disabledColor: HColors.grey,
     brightness: Brightness.light,
     primaryColor: HColors.primary,
+    canvasColor: HColors.primaryBackground,
     textTheme: HTextTheme.lightTextTheme,
     chipTheme: HChipTheme.lightChipTheme,
-    scaffoldBackgroundColor: HColors.white,
+    cardTheme: myCardTheme,
+    scaffoldBackgroundColor: HColors.primaryBackground,
     appBarTheme: HAppBarTheme.lightAppBarTheme,
     checkboxTheme: HCheckboxTheme.lightCheckboxTheme,
     bottomSheetTheme: HBottomSheetTheme.lightBottomSheetTheme,
