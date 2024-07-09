@@ -1,8 +1,7 @@
 import 'package:dr_ashraf_clinic/model/clinic_controller.dart';
+import 'package:dr_ashraf_clinic/model/pages_list.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
-import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
-import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/reception_schedule_page.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/navigation_drawer.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/change_lang_button_widget.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/clinic_name_logo.dart';
@@ -14,7 +13,6 @@ class ReceptionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = HelperFunctions.screenSize();
     final controller = Get.put(ClinicController());
     double maxPageWidth = HSizes.maxPageWidth;
     return Scaffold(
@@ -43,12 +41,14 @@ class ReceptionPage extends StatelessWidget {
                         ),
                         Expanded(
                           child: GestureDetector(
-                              onTap: () {
-                                (!controller.isCollapsed.value)
-                                    ? controller.updateCollapsed(true)
-                                    : null;
-                              },
-                              child: const ReceptionSchedulePage()),
+                            onTap: () {
+                              (!controller.isCollapsed.value)
+                                  ? controller.updateCollapsed(true)
+                                  : null;
+                            },
+                            child: Obx(() => receptionPagesList[
+                                controller.receptionPageIndex.value]),
+                          ),
                         )
                       ],
                     ),

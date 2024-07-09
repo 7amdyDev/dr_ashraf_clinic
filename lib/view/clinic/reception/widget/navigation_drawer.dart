@@ -35,7 +35,10 @@ class HNavigationDrawer extends StatelessWidget {
                   isCollapsed: isCollapsed,
                   imagePath: 'assets/icons/calender.png',
                   title: 'appointment_label',
-                  onPressed: () {}),
+                  onPressed: () {
+                    controller.receptionPageIndex.value = 0;
+                    controller.updateCollapsed(true);
+                  }),
               const Spacer(
                 flex: 1,
               ),
@@ -43,29 +46,76 @@ class HNavigationDrawer extends StatelessWidget {
                 isCollapsed: isCollapsed,
                 imagePath: 'assets/icons/reserve.png',
                 title: 'reserve_label',
-                onPressed: () {},
-              ),
-              const Spacer(
-                flex: 1,
-              ),
-              NavigationDrawerItem(
-                isCollapsed: isCollapsed,
-                imagePath: 'assets/icons/patient.png',
-                title: 'patient_label',
-                onPressed: () {},
+                onPressed: () {
+                  controller.receptionPageIndex.value = 1;
+                  controller.updateCollapsed(true);
+                },
               ),
               const Spacer(
                 flex: 1,
               ),
               NavigationDrawerExpandedItem(
-                  isCollapsed: isCollapsed,
-                  imagePath: 'assets/icons/finance.png',
-                  title: 'finance_label',
-                  onPressed: () {
-                    isCollapsed ? controller.updateCollapsed(false) : null;
-                  }),
+                isCollapsed: isCollapsed,
+                imagePath: 'assets/icons/patient.png',
+                title: 'patient_label',
+                onPressed: () {
+                  isCollapsed ? controller.updateCollapsed(false) : null;
+                },
+                children: [
+                  DrawerTextButton(
+                    text: 'new_patient_label',
+                    onPressed: () {
+                      controller.receptionPageIndex.value = 2;
+                      controller.updateCollapsed(true);
+                    },
+                  ),
+                  DrawerTextButton(
+                    text: 'search_patient_label',
+                    onPressed: () {
+                      controller.receptionPageIndex.value = 3;
+                      controller.updateCollapsed(true);
+                    },
+                  ),
+                ],
+              ),
+              const Spacer(
+                flex: 1,
+              ),
+              NavigationDrawerExpandedItem(
+                isCollapsed: isCollapsed,
+                imagePath: 'assets/icons/finance.png',
+                title: 'finance_label',
+                onPressed: () {
+                  isCollapsed ? controller.updateCollapsed(false) : null;
+                },
+                children: [
+                  DrawerTextButton(
+                    text: 'daily_revenue_label',
+                    onPressed: () {},
+                  ),
+                  DrawerTextButton(
+                    text: 'patient_finance_label',
+                    onPressed: () {},
+                  ),
+                  DrawerTextButton(
+                    text: 'clinic_expenses_label',
+                    onPressed: () {},
+                  ),
+                ],
+              ),
               const Spacer(
                 flex: 3,
+              ),
+              NavigationDrawerItem(
+                isCollapsed: isCollapsed,
+                imagePath: 'assets/icons/logout.png',
+                title: 'logout_label',
+                onPressed: () {
+                  Get.offNamed('/');
+                },
+              ),
+              const SizedBox(
+                height: HSizes.spaceBtwItems,
               ),
               Padding(
                   padding: const EdgeInsets.all(8.0),

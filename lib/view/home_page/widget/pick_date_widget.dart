@@ -5,17 +5,17 @@ import 'package:flutter/material.dart';
 class PickDateWidget extends StatelessWidget {
   const PickDateWidget({
     super.key,
-    required this.size,
+    required this.width,
     required this.dateController,
   });
 
-  final Size size;
+  final double width;
   final TextEditingController dateController;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: size.width / 4,
+      width: width,
       child: TextField(
         textAlign: TextAlign.center,
         controller: dateController,

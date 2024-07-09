@@ -1,13 +1,13 @@
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
-import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/custom_dropdown_widget.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/table_column_label.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/table_data_cell.dart';
+import 'package:dr_ashraf_clinic/view/clinic/reception/widget/checkbox_table_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class HScheduleDataTable extends StatelessWidget {
-  const HScheduleDataTable({
+class HOnlineReservationTable extends StatelessWidget {
+  const HOnlineReservationTable({
     super.key,
     required this.searchResult,
   });
@@ -17,7 +17,7 @@ class HScheduleDataTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(HSizes.spaceBtwItems),
+      padding: const EdgeInsets.all(HSizes.defaultSpace),
       child: SingleChildScrollView(
         child: SizedBox(
           width: double.infinity,
@@ -32,8 +32,8 @@ class HScheduleDataTable extends StatelessWidget {
               DataColumn(label: TableColumnLabel(text: 'date_label')),
               DataColumn(label: TableColumnLabel(text: 'service_type_label')),
               DataColumn(label: TableColumnLabel(text: 'telephone_label')),
-              DataColumn(label: TableColumnLabel(text: 'finance_label')),
-              DataColumn(label: TableColumnLabel(text: 'status_label')),
+              DataColumn(
+                  label: TableColumnLabel(text: 'request_checkbox_label')),
             ],
             source: _DataSource(data: searchResult),
 
@@ -57,8 +57,7 @@ class _DataSource extends DataTableSource {
       return null;
     }
 
-    final item = data[index];
-
+    //  final item = data[index];
     return DataRow(cells: [
       const DataCell(TableDataCell(text: '1')),
       const DataCell(TableDataCell(text: 'دعاء منذر محمد عبدالمجيد')),
@@ -66,10 +65,10 @@ class _DataSource extends DataTableSource {
           text: DateFormat('dd-MM-yyyy').format(DateTime.now()).toString())),
       const DataCell(TableDataCell(text: 'كشف')),
       const DataCell(TableDataCell(text: '01008169644')),
-      const DataCell(TableDataCell(text: 'تم الدفع')),
-      const DataCell(Center(
-          child:
-              FittedBox(fit: BoxFit.scaleDown, child: CustomDropDownWidget()))),
+      const DataCell(Center(child: TableCheckBoxWidget()))
+      // const DataCell(Center(
+      //     child:
+      //         FittedBox(fit: BoxFit.scaleDown, child: CustomDropDownWidget()))),
     ]);
   }
 

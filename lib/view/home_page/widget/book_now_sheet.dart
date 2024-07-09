@@ -82,7 +82,8 @@ class BookNowSheet extends StatelessWidget {
                     const SizedBox(
                       height: HSizes.spaceBtwItems,
                     ),
-                    PickDateWidget(size: size, dateController: dateController),
+                    PickDateWidget(
+                        width: size.width / 4, dateController: dateController),
                     const SizedBox(
                       height: HSizes.spaceBtwItems,
                     ),
