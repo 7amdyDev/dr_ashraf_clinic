@@ -1,4 +1,4 @@
-import 'package:dr_ashraf_clinic/model/clinic_controller.dart';
+import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/finance/widget/daily_finance_card_widget.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/finance/widget/daily_income_table.dart';

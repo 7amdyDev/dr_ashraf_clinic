@@ -1,4 +1,4 @@
-import 'package:dr_ashraf_clinic/model/clinic_controller.dart';
+import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/reservation/widget/patient_search_table.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/page_label_widget.dart';
