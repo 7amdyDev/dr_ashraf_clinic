@@ -15,7 +15,7 @@ class _MyDropdownState extends State<ServiceTypeDropDownMenu> {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<String>(
+    return DropdownButtonFormField<String>(
       value: _selectedValue, // Currently selected value
       items: const [
         DropdownMenuItem<String>(

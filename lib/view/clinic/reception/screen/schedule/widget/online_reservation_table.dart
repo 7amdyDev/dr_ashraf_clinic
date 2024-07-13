@@ -1,18 +1,18 @@
+import 'package:dr_ashraf_clinic/model/online_reserv_model.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/table_column_label.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/table_data_cell.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/checkbox_table_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class HOnlineReservationTable extends StatelessWidget {
   const HOnlineReservationTable({
     super.key,
-    required this.searchResult,
+    required this.onlineReserv,
   });
 
-  final List<String> searchResult;
+  final List<OnlineReservModel> onlineReserv;
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +35,12 @@ class HOnlineReservationTable extends StatelessWidget {
               DataColumn(
                   label: TableColumnLabel(text: 'request_checkbox_label')),
             ],
-            source: _DataSource(data: searchResult),
-
-            rowsPerPage: searchResult.length < 8 ? searchResult.length : 8,
-            // horizontalMargin: 60,
+            source: _DataSource(data: onlineReserv),
+            rowsPerPage: onlineReserv.isEmpty
+                ? 1
+                : onlineReserv.length < 8
+                    ? onlineReserv.length
+                    : 8,
             showEmptyRows: false,
           ),
         ),
@@ -48,7 +50,7 @@ class HOnlineReservationTable extends StatelessWidget {
 }
 
 class _DataSource extends DataTableSource {
-  final List<String> data;
+  final List<OnlineReservModel> data;
 
   _DataSource({required this.data});
   @override
@@ -59,12 +61,10 @@ class _DataSource extends DataTableSource {
 
     //  final item = data[index];
     return DataRow(cells: [
-      const DataCell(TableDataCell(text: '1')),
-      const DataCell(TableDataCell(text: 'دعاء منذر محمد عبدالمجيد')),
-      DataCell(TableDataCell(
-          text: DateFormat('dd-MM-yyyy').format(DateTime.now()).toString())),
-      const DataCell(TableDataCell(text: 'كشف')),
-      const DataCell(TableDataCell(text: '01008169644')),
+      DataCell(TableDataCell(text: (index + 1).toString())),
+      DataCell(TableDataCell(text: data[index].name)),
+      DataCell(TableDataCell(text: (data[index].dateTime))),
+      DataCell(TableDataCell(text: data[index].mobile)),
       const DataCell(Center(child: TableCheckBoxWidget()))
       // const DataCell(Center(
       //     child:

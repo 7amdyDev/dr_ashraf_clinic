@@ -8,21 +8,28 @@ class DataTextWidget extends StatelessWidget {
     this.child,
     this.value,
     this.enable = true,
-    this.labeFontSize = 18,
+    this.labelFontSize = 18,
+    this.textFontSize = 18,
     this.textEditingController,
     this.width = 200,
+    this.validator,
+    this.formKey,
   });
   final String label;
   final String? value;
   final Widget? child;
   final bool enable;
-  final double labeFontSize;
+  final double labelFontSize;
+  final double textFontSize;
+
   final double width;
   final TextEditingController? textEditingController;
+  final String? Function(String?)? validator;
+  final GlobalKey? formKey;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 100,
+      height: 105,
       width: width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,7 +39,7 @@ class DataTextWidget extends StatelessWidget {
             child: Text(
               label,
               style: GoogleFonts.notoNaskhArabic(
-                fontSize: labeFontSize,
+                fontSize: labelFontSize,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -41,9 +48,11 @@ class DataTextWidget extends StatelessWidget {
               ? ConstrainedBox(
                   constraints: const BoxConstraints(minWidth: 200),
                   child: TextFormField(
+                    style: TextStyle(fontSize: textFontSize),
                     enabled: enable,
                     initialValue: value,
                     controller: textEditingController,
+                    validator: validator,
                   ),
                 )
               : child!,

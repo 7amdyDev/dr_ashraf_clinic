@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class HValidator {
   static String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
@@ -57,19 +59,55 @@ class HValidator {
     return null;
   }
 
-  static String? validatePhoneNumber(String? value) {
+  static String? validateNumber(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Phone number is required.';
+      return 'validation_required_label'.tr;
     }
 
     // Regular expression for phone number validation (assuming a 10-digit US phone number format)
-    final phoneRegExp = RegExp(r'^[0-9]*$');
+    final phoneRegExp = RegExp(r"^[٠-٩\d]{1,6}$");
 
     if (!phoneRegExp.hasMatch(value)) {
-      return 'Invalid phone number.';
+      return 'validation_numbers_label'.tr;
     }
 
     return null;
+  }
+
+  static String? validateText(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'validation_required_label'.tr;
+    }
+
+    // Regular expression for phone number validation (assuming a 10-digit US phone number format)
+    final textRegExp = RegExp(r"(?:[\u0600-\u06FFa-zA-Z]){3,}.*$");
+
+    if (!textRegExp.hasMatch(value)) {
+      return 'validation_text_label'.tr;
+    }
+
+    return null;
+  }
+
+  static String expenseCodeValidation(int value) {
+    String result;
+    switch (value) {
+      case (202):
+        result = 'rent_label';
+        break;
+      case (203):
+        result = 'utilities_label';
+        break;
+      case (204):
+        result = 'salaries_label';
+        break;
+      case (205):
+        result = 'other_label';
+        break;
+      default:
+        result = 'medical_supplies_label';
+    }
+    return result;
   }
 
 // Add more custom validators as needed for your specific requirements.

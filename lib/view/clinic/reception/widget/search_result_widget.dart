@@ -29,8 +29,8 @@ class SearchDialogWidget extends StatelessWidget {
       content: SizedBox(
         width: 800,
         // height: 600,
-        child: PatientSearchTable(
-            searchResult: controller.patientSearchResult.toList()),
+        child:
+            PatientSearchTable(searchResult: controller.patientList.toList()),
       ),
       actionsAlignment: MainAxisAlignment.center,
       actions: [

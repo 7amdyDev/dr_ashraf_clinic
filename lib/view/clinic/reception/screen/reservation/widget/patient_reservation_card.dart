@@ -1,5 +1,5 @@
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
-import 'package:dr_ashraf_clinic/view/clinic/reception/screen/reservation/widget/patient_data_chip.dart';
+import 'package:dr_ashraf_clinic/view/clinic/reception/screen/reservation/widget/data_text_widget.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/reservation/widget/reservation_dropdownmenu_widget.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/checkbox_table_widget.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/filled_button.dart';
@@ -56,7 +56,9 @@ class PatientReservationCardWidget extends StatelessWidget {
                         DataTextWidget(
                           label: 'date_label'.tr,
                           child: PickDateWidget(
-                              width: 200, dateController: dateController),
+                            width: 200,
+                            dateController: dateController,
+                          ),
                         ),
                         DataTextWidget(
                           label: 'service_type_label'.tr,

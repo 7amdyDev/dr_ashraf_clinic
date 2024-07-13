@@ -1,4 +1,5 @@
 import 'package:dr_ashraf_clinic/model/clinic_controller.dart';
+import 'package:dr_ashraf_clinic/model/patient_model.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/table_column_label.dart';
@@ -9,7 +10,7 @@ import 'package:get/get.dart';
 class PatientSearchTable extends StatelessWidget {
   const PatientSearchTable({super.key, required this.searchResult});
 
-  final List<String> searchResult;
+  final List<PatientModel> searchResult;
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +36,11 @@ class PatientSearchTable extends StatelessWidget {
                   ],
                   source: _DataSource(data: searchResult),
 
-                  rowsPerPage:
-                      searchResult.length < 8 ? searchResult.length : 8,
+                  rowsPerPage: searchResult.isEmpty
+                      ? 1
+                      : searchResult.length < 8
+                          ? searchResult.length
+                          : 8,
                   // horizontalMargin: 60,
                   showEmptyRows: false,
                 ),
@@ -47,7 +51,7 @@ class PatientSearchTable extends StatelessWidget {
 }
 
 class _DataSource extends DataTableSource {
-  final List<String> data;
+  final List<PatientModel> data;
   final controller = Get.put(ClinicController());
 
   _DataSource({required this.data});
@@ -59,17 +63,17 @@ class _DataSource extends DataTableSource {
 
     //  final item = data[index];
     return DataRow(cells: [
-      const DataCell(TableDataCell(text: '1')),
+      DataCell(TableDataCell(text: index.toString())),
       DataCell(
-        TableDataCell(text: 'دعاء منذر محمد عبدالمجيد'),
+        TableDataCell(text: data[index].name),
         onTap: () {
           controller.show.value = true;
           Get.back();
         },
       ),
-      const DataCell(TableDataCell(text: '01008169644')),
-      const DataCell(TableDataCell(text: '30')),
-      const DataCell(TableDataCell(text: 'فيكتور عمانويل سموحة')),
+      DataCell(TableDataCell(text: data[index].mobile)),
+      DataCell(TableDataCell(text: data[index].age.toString())),
+      DataCell(TableDataCell(text: data[index].address)),
       // const DataCell(Center(
       //     child:
       //         FittedBox(fit: BoxFit.scaleDown, child: CustomDropDownWidget()))),

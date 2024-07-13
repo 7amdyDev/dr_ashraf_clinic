@@ -1,3 +1,5 @@
+import 'package:dr_ashraf_clinic/model/clinic_controller.dart';
+import 'package:dr_ashraf_clinic/model/online_reserv_model.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
@@ -7,6 +9,7 @@ import 'package:dr_ashraf_clinic/view/home_page/widget/page_title_widget.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/pick_date_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class BookNowSheet extends StatelessWidget {
   const BookNowSheet({super.key});
@@ -17,7 +20,7 @@ class BookNowSheet extends StatelessWidget {
     TextEditingController dateController = TextEditingController();
     TextEditingController nameController = TextEditingController();
     TextEditingController mobileController = TextEditingController();
-
+    var controller = Get.put(ClinicController());
     return Container(
       constraints: const BoxConstraints(maxWidth: 1024),
       padding: const EdgeInsets.all(HSizes.defaultSpace),
@@ -98,6 +101,11 @@ class BookNowSheet extends StatelessWidget {
                     HFilledButton(
                       text: 'save_button',
                       onPressed: () {
+                        var reservation = OnlineReservModel(
+                            name: nameController.text,
+                            mobile: mobileController.text,
+                            dateTime: dateController.text);
+                        controller.onlineReservData.add(reservation);
                         Get.back();
                       },
                     )

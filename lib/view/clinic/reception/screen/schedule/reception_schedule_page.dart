@@ -1,3 +1,4 @@
+import 'package:dr_ashraf_clinic/model/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/online_reservation_table.dart';
@@ -12,6 +13,7 @@ class ReceptionSchedulePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.put(ClinicController());
     return Column(
       children: [
         const SizedBox(
@@ -34,23 +36,24 @@ class ReceptionSchedulePage extends StatelessWidget {
                 }),
           ],
         ),
-        const Expanded(
+        Expanded(
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: HSizes.spaceBtwItems,
                 ),
-                HScheduleDataTable(searchResult: [
+                const HScheduleDataTable(searchResult: [
                   'ahmed',
                   'Hamdy',
                   'anas',
                 ]),
-                PageLabelWidget(
+                const PageLabelWidget(
                   text: 'online_table_label',
                 ),
-                HOnlineReservationTable(searchResult: ['', '', ''])
+                HOnlineReservationTable(
+                    onlineReserv: controller.onlineReservData)
               ],
             ),
           ),

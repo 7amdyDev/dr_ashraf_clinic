@@ -97,6 +97,24 @@ class HFormatter {
 
     return formattedNumber.toString();
   }
+
+  static String convertArabicToEnglishNumbers(String input) {
+    const numberMap = {
+      '٠': '0',
+      '١': '1',
+      '٢': '2',
+      '٣': '3',
+      '٤': '4',
+      '٥': '5',
+      '٦': '6',
+      '٧': '7',
+      '٨': '8',
+      '٩': '9',
+    };
+
+    return input.replaceAllMapped(RegExp(r'[٠-٩]'),
+        (match) => numberMap[match.group(0)] ?? match.group(0)!);
+  }
 }
 
 

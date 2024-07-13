@@ -91,15 +91,24 @@ class HNavigationDrawer extends StatelessWidget {
                 children: [
                   DrawerTextButton(
                     text: 'daily_revenue_label',
-                    onPressed: () {},
+                    onPressed: () {
+                      controller.receptionPageIndex.value = 4;
+                      controller.updateCollapsed(true);
+                    },
                   ),
                   DrawerTextButton(
                     text: 'patient_finance_label',
-                    onPressed: () {},
+                    onPressed: () {
+                      controller.receptionPageIndex.value = 5;
+                      controller.updateCollapsed(true);
+                    },
                   ),
                   DrawerTextButton(
                     text: 'clinic_expenses_label',
-                    onPressed: () {},
+                    onPressed: () {
+                      controller.receptionPageIndex.value = 6;
+                      controller.updateCollapsed(true);
+                    },
                   ),
                 ],
               ),

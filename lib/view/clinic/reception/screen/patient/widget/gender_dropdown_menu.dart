@@ -12,21 +12,21 @@ class GenderDropdownMenu extends StatefulWidget {
 }
 
 class _MyDropdownState extends State<GenderDropdownMenu> {
-  String _selectedValue = 'Male'; // Default selected value
+  String _selectedValue = '1'; // Default selected value
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<String>(
+    return DropdownButtonFormField<String>(
       value: _selectedValue, // Currently selected value
       items: [
         DropdownMenuItem<String>(
-          value: 'Male',
+          value: '1',
           child: TableDataCell(
             text: 'male_label'.tr,
           ),
         ),
         DropdownMenuItem<String>(
-          value: 'Female',
+          value: '2',
           child: TableDataCell(
             text: 'female_label'.tr,
           ),
