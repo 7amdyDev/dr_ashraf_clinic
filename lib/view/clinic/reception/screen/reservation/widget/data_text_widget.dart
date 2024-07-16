@@ -14,6 +14,7 @@ class DataTextWidget extends StatelessWidget {
     this.width = 200,
     this.validator,
     this.formKey,
+    this.maxLines = 1,
   });
   final String label;
   final String? value;
@@ -21,8 +22,8 @@ class DataTextWidget extends StatelessWidget {
   final bool enable;
   final double labelFontSize;
   final double textFontSize;
-
-  final double width;
+  final int maxLines;
+  final double? width;
   final TextEditingController? textEditingController;
   final String? Function(String?)? validator;
   final GlobalKey? formKey;
@@ -36,24 +37,27 @@ class DataTextWidget extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              label,
-              style: GoogleFonts.notoNaskhArabic(
-                fontSize: labelFontSize,
-                fontWeight: FontWeight.w600,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                label,
+                style: GoogleFonts.notoNaskhArabic(
+                  fontSize: labelFontSize,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),
           child == null
-              ? ConstrainedBox(
-                  constraints: const BoxConstraints(minWidth: 200),
-                  child: TextFormField(
-                    style: TextStyle(fontSize: textFontSize),
-                    enabled: enable,
-                    initialValue: value,
-                    controller: textEditingController,
-                    validator: validator,
+              ? TextFormField(
+                  style: TextStyle(
+                    fontSize: textFontSize,
                   ),
+                  enabled: enable,
+                  initialValue: value,
+                  maxLines: maxLines,
+                  controller: textEditingController,
+                  validator: validator,
                 )
               : child!,
         ],

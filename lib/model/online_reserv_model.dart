@@ -3,6 +3,9 @@ class OnlineReservModel {
   final String mobile;
   final String dateTime;
 
-  OnlineReservModel(
-      {required this.name, required this.mobile, required this.dateTime});
+  OnlineReservModel({
+    required this.name,
+    required this.mobile,
+    required this.dateTime,
+  });
 }

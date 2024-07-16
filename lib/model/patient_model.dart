@@ -1,4 +1,5 @@
 class PatientModel {
+  final int? id;
   final String name;
   final String mobile;
   final int age;
@@ -12,6 +13,7 @@ class PatientModel {
   final String? notes;
 
   PatientModel({
+    this.id,
     required this.name,
     required this.mobile,
     required this.age,

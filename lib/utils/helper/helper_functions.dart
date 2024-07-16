@@ -116,4 +116,11 @@ class HelperFunctions {
     }
     return wrappedList;
   }
+
+  static double clinicPagesWidth() {
+    double width = HelperFunctions.screenWidth() < 1440
+        ? HelperFunctions.screenWidth() - 100
+        : 1440;
+    return width;
+  }
 }

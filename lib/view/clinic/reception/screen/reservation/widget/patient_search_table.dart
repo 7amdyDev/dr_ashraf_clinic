@@ -1,4 +1,4 @@
-import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
+import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
 import 'package:dr_ashraf_clinic/model/patient_model.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
@@ -52,7 +52,7 @@ class PatientSearchTable extends StatelessWidget {
 
 class _DataSource extends DataTableSource {
   final List<PatientModel> data;
-  final controller = Get.put(ClinicController());
+  final controller = Get.put(PatientController());
 
   _DataSource({required this.data});
   @override
@@ -63,11 +63,11 @@ class _DataSource extends DataTableSource {
 
     //  final item = data[index];
     return DataRow(cells: [
-      DataCell(TableDataCell(text: index.toString())),
+      DataCell(TableDataCell(text: data[index].id.toString())),
       DataCell(
         TableDataCell(text: data[index].name),
         onTap: () {
-          controller.show.value = true;
+          controller.choosePatient(data[index].id!);
           Get.back();
         },
       ),

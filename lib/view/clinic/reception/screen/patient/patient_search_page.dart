@@ -1,7 +1,6 @@
 import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/patient/widget/new_patient_card_widget.dart';
-import 'package:dr_ashraf_clinic/view/clinic/reception/screen/reservation/widget/patient_reservation_card.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/reservation/widget/patient_reservation_table.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/page_label_widget.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/search_list_form_field.dart';
@@ -56,10 +55,10 @@ class PatientSearchPage extends StatelessWidget {
               children: [
                 Obx(
                   () => NewPatientCardWidget(
-                    show: controller.show.value,
+                    show: true,
                   ),
                 ),
-                Obx(() => controller.show.value
+                Obx(() => true
                     ? Column(
                         children: [
                           const SizedBox(
@@ -73,7 +72,7 @@ class PatientSearchPage extends StatelessWidget {
                             ),
                           ),
                           PatientReservationTable(
-                              show: controller.show.value,
+                              show: true,
                               searchResult:
                                   controller.patientSearchResult.toList()),
                         ],

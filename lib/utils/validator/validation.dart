@@ -65,7 +65,7 @@ class HValidator {
     }
 
     // Regular expression for phone number validation (assuming a 10-digit US phone number format)
-    final phoneRegExp = RegExp(r"^[٠-٩\d]{1,6}$");
+    final phoneRegExp = RegExp(r"^[٠-٩\d]{1,12}$");
 
     if (!phoneRegExp.hasMatch(value)) {
       return 'validation_numbers_label'.tr;
@@ -80,11 +80,11 @@ class HValidator {
     }
 
     // Regular expression for phone number validation (assuming a 10-digit US phone number format)
-    final textRegExp = RegExp(r"(?:[\u0600-\u06FFa-zA-Z]){3,}.*$");
+    //  final textRegExp = RegExp(r"(?:[\u0600-\u06FFa-zA-Z]){3,}.*$");
 
-    if (!textRegExp.hasMatch(value)) {
-      return 'validation_text_label'.tr;
-    }
+    // if (!textRegExp.hasMatch(value)) {
+    //   return 'validation_text_label'.tr;
+    // }
 
     return null;
   }

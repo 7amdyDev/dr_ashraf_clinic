@@ -1,4 +1,4 @@
-import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
+import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/reservation/widget/patient_search_table.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/page_label_widget.dart';
@@ -12,7 +12,7 @@ class SearchDialogWidget extends StatelessWidget {
     required this.controller,
   });
 
-  final ClinicController controller;
+  final PatientController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +30,16 @@ class SearchDialogWidget extends StatelessWidget {
         width: 800,
         // height: 600,
         child:
-            PatientSearchTable(searchResult: controller.patientList.toList()),
+            PatientSearchTable(searchResult: controller.searchResult.toList()),
       ),
       actionsAlignment: MainAxisAlignment.center,
       actions: [
         HFilledButton(
-          fontSize: 18,
-          text: 'cancel_button',
-          onPressed: () => Get.back(),
-        )
+            fontSize: 18,
+            text: 'cancel_button',
+            onPressed: () {
+              Get.back();
+            })
       ],
     );
   }

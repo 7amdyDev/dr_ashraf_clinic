@@ -1,13 +1,14 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 class ExpenseModel {
+  int? id;
   String description;
   int value;
-  String expenseType;
+  String expenseAccount;
   String dateTime;
   ExpenseModel({
+    this.id,
     required this.description,
     required this.value,
-    required this.expenseType,
+    required this.expenseAccount,
     required this.dateTime,
   });
 }

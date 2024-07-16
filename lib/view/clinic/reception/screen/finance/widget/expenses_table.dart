@@ -94,7 +94,7 @@ class _DataSource extends DataTableSource {
       ),
       DataCell(TableDataCell(text: item.dateTime)),
       DataCell(TableDataCell(
-          text: HValidator.expenseCodeValidation(int.parse(item.expenseType))
+          text: HValidator.expenseCodeValidation(int.parse(item.expenseAccount))
               .tr)),
       DataCell(TableDataCell(text: item.value.toString())),
 

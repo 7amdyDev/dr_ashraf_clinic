@@ -1,4 +1,4 @@
-import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
+import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/search_result_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -32,7 +32,7 @@ class _SearchListFormFieldState extends State<SearchListFormField> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ClinicController());
+    final controller = Get.put(PatientController());
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -79,11 +79,23 @@ class _SearchListFormFieldState extends State<SearchListFormField> {
                       ],
                     ),
                     onTap: () {
+                      controller.choosePatient(0);
+                      switch (index) {
+                        case 0:
+                          controller.patientSearch(name: _searchText);
+                          break;
+                        case 1:
+                          controller.patientSearch(mobile: _searchText);
+                          break;
+                        case 2:
+                          controller.patientSearch(
+                              id: int.tryParse(_searchText!));
+                          break;
+                      }
                       Get.dialog(
                         SearchDialogWidget(controller: controller),
                       );
                       // Handle item selection (optional)
-                      controller.patientSearchResult.add('hello');
                       setState(() {
                         _searchText = '';
                       });

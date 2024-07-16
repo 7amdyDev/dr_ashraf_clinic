@@ -1,3 +1,4 @@
+import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/search_list_form_field.dart';
 import 'package:flutter/material.dart';
 
@@ -8,10 +9,11 @@ class PatientSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = HelperFunctions.clinicPagesWidth();
     return Row(
       children: [
         SizedBox(
-          width: 500,
+          width: width / 2,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: SearchListFormField(

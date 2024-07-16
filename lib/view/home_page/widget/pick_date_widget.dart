@@ -6,10 +6,12 @@ class PickDateWidget extends StatelessWidget {
   const PickDateWidget({
     super.key,
     required this.width,
+    this.textFontSize = 18,
     required this.dateController,
   });
 
   final double width;
+  final double textFontSize;
   final TextEditingController dateController;
 
   @override
@@ -17,6 +19,7 @@ class PickDateWidget extends StatelessWidget {
     return SizedBox(
       width: width,
       child: TextField(
+        style: TextStyle(fontSize: textFontSize),
         textAlign: TextAlign.center,
         controller: dateController,
         decoration: const InputDecoration(suffixIcon: Icon(Icons.date_range)),

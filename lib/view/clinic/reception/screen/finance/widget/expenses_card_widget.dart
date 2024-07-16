@@ -18,7 +18,7 @@ class ExpensesCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController descriptionController = TextEditingController();
-    String expenseType = '201';
+    String expenseAccount = '201';
     TextEditingController valueController = TextEditingController();
     final controller = Get.put(ClinicController());
     final valueKey = GlobalKey<FormState>();
@@ -57,7 +57,7 @@ class ExpensesCardWidget extends StatelessWidget {
                     label: 'expense_type_label'.tr,
                     child: ExpensesDropdownMenu(
                       onSelected: (value) {
-                        expenseType = value;
+                        expenseAccount = value;
                       },
                     ),
                   ),
@@ -87,7 +87,7 @@ class ExpensesCardWidget extends StatelessWidget {
                       var expense = ExpenseModel(
                           description: descriptionController.value.text,
                           value: int.parse(valueText),
-                          expenseType: expenseType,
+                          expenseAccount: expenseAccount,
                           dateTime: HFormatter.formatDate(DateTime.now()));
                       controller.addExpense(expense);
                       descriptionController.clear();
