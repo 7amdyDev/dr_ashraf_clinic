@@ -1,4 +1,6 @@
+import 'package:dr_ashraf_clinic/controller/appointment_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class TableCheckBoxWidget extends StatefulWidget {
   const TableCheckBoxWidget({
@@ -9,15 +11,14 @@ class TableCheckBoxWidget extends StatefulWidget {
 }
 
 class _TableCheckBoxState extends State<TableCheckBoxWidget> {
-  bool isChecked = false;
-
   @override
   Widget build(BuildContext context) {
+    var controller = Get.put(AppointmentController());
     return Checkbox(
-        value: isChecked,
+        value: controller.paid.value,
         onChanged: (value) {
           setState(() {
-            isChecked = value!;
+            controller.paid.value = value!;
           });
         });
   }

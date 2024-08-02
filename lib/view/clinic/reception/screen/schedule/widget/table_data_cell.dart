@@ -14,11 +14,13 @@ class TableDataCell extends StatelessWidget {
     return Center(
         child: FittedBox(
       fit: BoxFit.scaleDown,
-      child: Text(
-        text,
-        style: GoogleFonts.cairo(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
+      child: RichText(
+        text: TextSpan(
+          text: text,
+          style: GoogleFonts.cairo(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     ));

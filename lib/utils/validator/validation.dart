@@ -111,4 +111,20 @@ class HValidator {
   }
 
 // Add more custom validators as needed for your specific requirements.
+
+  static String serviceIdValidation(int value) {
+    String result;
+    switch (value) {
+      case (0):
+        result = 'check_label';
+        break;
+      case (1):
+        result = 'consult_label';
+        break;
+
+      default:
+        result = 'check_label';
+    }
+    return result;
+  }
 }

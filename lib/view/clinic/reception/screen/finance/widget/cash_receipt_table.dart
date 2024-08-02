@@ -7,8 +7,8 @@ import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/ta
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class DailyIncomeTable extends StatelessWidget {
-  const DailyIncomeTable({
+class CashReceiptTable extends StatelessWidget {
+  const CashReceiptTable({
     super.key,
     required this.searchResult,
   });

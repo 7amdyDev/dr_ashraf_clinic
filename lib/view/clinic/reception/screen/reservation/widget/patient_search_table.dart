@@ -1,3 +1,4 @@
+import 'package:dr_ashraf_clinic/controller/finance_controller.dart';
 import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
 import 'package:dr_ashraf_clinic/model/patient_model.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
@@ -53,7 +54,7 @@ class PatientSearchTable extends StatelessWidget {
 class _DataSource extends DataTableSource {
   final List<PatientModel> data;
   final controller = Get.put(PatientController());
-
+  final finaceController = Get.put(FinanceController());
   _DataSource({required this.data});
   @override
   DataRow? getRow(int index) {
@@ -68,6 +69,7 @@ class _DataSource extends DataTableSource {
         TableDataCell(text: data[index].name),
         onTap: () {
           controller.choosePatient(data[index].id!);
+          finaceController.getPatientAccountlst(data[index].id!);
           Get.back();
         },
       ),

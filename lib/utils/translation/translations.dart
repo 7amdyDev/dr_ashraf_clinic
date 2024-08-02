@@ -91,6 +91,7 @@ class AppTranslation extends Translations {
           'patient_accounts_label': 'Patient Accounts',
           'patient_unpaid_label': 'Unpaid',
           'patient_paid_label': 'Paid',
+          'cash_receipt_label': 'Cash Receipt',
         },
         'ar_EG': {
           'app_name': 'عيادة الدكتور أشرف يحيي',
@@ -183,6 +184,9 @@ class AppTranslation extends Translations {
           'patient_accounts_label': 'حسابات المريض',
           'patient_unpaid_label': ' المتبقي',
           'patient_paid_label': 'المدفوع',
+          'check_label': 'كشف',
+          'consult_label': 'متابعة',
+          'cash_receipt_label': 'إيصال دفع',
         },
       };
 }

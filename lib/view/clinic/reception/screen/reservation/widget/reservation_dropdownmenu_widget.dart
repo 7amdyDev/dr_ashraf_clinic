@@ -2,38 +2,40 @@ import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/ta
 import 'package:flutter/material.dart';
 
 class ServiceTypeDropDownMenu extends StatefulWidget {
-  final Function(String) onSelected; // Callback for selection change
-
-  const ServiceTypeDropDownMenu({super.key, required this.onSelected});
+  final Function(int) onSelected; // Callback for selection change
+  final int serviceId;
+  const ServiceTypeDropDownMenu(
+      {super.key, required this.onSelected, required this.serviceId});
 
   @override
   State<ServiceTypeDropDownMenu> createState() => _MyDropdownState();
 }
 
 class _MyDropdownState extends State<ServiceTypeDropDownMenu> {
-  String _selectedValue = 'Check'; // Default selected value
+  // Default selected value
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonFormField<String>(
-      value: _selectedValue, // Currently selected value
+    int selectedValue = widget.serviceId;
+    return DropdownButtonFormField<int>(
+      value: selectedValue, // Currently selected value
       items: const [
-        DropdownMenuItem<String>(
-          value: 'Check',
+        DropdownMenuItem<int>(
+          value: 0,
           child: TableDataCell(
             text: 'كشف',
           ),
         ),
-        DropdownMenuItem<String>(
-          value: 'Consult',
+        DropdownMenuItem<int>(
+          value: 1,
           child: TableDataCell(
-            text: 'إستشارة',
+            text: 'متابعة',
           ),
         ),
       ],
       onChanged: (value) {
         setState(() {
-          _selectedValue = value!; // Update selected value
+          selectedValue = value!; // Update selected value
         });
         widget.onSelected(value!); // Call callback with selected value
       },

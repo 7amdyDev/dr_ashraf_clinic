@@ -1,8 +1,11 @@
-import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
-import 'package:dr_ashraf_clinic/model/expense_model.dart';
+import 'package:dr_ashraf_clinic/controller/appointment_controller.dart';
+import 'package:dr_ashraf_clinic/controller/finance_controller.dart';
+import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
+import 'package:dr_ashraf_clinic/model/finance_models.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/utils/validator/validation.dart';
+import 'package:dr_ashraf_clinic/view/clinic/reception/screen/finance/widget/cash_reciept_dialog.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/table_column_label.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/table_data_cell.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +18,11 @@ class PatientAccountTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ClinicController());
-    final List<ExpenseModel> searchResult = controller.expenseSearchResult;
+    final financeController = Get.put(FinanceController());
+
+    final List<AppointmentFinance> searchResult =
+        financeController.appointmentFinancelst;
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -30,6 +36,8 @@ class PatientAccountTable extends StatelessWidget {
                 columnSpacing: 12,
                 columns: const [
                   DataColumn(label: TableColumnLabel(text: '#')),
+                  DataColumn(
+                      label: TableColumnLabel(text: 'patient_name_label')),
                   DataColumn(label: TableColumnLabel(text: 'date_label')),
                   DataColumn(
                       label: TableColumnLabel(text: 'service_type_label')),
@@ -52,9 +60,9 @@ class PatientAccountTable extends StatelessWidget {
           const SizedBox(
             height: HSizes.spaceBtwItems,
           ),
-          const SizedBox(
-            height: HSizes.spaceBtwSections,
-          )
+          // const SizedBox(
+          //   height: HSizes.spaceBtwSections,
+          // )
         ],
       ),
     );
@@ -62,7 +70,10 @@ class PatientAccountTable extends StatelessWidget {
 }
 
 class _DataSource extends DataTableSource {
-  final List<ExpenseModel> data;
+  final List<AppointmentFinance> data;
+  final patientController = Get.put(PatientController());
+  final financeController = Get.put(FinanceController());
+  final appointmentController = Get.put(AppointmentController());
 
   _DataSource({required this.data});
   @override
@@ -70,20 +81,28 @@ class _DataSource extends DataTableSource {
     if (index >= data.length) {
       return null;
     }
-
     final item = data[index];
+
     return DataRow(cells: [
       DataCell(TableDataCell(text: (index + 1).toString())),
       DataCell(
-        TableDataCell(text: item.description),
-        onTap: () {},
+        TableDataCell(
+            text: (patientController.getPatientById(item.patientId)).name),
+        onTap: () {
+          // Get.dialog(CashRecieptDialogWidget(
+          //     controller: financeController,
+          //     recordId: item.id!,
+          //     appointmentId: item.appointmentId));
+          // financeController.accountRecordId.value = item.id!;
+        },
       ),
-      DataCell(TableDataCell(text: item.dateTime)),
       DataCell(TableDataCell(
-          text: HValidator.expenseCodeValidation(int.parse(item.expenseAccount))
-              .tr)),
-      DataCell(TableDataCell(text: item.value.toString())),
-      DataCell(TableDataCell(text: item.value.toString())),
+          text: appointmentController.getAppointmentDateById(item.appointId))),
+      DataCell(TableDataCell(
+          text: HValidator.serviceIdValidation(item.serviceId).tr)),
+      DataCell(TableDataCell(text: item.amount.toString())),
+      DataCell(TableDataCell(text: item.paid.toString())),
+      DataCell(TableDataCell(text: item.unPaid.toString())),
 
       // const DataCell(Center(
       //     child:

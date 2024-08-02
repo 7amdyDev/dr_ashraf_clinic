@@ -8,17 +8,21 @@ class PickDateWidget extends StatelessWidget {
     required this.width,
     this.textFontSize = 18,
     required this.dateController,
+    this.validator,
   });
 
   final double width;
   final double textFontSize;
   final TextEditingController dateController;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
+    //  dateController.text = HFormatter.formatDate(DateTime.now());
     return SizedBox(
       width: width,
-      child: TextField(
+      child: TextFormField(
+        validator: validator,
         style: TextStyle(fontSize: textFontSize),
         textAlign: TextAlign.center,
         controller: dateController,
@@ -26,8 +30,8 @@ class PickDateWidget extends StatelessWidget {
         onTap: () {
           final Future<DateTime?> picked = showDatePicker(
             context: context,
-            selectableDayPredicate: (DateTime val) =>
-                val.weekday == 5 ? false : true,
+            // selectableDayPredicate: (DateTime val) =>
+            //     val.weekday == 5 ? false : true,
             currentDate: DateTime.now(),
             initialDate: DateTime.now(),
             firstDate: DateTime.now(),

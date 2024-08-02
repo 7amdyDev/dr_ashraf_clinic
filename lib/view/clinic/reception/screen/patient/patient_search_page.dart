@@ -1,7 +1,6 @@
 import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/patient/widget/new_patient_card_widget.dart';
-import 'package:dr_ashraf_clinic/view/clinic/reception/screen/reservation/widget/patient_reservation_table.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/page_label_widget.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/search_list_form_field.dart';
 import 'package:flutter/material.dart';
@@ -54,30 +53,32 @@ class PatientSearchPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Obx(
-                  () => NewPatientCardWidget(
+                  () => const NewPatientCardWidget(
                     show: true,
                   ),
                 ),
-                Obx(() => true
-                    ? Column(
-                        children: [
-                          const SizedBox(
-                            height: HSizes.spaceBtwItems,
-                          ),
-                          Text(
-                            'schedule_table_label'.tr,
-                            style: GoogleFonts.cairo(
-                              fontSize: 22,
-                              fontWeight: FontWeight.w600,
+                Obx(
+                  () => true
+                      ? Column(
+                          children: [
+                            const SizedBox(
+                              height: HSizes.spaceBtwItems,
                             ),
-                          ),
-                          PatientReservationTable(
-                              show: true,
-                              searchResult:
-                                  controller.patientSearchResult.toList()),
-                        ],
-                      )
-                    : const SizedBox()),
+                            Text(
+                              'schedule_table_label'.tr,
+                              style: GoogleFonts.cairo(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            // PatientReservationTable(
+                            //     show: true,
+                            //     searchResult:
+                            //         controller.patientSearchResult.toList()),
+                          ],
+                        )
+                      : const SizedBox(),
+                ),
               ],
             ),
           ),

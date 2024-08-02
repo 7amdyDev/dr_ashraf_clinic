@@ -1,4 +1,4 @@
-import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
+import 'package:dr_ashraf_clinic/controller/finance_controller.dart';
 import 'package:dr_ashraf_clinic/model/expense_model.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
@@ -16,8 +16,10 @@ class ExpensesTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ClinicController());
-    final List<ExpenseModel> searchResult = controller.expenseSearchResult;
+    final financeController = Get.put(FinanceController());
+    final List<ExpenseModel> searchResult =
+        financeController.expenseSearchResult;
+    int? expenseId;
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -38,7 +40,9 @@ class ExpensesTable extends StatelessWidget {
                       label: TableColumnLabel(text: 'expense_type_label')),
                   DataColumn(label: TableColumnLabel(text: 'value_label')),
                 ],
-                source: _DataSource(data: searchResult),
+                source: _DataSource(data: searchResult, (value) {
+                  expenseId = value;
+                }),
                 rowsPerPage: searchResult.isEmpty
                     ? 1
                     : searchResult.length < 8
@@ -57,12 +61,11 @@ class ExpensesTable extends StatelessWidget {
               HFilledButton(
                 text: 'delete_button',
                 fontSize: 22,
-                onPressed: () {},
-              ),
-              HFilledButton(
-                text: 'update_button',
-                fontSize: 22,
-                onPressed: () {},
+                onPressed: () {
+                  if (expenseId != null) {
+                    financeController.deleteExpense(expenseId!);
+                  }
+                },
               ),
             ],
           ),
@@ -77,8 +80,8 @@ class ExpensesTable extends StatelessWidget {
 
 class _DataSource extends DataTableSource {
   final List<ExpenseModel> data;
-
-  _DataSource({required this.data});
+  final Function(int) onSelected;
+  _DataSource(this.onSelected, {required this.data});
   @override
   DataRow? getRow(int index) {
     if (index >= data.length) {
@@ -90,7 +93,9 @@ class _DataSource extends DataTableSource {
       DataCell(TableDataCell(text: (index + 1).toString())),
       DataCell(
         TableDataCell(text: item.description),
-        onTap: () {},
+        onTap: () {
+          onSelected(item.id!);
+        },
       ),
       DataCell(TableDataCell(text: item.dateTime)),
       DataCell(TableDataCell(

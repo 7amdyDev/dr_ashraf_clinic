@@ -1,4 +1,4 @@
-import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
+import 'package:dr_ashraf_clinic/controller/finance_controller.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/finance/widget/daily_finance_card_widget.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/finance/widget/daily_income_table.dart';
@@ -11,7 +11,7 @@ class DailyIcomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ClinicController());
+    final financeController = Get.put(FinanceController());
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -41,7 +41,8 @@ class DailyIcomePage extends StatelessWidget {
                     text: 'daily_revenue_label',
                     fontSize: 24,
                   ),
-                  DailyIncomeTable(searchResult: controller.patientSearchResult)
+                  DailyIncomeTable(
+                      searchResult: financeController.assetDailyIncomelst)
                 ],
               ),
             ),

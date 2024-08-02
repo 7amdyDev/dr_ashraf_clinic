@@ -23,6 +23,10 @@ class PatientController extends GetxController {
     return patientList.firstWhere((element) => element.id == patientId.value);
   }
 
+  PatientModel getPatientById(int id) {
+    return patientList.firstWhere((element) => element.id == id);
+  }
+
   void patientSearch({int? id, String? mobile, String? name}) {
     searchResult.clear();
 

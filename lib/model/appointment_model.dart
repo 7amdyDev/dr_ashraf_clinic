@@ -4,11 +4,13 @@ class AppointmentModel {
   final int serviceId;
   final int status;
   final String dateTime;
+  final String mobile;
   final String? notes;
 
-  AppointmentModel(
-    this.status, {
+  AppointmentModel({
     this.id,
+    required this.status,
+    required this.mobile,
     required this.patientId,
     required this.serviceId,
     required this.dateTime,
