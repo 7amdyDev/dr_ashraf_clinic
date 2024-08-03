@@ -14,6 +14,16 @@ class AppointmentController extends GetxController {
     return appointmentlst.firstWhere((element) => element.id == appId).dateTime;
   }
 
+  AppointmentModel getAppointmentById(int appId) {
+    return appointmentlst.firstWhere((element) => element.id == appId);
+  }
+
+  int getAppointmentService(int appId) {
+    return appointmentlst
+        .firstWhere((element) => element.id == appId)
+        .serviceId;
+  }
+
   List<AppointmentModel> getPatientAppointment(int id) {
     patientAppointlst.clear();
     for (var item in appointmentlst) {

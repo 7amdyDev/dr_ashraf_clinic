@@ -65,8 +65,7 @@ class _DataSource extends DataTableSource {
       DataCell(TableDataCell(
           text: HValidator.serviceIdValidation(item.serviceId).tr)),
       DataCell(TableDataCell(
-          text: financeController
-              .getAppointmentAccount(data[index].id!)
+          text: 'financeController.getAppointmentAccount(data[index].id!)'
               .toString())),
       DataCell(TableDataCell(text: item.status.toString())),
 

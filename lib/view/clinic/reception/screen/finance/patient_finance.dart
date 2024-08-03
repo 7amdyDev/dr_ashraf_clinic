@@ -45,11 +45,11 @@ class PatientFinance extends StatelessWidget {
                     fontSize: 28,
                   ),
                   const PatientAccountTable(),
-                  Obx(() => financeController.accountRecordId.value != 0
-                      ? PatientReceiptCashCard(
-                          record: financeController.getAssetAccountByRecordId(
-                              financeController.accountRecordId.value))
-                      : const SizedBox()),
+                  // Obx(() => financeController.accountRecordId.value != 0
+                  //     ? PatientReceiptCashCard(
+                  //         record: financeController.getAssetAccountByRecordId(
+                  //             financeController.accountRecordId.value))
+                  //     : const SizedBox()),
                   const SizedBox(
                     height: HSizes.spaceBtwSections,
                   )

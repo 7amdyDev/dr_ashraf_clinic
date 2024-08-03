@@ -5,10 +5,9 @@ class AssetAccountsModel {
   final int patientId;
   final String dateTime;
   final int serviceId;
-  final int value;
+  final int fee;
   int discount;
   int debit;
-  int credit;
 
   AssetAccountsModel({
     this.id,
@@ -17,10 +16,9 @@ class AssetAccountsModel {
     required this.patientId,
     required this.dateTime,
     required this.serviceId,
-    required this.value,
+    required this.fee,
     this.discount = 0,
     required this.debit,
-    required this.credit,
   });
 }
 
@@ -30,7 +28,7 @@ class RevenueAccounts {
   final int appointmentId;
   final int patientId;
   final String dateTime;
-  final int value;
+  final int amount;
   final int serviceId;
 
   RevenueAccounts({
@@ -39,7 +37,7 @@ class RevenueAccounts {
     required this.appointmentId,
     required this.patientId,
     required this.dateTime,
-    required this.value,
+    required this.amount,
     required this.serviceId,
   });
 }
@@ -47,18 +45,14 @@ class RevenueAccounts {
 class AppointmentFinance {
   final int appointId;
   final int patientId;
-  final String dateTime;
-  final int serviceId;
-  final int amount;
+  final int serviceFee;
   final int paid;
   final int unPaid;
 
   AppointmentFinance(
       {required this.appointId,
       required this.patientId,
-      required this.dateTime,
-      required this.serviceId,
-      required this.amount,
+      required this.serviceFee,
       required this.paid,
       required this.unPaid});
 }

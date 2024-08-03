@@ -20,7 +20,7 @@ class PatientFinanceCardWidget extends StatelessWidget {
             Obx(
               () => FinanceValueColumn(
                 label: 'patient_accounts_label',
-                value: finaceController.patientTotalAccount.value.toString(),
+                value: finaceController.patientBalance.value.toString(),
               ),
             ),
             const VerticalDivider(
@@ -31,7 +31,7 @@ class PatientFinanceCardWidget extends StatelessWidget {
             Obx(
               () => FinanceValueColumn(
                 label: 'patient_paid_label',
-                value: finaceController.patientPaidAccount.value.toString(),
+                value: finaceController.patientTotalPaid.value.toString(),
               ),
             ),
             const VerticalDivider(
@@ -42,7 +42,7 @@ class PatientFinanceCardWidget extends StatelessWidget {
             Obx(
               () => FinanceValueColumn(
                 label: 'patient_unpaid_label',
-                value: finaceController.patientUnPaidAccount.value.toString(),
+                value: finaceController.patientTotalUnPaid.value.toString(),
               ),
             ),
           ],

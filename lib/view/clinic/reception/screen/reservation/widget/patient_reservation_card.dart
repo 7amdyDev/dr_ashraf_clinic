@@ -117,14 +117,14 @@ class PatientReservationCardWidget extends StatelessWidget {
                             patientId: id!,
                             dateTime: HFormatter.formatDate(DateTime.now()),
                             serviceId: controller.serviceId.value,
-                            value: 400,
+                            fee: 400,
                             debit: 400);
                         financeController.addAccountRecievable(
                           appointmentId: controller.appointmentlst.length,
                           patientId: id!,
                           serviceId: controller.serviceId.value,
                           dateTime: dateController.text,
-                          value: 400,
+                          fee: 0,
                           debit: 0,
                         );
                       } else {
@@ -133,7 +133,7 @@ class PatientReservationCardWidget extends StatelessWidget {
                           patientId: id!,
                           serviceId: controller.serviceId.value,
                           dateTime: dateController.text,
-                          value: 400,
+                          fee: 400,
                           debit: 400,
                         );
                         financeController.addAssetCashOnHand(
@@ -141,7 +141,7 @@ class PatientReservationCardWidget extends StatelessWidget {
                             patientId: id!,
                             dateTime: HFormatter.formatDate(DateTime.now()),
                             serviceId: controller.serviceId.value,
-                            value: 400,
+                            fee: 0,
                             debit: 0);
                       }
                     }

@@ -69,7 +69,8 @@ class _DataSource extends DataTableSource {
         TableDataCell(text: data[index].name),
         onTap: () {
           controller.choosePatient(data[index].id!);
-          finaceController.getPatientAccountlst(data[index].id!);
+          finaceController.patientId.value = data[index].id!;
+          finaceController.getPatientAccountslst();
           Get.back();
         },
       ),

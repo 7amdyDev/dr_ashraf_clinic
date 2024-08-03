@@ -19,9 +19,8 @@ class PatientAccountTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final financeController = Get.put(FinanceController());
-
     final List<AppointmentFinance> searchResult =
-        financeController.appointmentFinancelst;
+        financeController.appointmentAccountslst;
 
     return SingleChildScrollView(
       child: Column(
@@ -89,18 +88,21 @@ class _DataSource extends DataTableSource {
         TableDataCell(
             text: (patientController.getPatientById(item.patientId)).name),
         onTap: () {
-          // Get.dialog(CashRecieptDialogWidget(
-          //     controller: financeController,
-          //     recordId: item.id!,
-          //     appointmentId: item.appointmentId));
-          // financeController.accountRecordId.value = item.id!;
+          Get.dialog(CashRecieptDialogWidget(
+            controller: financeController,
+            appointData:
+                appointmentController.getAppointmentById(item.appointId),
+          ));
+          //  financeController.accountRecordId.value = item.id!;
         },
       ),
       DataCell(TableDataCell(
           text: appointmentController.getAppointmentDateById(item.appointId))),
       DataCell(TableDataCell(
-          text: HValidator.serviceIdValidation(item.serviceId).tr)),
-      DataCell(TableDataCell(text: item.amount.toString())),
+          text: HValidator.serviceIdValidation(
+                  appointmentController.getAppointmentService(item.appointId))
+              .tr)),
+      DataCell(TableDataCell(text: item.serviceFee.toString())),
       DataCell(TableDataCell(text: item.paid.toString())),
       DataCell(TableDataCell(text: item.unPaid.toString())),
 

@@ -1,3 +1,4 @@
+import 'package:dr_ashraf_clinic/model/appointment_model.dart';
 import 'package:dr_ashraf_clinic/model/expense_model.dart';
 import 'package:dr_ashraf_clinic/model/finance_models.dart';
 import 'package:dr_ashraf_clinic/utils/formatters/formatter.dart';
@@ -6,23 +7,25 @@ import 'package:get/state_manager.dart';
 
 class FinanceController extends GetxController {
   RxList<RevenueAccounts> revenueAccountlst = <RevenueAccounts>[].obs;
-  RxList<AppointmentFinance> appointmentFinancelst = <AppointmentFinance>[].obs;
+  RxList<AppointmentFinance> appointmentAccountslst =
+      <AppointmentFinance>[].obs;
   RxList<AssetAccountsModel> assetAccountslst = <AssetAccountsModel>[].obs;
   RxList<AssetAccountsModel> assetDailyIncomelst = <AssetAccountsModel>[].obs;
-  RxList<AssetAccountsModel> patientAssetAccountlst =
+  RxList<AssetAccountsModel> patientAssetAccountslst =
       <AssetAccountsModel>[].obs;
   RxList<AssetAccountsModel> appointmentCashReciept =
       <AssetAccountsModel>[].obs;
-
-  RxInt patientTotalAccount = 0.obs;
-  RxInt patientPaidAccount = 0.obs;
-  RxInt patientUnPaidAccount = 0.obs;
+  RxList<int> patientAppointslst = <int>[].obs;
+  RxInt appointUnPaid = 0.obs;
+  RxInt patientBalance = 0.obs;
+  RxInt patientTotalPaid = 0.obs;
+  RxInt patientTotalUnPaid = 0.obs;
   RxInt accountRecordId = 0.obs;
   RxInt dailyIncome = 0.obs;
   RxInt totalDailyExpenses = 0.obs;
   RxInt cash = 0.obs;
   RxList<ExpenseModel> expenseSearchResult = <ExpenseModel>[].obs;
-
+  RxInt patientId = 0.obs;
 // -------- Expenses Functions --------------- //
   void addExpense(ExpenseModel expense) {
     expenseSearchResult.add(expense); // Update the list
@@ -47,112 +50,135 @@ class FinanceController extends GetxController {
   }
 
 // ------------ Account Assets ----------- //
+
+  void onPatientAccountListUpdated() {
+    getPatientAccountslst();
+  }
+
   void _addRevenueToAccount(int appointmentId, int patientId, String dateTime,
-      int serviceId, int value) {
+      int serviceId, int amount) {
     var revenueAccount = RevenueAccounts(
         revenueAccount: 101,
         appointmentId: appointmentId,
         patientId: patientId,
         dateTime: dateTime,
-        value: value,
+        amount: amount,
         serviceId: serviceId);
     revenueAccountlst.add(revenueAccount);
   }
 
-  void getPatientAccountlst(int id) {
-    patientAssetAccountlst.clear();
-    // int value = 0;
-    // int paid = 0;
-    // int unpaid = 0;
-    List<int> appointments = [];
-    for (var item in assetAccountslst) {
-      if ((item.accountNumber == 302 || item.accountNumber == 301) &&
-          item.patientId == id) {
-        patientAssetAccountlst.add(item);
-        appointments.add(item.appointmentId);
-      }
-    }
-
-    appointments = appointments.toSet().toList();
-    appointmentFinancelst.clear();
-    for (var item in appointments) {
-      getPatientAccountsByAppointment(item);
-    }
-    // patientTotalAccount.value = value;
-    // patientPaidAccount.value = paid;
-    // patientUnPaidAccount.value = unpaid;
-  }
-
-  void getPatientAccountsByAppointment(int appointmentId) {
+  void getPatientAccountslst() {
+    patientAssetAccountslst.clear();
+    patientAppointslst.clear();
     int amount = 0;
     int paid = 0;
     int unPaid = 0;
-    String? dateTime;
-    int? patientId;
-    int? serviceId;
-    for (var item in patientAssetAccountlst) {
-      print(item.serviceId);
-      dateTime = item.dateTime;
-      patientId = item.patientId;
-      serviceId = item.serviceId;
-      if (item.appointmentId == appointmentId && item.accountNumber == 301) {
-        amount = item.value;
+    for (var item in assetAccountslst) {
+      if (item.accountNumber == 301 && item.patientId == patientId.value) {
+        amount += item.fee;
         paid += item.debit;
-      } else if (item.appointmentId == appointmentId &&
-          item.accountNumber == 302) {
-        amount = item.value;
+        patientAppointslst.add(item.appointmentId);
+        patientAssetAccountslst.add(item);
+      } else if (item.accountNumber == 302 &&
+          item.patientId == patientId.value) {
+        amount += item.fee;
         unPaid += item.debit;
+        patientAppointslst.add(item.appointmentId);
+        patientAssetAccountslst.add(item);
+      }
+      patientBalance.value = amount;
+      patientTotalPaid.value = paid;
+      patientTotalUnPaid.value = unPaid;
+      patientAppointslst.value = patientAppointslst.toSet().toList();
+    }
+    getPatientAppointAccount();
+  }
+
+  void getAppointmentBalance(int appointId) {
+    appointUnPaid.value = appointmentAccountslst
+        .firstWhere((appointment) => appointment.appointId == appointId)
+        .unPaid;
+  }
+
+  void getPatientAppointAccount() {
+    appointmentAccountslst.clear();
+    for (var appointId in patientAppointslst) {
+      int amount = 0;
+      int paid = 0;
+      int unPaid = 0;
+      int patientId = 0;
+      for (var item in patientAssetAccountslst) {
+        if (item.accountNumber == 301 && item.appointmentId == appointId) {
+          patientId = item.patientId;
+          amount += item.fee;
+          paid += item.debit;
+        } else if (item.accountNumber == 302 &&
+            item.appointmentId == appointId) {
+          patientId = item.patientId;
+          amount += item.fee;
+          unPaid += item.debit;
+        }
+      }
+
+      appointmentAccountslst.add(AppointmentFinance(
+          appointId: appointId,
+          patientId: patientId,
+          serviceFee: amount,
+          paid: paid,
+          unPaid: unPaid));
+    }
+  }
+
+  void addPatientCashReceipt(AppointmentModel appointData, int amount) {
+    for (var item in patientAssetAccountslst) {
+      if (item.accountNumber == 302 && item.appointmentId == appointData.id!) {
+        item.debit -= amount;
       }
     }
-
-    appointmentFinancelst.add(AppointmentFinance(
-        appointId: appointmentId,
-        patientId: patientId!,
-        dateTime: dateTime!,
-        serviceId: serviceId!,
-        amount: amount,
-        paid: paid,
-        unPaid: unPaid));
+    addAssetCashOnHand(
+        appointmentId: appointData.id!,
+        patientId: appointData.patientId,
+        dateTime: HFormatter.formatDate(DateTime.now()),
+        serviceId: appointData.serviceId,
+        fee: 0,
+        debit: amount);
+    onPatientAccountListUpdated();
+    getAppointmentBalance(appointData.id!);
   }
 
-  AssetAccountsModel getAssetAccountByRecordId(int id) {
-    var record =
-        patientAssetAccountlst.firstWhere((element) => element.id == id);
-
-    return record;
-  }
-
-  void patientCashReceipt(AssetAccountsModel record) {
-    // int indexToUpdate =
-    //     patientAssetAccountlst.indexWhere((element) => element.id == record.id);
-
-    // if (indexToUpdate != -1) {
-    //   // Update the record at the found index
-    //   // patientAssetAccountlst[indexToUpdate] = record;
-    //   addAssetCashOnHand(record.appointmentId, record.patientId,
-    //       record.dateTime, record.serviceId, 0, record.debit);
-    //   addAccountRecievable(
-    //       appointmentId: record.appointmentId,
-    //       patientId: record.patientId,
-    //       dateTime: record.dateTime,
-    //       serviceId: record.serviceId,
-    //       value: 0,
-    //       debit: 0,
-    //       credit: record.debit);
-    // }
+  void removePatientCashReceipt(int recordId) {
+    int amount = 0;
+    int appointId = 0;
+    int recordIndex =
+        assetAccountslst.indexWhere((record) => record.id == recordId);
+    if (recordIndex != -1) {
+      amount = assetAccountslst[recordIndex].debit;
+      assetAccountslst[recordIndex].debit = 0;
+    }
+    for (var item in patientAssetAccountslst) {
+      if (item.accountNumber == 302 &&
+          item.appointmentId == assetAccountslst[recordIndex].appointmentId) {
+        item.debit += amount;
+        appointId = item.appointmentId;
+      }
+    }
+    accountRecordId.value = 0;
+    onPatientAccountListUpdated();
+    if (appointId != 0) getAppointmentBalance(appointId);
   }
 
   void getDailyCash() {
-    int value = 0;
+    int balance = 0;
     assetDailyIncomelst.clear();
     for (var item in assetAccountslst) {
       if (item.accountNumber == 301 &&
+          item.debit != 0 &&
           item.dateTime == HFormatter.formatDate(DateTime.now())) {
-        value += item.debit;
+        balance += item.debit;
         assetDailyIncomelst.add(item);
       }
     }
-    dailyIncome.value = value;
+    dailyIncome.value = balance;
     cash.value = dailyIncome.value - totalDailyExpenses.value;
   }
 
@@ -161,18 +187,19 @@ class FinanceController extends GetxController {
     required int patientId,
     required String dateTime,
     required int serviceId,
-    required int value,
+    required int fee,
     required int debit,
   }) {
     var assetAccount = AssetAccountsModel(
-        accountNumber: 301,
-        appointmentId: appointmentId,
-        patientId: patientId,
-        dateTime: dateTime,
-        serviceId: serviceId,
-        value: value,
-        debit: debit,
-        credit: 0);
+      id: assetAccountslst.length + 1,
+      accountNumber: 301,
+      appointmentId: appointmentId,
+      patientId: patientId,
+      dateTime: dateTime,
+      serviceId: serviceId,
+      fee: fee,
+      debit: debit,
+    );
 
     assetAccountslst.add(assetAccount);
     getDailyCash();
@@ -190,7 +217,7 @@ class FinanceController extends GetxController {
     required int patientId,
     required String dateTime,
     required int serviceId,
-    required int value,
+    required int fee,
     required int debit,
   }) {
     var assetAccount = AssetAccountsModel(
@@ -200,9 +227,8 @@ class FinanceController extends GetxController {
       patientId: patientId,
       dateTime: dateTime,
       serviceId: serviceId,
-      value: value,
+      fee: fee,
       debit: debit,
-      credit: 0,
     );
 
     assetAccountslst.add(assetAccount);
@@ -210,18 +236,20 @@ class FinanceController extends GetxController {
 
   void getCashRecieptOnAppointment(int appointmentId) {
     appointmentCashReciept.clear();
-    for (var item in patientAssetAccountlst) {
-      if (item.accountNumber == 301 && item.appointmentId == appointmentId) {
+    for (var item in patientAssetAccountslst) {
+      if (item.accountNumber == 301 &&
+          item.appointmentId == appointmentId &&
+          item.debit != 0) {
         appointmentCashReciept.add(item);
       }
     }
   }
 
-  int getAppointmentAccount(int appointmentId) {
-    var assetAccount = assetAccountslst.firstWhere((element) =>
-        (element.appointmentId == appointmentId &&
-            (element.accountNumber == 302 || element.accountNumber == 301)));
+  // int getAppointmentAccount(int appointmentId) {
+  //   var assetAccount = assetAccountslst.firstWhere((element) =>
+  //       (element.appointmentId == appointmentId &&
+  //           (element.accountNumber == 302 || element.accountNumber == 301)));
 
-    return assetAccount.debit;
-  }
+  //   return assetAccount.debit;
+  // }
 }
