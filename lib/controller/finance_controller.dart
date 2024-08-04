@@ -245,11 +245,9 @@ class FinanceController extends GetxController {
     }
   }
 
-  // int getAppointmentAccount(int appointmentId) {
-  //   var assetAccount = assetAccountslst.firstWhere((element) =>
-  //       (element.appointmentId == appointmentId &&
-  //           (element.accountNumber == 302 || element.accountNumber == 301)));
-
-  //   return assetAccount.debit;
-  // }
+  int getAppointmentAccount(int appointmentId) {
+    return appointmentAccountslst
+        .firstWhere((appointment) => appointment.appointId == appointmentId)
+        .unPaid;
+  }
 }

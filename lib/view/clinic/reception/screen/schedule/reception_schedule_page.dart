@@ -1,6 +1,8 @@
+import 'package:dr_ashraf_clinic/controller/appointment_controller.dart';
 import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
+import 'package:dr_ashraf_clinic/utils/formatters/formatter.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/online_reservation_table.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/schedule_table_widget.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/page_label_widget.dart';
@@ -14,6 +16,7 @@ class ReceptionSchedulePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var controller = Get.put(ClinicController());
+    var appointmentController = Get.put(AppointmentController());
     return Column(
       children: [
         const SizedBox(
@@ -28,11 +31,15 @@ class ReceptionSchedulePage extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            HFilledButton(text: 'today_label'.tr, onPressed: () {}),
+            HFilledButton(
+                text: 'today_label'.tr,
+                onPressed: () {
+                  appointmentController.getAppointsByDate();
+                }),
             HFilledButton(
                 text: 'choose_date_label'.tr,
                 onPressed: () {
-                  datePickerDialog(context);
+                  datePickerDialog(context, appointmentController);
                 }),
           ],
         ),
@@ -44,11 +51,8 @@ class ReceptionSchedulePage extends StatelessWidget {
                 const SizedBox(
                   height: HSizes.spaceBtwItems,
                 ),
-                const HScheduleDataTable(searchResult: [
-                  'ahmed',
-                  'Hamdy',
-                  'anas',
-                ]),
+                HScheduleDataTable(
+                    searchResult: appointmentController.appointListByDate),
                 const PageLabelWidget(
                   text: 'online_table_label',
                 ),
@@ -63,7 +67,7 @@ class ReceptionSchedulePage extends StatelessWidget {
   }
 }
 
-void datePickerDialog(context) {
+void datePickerDialog(context, AppointmentController controller) {
   final Future<DateTime?> picked = showDatePicker(
     context: context,
     //s  selectableDayPredicate: (DateTime val) => val.weekday == 5 ? false : true,
@@ -87,7 +91,7 @@ void datePickerDialog(context) {
     },
   );
   picked.then((onValue) {
-    onValue ?? DateTime.now();
+    controller.getAppointsByDate(date: HFormatter.formatDate(onValue));
     // dateController.text = HFormatter.formatDate(onValue);
   });
 }

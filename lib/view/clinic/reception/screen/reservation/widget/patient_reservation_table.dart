@@ -29,7 +29,6 @@ class PatientReservationTable extends StatelessWidget {
                 DataColumn(label: TableColumnLabel(text: 'patient_name_label')),
                 DataColumn(label: TableColumnLabel(text: 'date_label')),
                 DataColumn(label: TableColumnLabel(text: 'service_type_label')),
-                DataColumn(label: TableColumnLabel(text: 'finance_label')),
                 DataColumn(label: TableColumnLabel(text: 'status_label')),
               ],
               source: _DataSource(data: searchResult),
@@ -64,14 +63,8 @@ class _DataSource extends DataTableSource {
       DataCell(TableDataCell(text: item.dateTime)),
       DataCell(TableDataCell(
           text: HValidator.serviceIdValidation(item.serviceId).tr)),
-      DataCell(TableDataCell(
-          text: 'financeController.getAppointmentAccount(data[index].id!)'
-              .toString())),
-      DataCell(TableDataCell(text: item.status.toString())),
-
-      // const DataCell(Center(
-      //     child:
-      //         FittedBox(fit: BoxFit.scaleDown, child: CustomDropDownWidget()))),
+      DataCell(
+          TableDataCell(text: HValidator.statusIdValidation(item.status).tr)),
     ]);
   }
 

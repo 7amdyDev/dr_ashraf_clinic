@@ -127,4 +127,28 @@ class HValidator {
     }
     return result;
   }
+
+  static String statusIdValidation(int value) {
+    String result;
+    switch (value) {
+      case (0):
+        result = 'no_show_label';
+        break;
+      case (1):
+        result = 'waiting_label';
+        break;
+
+      case (2):
+        result = 'completed_label';
+        break;
+
+      case (3):
+        result = 'canceled_label';
+        break;
+
+      default:
+        result = 'no_show_label';
+    }
+    return result;
+  }
 }
