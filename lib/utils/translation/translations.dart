@@ -4,7 +4,7 @@ class AppTranslation extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         'en_US': {
-          'app_name': 'Dr Ashraf Yehia Clinic',
+          'app_name': 'Dr Ashraf Yehia Clinics',
           'main_button': 'Home',
           'clinic_button': 'Clinic',
           'contact_button': 'Contact Us',
@@ -29,10 +29,12 @@ class AppTranslation extends Translations {
           'appointment_label': 'Schedule',
           'reserve_label': 'Reserve',
           'patient_label': 'Patient Profile',
+          'patient_label2': 'Patient Profile',
           'new_patient_label': 'New Profile',
           'search_patient_label': 'Patient Search',
           'finance_label': 'Finance',
           'patient_finance_label': 'Patient Finance',
+          'patient_finance_label2': 'Patient Finance',
           'clinic_expenses_label': 'Clinic Expenses',
           'expenses_label': 'Expenses',
           'cash_label': 'Cash',
@@ -94,7 +96,7 @@ class AppTranslation extends Translations {
           'cash_receipt_label': 'Cash Receipt',
         },
         'ar_EG': {
-          'app_name': 'عيادة الدكتور أشرف يحيي',
+          'app_name': 'عيادات الدكتور أشرف يحيي',
           'main_button': 'الرئيسية',
           'clinic_button': 'العيادة',
           'contact_button': 'أتصل بنا',
@@ -123,10 +125,12 @@ class AppTranslation extends Translations {
           'appointment_label': 'المواعيد',
           'reserve_label': 'حجز موعد',
           'patient_label': 'ملفات المرضي',
+          'patient_label2': 'ملف المريض',
           'new_patient_label': 'ملف جديد',
           'search_patient_label': 'بحث عن مريض',
           'finance_label': 'الحسابات',
           'patient_finance_label': 'حسابات المرضي',
+          'patient_finance_label2': 'حسابات المريض',
           'clinic_expenses_label': 'مصروفات العيادة',
           'expenses_label': 'المصروفات',
           'cash_label': 'النقدية',

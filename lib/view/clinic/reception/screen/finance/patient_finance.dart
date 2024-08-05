@@ -6,24 +6,30 @@ import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/page_label_widget.dart';
 
 class PatientFinance extends StatelessWidget {
-  const PatientFinance({super.key});
+  const PatientFinance({super.key, this.show = true});
+
+  final bool show;
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
+        show
+            ? const SizedBox(
+                height: HSizes.spaceBtwSections,
+              )
+            : const SizedBox(),
+        show
+            ? const PageLabelWidget(
+                text: 'patient_finance_label',
+              )
+            : const SizedBox(),
         const SizedBox(
           height: HSizes.spaceBtwSections,
         ),
-        const PageLabelWidget(
-          text: 'patient_finance_label',
-        ),
-        const SizedBox(
-          height: HSizes.spaceBtwSections,
-        ),
-        const PatientSearchBar(),
+        show ? const PatientSearchBar() : const SizedBox(),
         const PatientFinanceCardWidget(),
-        Expanded(
+        const Expanded(
           child: SingleChildScrollView(
             child: SizedBox(
               width: double.infinity,
@@ -32,15 +38,15 @@ class PatientFinance extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(
+                  SizedBox(
                     height: HSizes.spaceBtwItems,
                   ),
-                  const PageLabelWidget(
+                  PageLabelWidget(
                     text: 'patient_accounts_label',
                     fontSize: 28,
                   ),
-                  const PatientAccountTable(),
-                  const SizedBox(
+                  PatientAccountTable(),
+                  SizedBox(
                     height: HSizes.spaceBtwSections,
                   )
                 ],

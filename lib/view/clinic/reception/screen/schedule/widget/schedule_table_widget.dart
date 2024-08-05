@@ -20,36 +20,38 @@ class HScheduleDataTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(HSizes.spaceBtwItems),
-      child: SingleChildScrollView(
-        child: SizedBox(
-          width: double.infinity,
-          child: PaginatedDataTable(
-            headingRowHeight: 48,
-            horizontalMargin: 12,
-            headingRowColor: const WidgetStatePropertyAll(HColors.accent),
-            columnSpacing: 12,
-            columns: const [
-              DataColumn(label: TableColumnLabel(text: ' # ')),
-              DataColumn(label: TableColumnLabel(text: 'patient_name_label')),
-              DataColumn(label: TableColumnLabel(text: 'date_label')),
-              DataColumn(label: TableColumnLabel(text: 'service_type_label')),
-              DataColumn(label: TableColumnLabel(text: 'telephone_label')),
-              //  DataColumn(label: TableColumnLabel(text: 'finance_label')),
-              DataColumn(label: TableColumnLabel(text: 'status_label')),
-            ],
-            source: _DataSource(data: searchResult),
-            rowsPerPage: searchResult.isEmpty
-                ? 1
-                : searchResult.length < 8
-                    ? searchResult.length
-                    : 8,
-            showEmptyRows: false,
+    return Obx(() => Padding(
+          padding: const EdgeInsets.all(HSizes.spaceBtwItems),
+          child: SingleChildScrollView(
+            child: SizedBox(
+              width: double.infinity,
+              child: PaginatedDataTable(
+                headingRowHeight: 48,
+                horizontalMargin: 12,
+                headingRowColor: const WidgetStatePropertyAll(HColors.accent),
+                columnSpacing: 12,
+                columns: const [
+                  DataColumn(label: TableColumnLabel(text: ' # ')),
+                  DataColumn(
+                      label: TableColumnLabel(text: 'patient_name_label')),
+                  DataColumn(label: TableColumnLabel(text: 'date_label')),
+                  DataColumn(
+                      label: TableColumnLabel(text: 'service_type_label')),
+                  DataColumn(label: TableColumnLabel(text: 'telephone_label')),
+                  //  DataColumn(label: TableColumnLabel(text: 'finance_label')),
+                  DataColumn(label: TableColumnLabel(text: 'status_label')),
+                ],
+                source: _DataSource(data: searchResult),
+                rowsPerPage: searchResult.isEmpty
+                    ? 1
+                    : searchResult.length < 8
+                        ? searchResult.length
+                        : 8,
+                showEmptyRows: false,
+              ),
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
 

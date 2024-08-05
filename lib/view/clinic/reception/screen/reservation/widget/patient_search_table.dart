@@ -1,3 +1,4 @@
+import 'package:dr_ashraf_clinic/controller/appointment_controller.dart';
 import 'package:dr_ashraf_clinic/controller/finance_controller.dart';
 import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
 import 'package:dr_ashraf_clinic/model/patient_model.dart';
@@ -55,6 +56,7 @@ class _DataSource extends DataTableSource {
   final List<PatientModel> data;
   final controller = Get.put(PatientController());
   final finaceController = Get.put(FinanceController());
+  final appointmentController = AppointmentController();
   _DataSource({required this.data});
   @override
   DataRow? getRow(int index) {
@@ -71,6 +73,7 @@ class _DataSource extends DataTableSource {
           controller.choosePatient(data[index].id!);
           finaceController.patientId.value = data[index].id!;
           finaceController.getPatientAccountslst();
+          appointmentController.getPatientAppointment(data[index].id!);
           Get.back();
         },
       ),

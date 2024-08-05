@@ -5,9 +5,7 @@ import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/finance/widget/cash_receipt_table.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/finance/widget/patient_reciept_cash.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/page_label_widget.dart';
-import 'package:dr_ashraf_clinic/view/home_page/widget/filled_button.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class CashRecieptDialogWidget extends StatelessWidget {
   const CashRecieptDialogWidget({
@@ -46,14 +44,6 @@ class CashRecieptDialogWidget extends StatelessWidget {
         ),
       ),
       actionsAlignment: MainAxisAlignment.center,
-      // actions: [
-      //   HFilledButton(
-      //       fontSize: 18,
-      //       text: 'cancel_button',
-      //       onPressed: () {
-      //         Get.back();
-      //       })
-      // ],
     );
   }
 }

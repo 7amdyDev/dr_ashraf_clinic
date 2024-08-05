@@ -145,56 +145,65 @@ class _NewPatientCardWidgetState extends State<NewPatientCardWidget> {
                       const SizedBox(
                         height: HSizes.spaceBtwItems,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      Column(
                         children: [
                           DataTextWidget(
                             label: 'family_history_label'.tr,
                             textEditingController: familyHistory,
-                            width: width / 5,
+                            width: width * 0.8,
                             maxLines: 2,
+                          ),
+                          const SizedBox(
+                            height: HSizes.spaceBtwItems,
                           ),
                           DataTextWidget(
                             label: 'surgical_history_label'.tr,
                             textEditingController: surgicalHistory,
                             enable: true,
-                            width: width / 5,
+                            width: width * 0.8,
                             maxLines: 2,
+                          ),
+                          const SizedBox(
+                            height: HSizes.spaceBtwItems,
                           ),
                           DataTextWidget(
                             label: 'medications_label'.tr,
                             textEditingController: medicine,
                             enable: true,
-                            width: width / 5,
+                            width: width * 0.8,
                             maxLines: 2,
                           ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: HSizes.spaceBtwItems,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
+                          const SizedBox(
+                            height: HSizes.spaceBtwItems,
+                          ),
                           DataTextWidget(
                             label: 'allergies_label'.tr,
                             textEditingController: allergies,
-                            width: width / 5,
+                            width: width * 0.8,
                             maxLines: 2,
+                          ),
+                          const SizedBox(
+                            height: HSizes.spaceBtwItems,
                           ),
                           DataTextWidget(
                             label: 'past_medical_label'.tr,
                             textEditingController: pastMedicalCondition,
                             enable: true,
-                            width: width / 5,
+                            width: width * 0.8,
                             maxLines: 2,
+                          ),
+                          const SizedBox(
+                            height: HSizes.spaceBtwItems,
                           ),
                           DataTextWidget(
                             label: 'notes_label'.tr,
                             textEditingController: notes,
                             enable: true,
-                            width: width / 5,
+                            width: width * 0.8,
                             maxLines: 2,
+                          ),
+                          const SizedBox(
+                            height: HSizes.spaceBtwItems,
                           ),
                         ],
                       ),
