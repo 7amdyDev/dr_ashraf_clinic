@@ -1,4 +1,5 @@
 import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
+import 'package:dr_ashraf_clinic/utils/formatters/formatter.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/search_result_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -89,7 +90,9 @@ class _SearchListFormFieldState extends State<SearchListFormField> {
                           break;
                         case 2:
                           controller.patientSearch(
-                              id: int.tryParse(_searchText!));
+                              id: int.tryParse(
+                                  HFormatter.convertArabicToEnglishNumbers(
+                                      _searchText!)));
                           break;
                       }
                       Get.dialog(

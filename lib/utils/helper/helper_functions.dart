@@ -118,9 +118,9 @@ class HelperFunctions {
   }
 
   static double clinicPagesWidth() {
-    double width = HelperFunctions.screenWidth() < 1440
+    double width = HelperFunctions.screenWidth() < 1024
         ? HelperFunctions.screenWidth() - 100
-        : 1440;
+        : 1024;
     return width;
   }
 }

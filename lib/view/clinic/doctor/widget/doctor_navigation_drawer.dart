@@ -8,8 +8,8 @@ import 'package:dr_ashraf_clinic/view/clinic/reception/widget/navigation_drawer_
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HNavigationDrawer extends StatelessWidget {
-  const HNavigationDrawer({super.key, required this.isCollapsed});
+class HDoctorNavigationDrawer extends StatelessWidget {
+  const HDoctorNavigationDrawer({super.key, required this.isCollapsed});
   final bool isCollapsed;
   @override
   Widget build(BuildContext context) {
@@ -39,9 +39,36 @@ class HNavigationDrawer extends StatelessWidget {
                   imagePath: 'assets/icons/calender.png',
                   title: 'appointment_label',
                   onPressed: () {
-                    controller.receptionPageIndex.value = 0;
+                    controller.doctorPageIndex.value = 0;
                     controller.updateCollapsed(true);
                   }),
+              const Spacer(
+                flex: 1,
+              ),
+              NavigationDrawerExpandedItem(
+                isCollapsed: isCollapsed,
+                imagePath: 'assets/icons/check.png',
+                title: 'check_section_label',
+                onPressed: () {
+                  isCollapsed ? controller.updateCollapsed(false) : null;
+                },
+                children: [
+                  DrawerTextButton(
+                    text: 'new_check_label',
+                    onPressed: () {
+                      controller.doctorPageIndex.value = 7;
+                      controller.updateCollapsed(true);
+                    },
+                  ),
+                  DrawerTextButton(
+                    text: 'search_patient_label',
+                    onPressed: () {
+                      controller.doctorPageIndex.value = 3;
+                      controller.updateCollapsed(true);
+                    },
+                  ),
+                ],
+              ),
               const Spacer(
                 flex: 1,
               ),
@@ -50,7 +77,7 @@ class HNavigationDrawer extends StatelessWidget {
                 imagePath: 'assets/icons/reserve.png',
                 title: 'reserve_label',
                 onPressed: () {
-                  controller.receptionPageIndex.value = 1;
+                  controller.doctorPageIndex.value = 1;
                   controller.updateCollapsed(true);
                 },
               ),
@@ -68,14 +95,14 @@ class HNavigationDrawer extends StatelessWidget {
                   DrawerTextButton(
                     text: 'new_patient_label',
                     onPressed: () {
-                      controller.receptionPageIndex.value = 2;
+                      controller.doctorPageIndex.value = 2;
                       controller.updateCollapsed(true);
                     },
                   ),
                   DrawerTextButton(
                     text: 'search_patient_label',
                     onPressed: () {
-                      controller.receptionPageIndex.value = 3;
+                      controller.doctorPageIndex.value = 3;
                       controller.updateCollapsed(true);
                     },
                   ),
@@ -95,21 +122,21 @@ class HNavigationDrawer extends StatelessWidget {
                   DrawerTextButton(
                     text: 'daily_revenue_label',
                     onPressed: () {
-                      controller.receptionPageIndex.value = 4;
+                      controller.doctorPageIndex.value = 4;
                       controller.updateCollapsed(true);
                     },
                   ),
                   DrawerTextButton(
                     text: 'patient_finance_label',
                     onPressed: () {
-                      controller.receptionPageIndex.value = 5;
+                      controller.doctorPageIndex.value = 5;
                       controller.updateCollapsed(true);
                     },
                   ),
                   DrawerTextButton(
                     text: 'clinic_expenses_label',
                     onPressed: () {
-                      controller.receptionPageIndex.value = 6;
+                      controller.doctorPageIndex.value = 6;
                       controller.updateCollapsed(true);
                     },
                   ),

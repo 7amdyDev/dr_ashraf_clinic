@@ -23,7 +23,10 @@ class ChangeLangButton extends StatelessWidget {
         child: Text(
           HelperFunctions.isLocalEnglish() ? 'عربي' : 'English',
           style: GoogleFonts.elMessiri(
-              fontSize: 24, fontWeight: FontWeight.bold, color: HColors.black),
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: HColors.black,
+          ),
         ),
       ),
     );

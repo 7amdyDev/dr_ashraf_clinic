@@ -9,17 +9,24 @@ import 'package:dr_ashraf_clinic/view/home_page/widget/filled_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ExpensesTable extends StatelessWidget {
+class ExpensesTable extends StatefulWidget {
   const ExpensesTable({
     super.key,
   });
+
+  @override
+  State<ExpensesTable> createState() => _ExpensesTableState();
+}
+
+class _ExpensesTableState extends State<ExpensesTable> {
+  int? expenseId;
 
   @override
   Widget build(BuildContext context) {
     final financeController = Get.put(FinanceController());
     final List<ExpenseModel> searchResult =
         financeController.expenseSearchResult;
-    int? expenseId;
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -40,8 +47,11 @@ class ExpensesTable extends StatelessWidget {
                       label: TableColumnLabel(text: 'expense_type_label')),
                   DataColumn(label: TableColumnLabel(text: 'value_label')),
                 ],
-                source: _DataSource(data: searchResult, (value) {
-                  expenseId = value;
+                source: _DataSource(data: searchResult, expenseId: expenseId,
+                    (value) {
+                  setState(() {
+                    expenseId = value;
+                  });
                 }),
                 rowsPerPage: searchResult.isEmpty
                     ? 1
@@ -58,19 +68,22 @@ class ExpensesTable extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              HFilledButton(
-                text: 'delete_button',
-                fontSize: 22,
-                onPressed: () {
-                  if (expenseId != null) {
-                    financeController.deleteExpense(expenseId!);
-                  }
-                },
-              ),
+              expenseId != null
+                  ? HFilledButton(
+                      text: 'delete_button',
+                      fontSize: 22,
+                      onPressed: () {
+                        financeController.deleteExpense(expenseId!);
+                        setState(() {
+                          expenseId = null;
+                        });
+                      },
+                    )
+                  : const SizedBox(),
             ],
           ),
           const SizedBox(
-            height: HSizes.spaceBtwSections,
+            height: HSizes.spaceBtwItems,
           )
         ],
       ),
@@ -81,7 +94,9 @@ class ExpensesTable extends StatelessWidget {
 class _DataSource extends DataTableSource {
   final List<ExpenseModel> data;
   final Function(int) onSelected;
-  _DataSource(this.onSelected, {required this.data});
+  final int? expenseId;
+  _DataSource(this.onSelected, {required this.expenseId, required this.data});
+
   @override
   DataRow? getRow(int index) {
     if (index >= data.length) {
@@ -89,24 +104,27 @@ class _DataSource extends DataTableSource {
     }
 
     final item = data[index];
-    return DataRow(cells: [
-      DataCell(TableDataCell(text: (index + 1).toString())),
-      DataCell(
-        TableDataCell(text: item.description),
-        onTap: () {
-          onSelected(item.id!);
-        },
-      ),
-      DataCell(TableDataCell(text: item.dateTime)),
-      DataCell(TableDataCell(
-          text: HValidator.expenseCodeValidation(int.parse(item.expenseAccount))
-              .tr)),
-      DataCell(TableDataCell(text: item.value.toString())),
 
-      // const DataCell(Center(
-      //     child:
-      //         FittedBox(fit: BoxFit.scaleDown, child: CustomDropDownWidget()))),
-    ]);
+    return DataRow(
+        selected: expenseId == item.id,
+        color: expenseId == item.id
+            ? const WidgetStatePropertyAll<Color>(Colors.black12)
+            : null,
+        cells: [
+          DataCell(TableDataCell(text: (index + 1).toString())),
+          DataCell(
+            TableDataCell(text: item.description),
+            onTap: () {
+              onSelected(item.id!);
+            },
+          ),
+          DataCell(TableDataCell(text: item.dateTime)),
+          DataCell(TableDataCell(
+              text: HValidator.expenseCodeValidation(
+                      int.parse(item.expenseAccount))
+                  .tr)),
+          DataCell(TableDataCell(text: item.value.toString())),
+        ]);
   }
 
   @override

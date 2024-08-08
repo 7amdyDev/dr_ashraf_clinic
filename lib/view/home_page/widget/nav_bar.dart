@@ -18,16 +18,16 @@ class HNavBar extends StatelessWidget {
             children: [
               NavBarButton(
                 text: 'main_button',
-                fontSize: 24,
+                fontSize: 20,
               ),
               NavBarButton(
                 text: 'clinic_button',
-                fontSize: 24,
+                fontSize: 20,
                 route: '/clinic',
               ),
               NavBarButton(
                 text: 'contact_button',
-                fontSize: 24,
+                fontSize: 20,
                 route: '/contact_us',
               ),
               ChangeLangButton(),

@@ -4,14 +4,14 @@ import 'package:dr_ashraf_clinic/model/pages_list.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/view/clinic/clinic_page.dart';
-import 'package:dr_ashraf_clinic/view/clinic/reception/widget/navigation_drawer.dart';
+import 'package:dr_ashraf_clinic/view/clinic/doctor/widget/doctor_navigation_drawer.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/change_lang_button_widget.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/clinic_name_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ReceptionPage extends StatelessWidget {
-  const ReceptionPage({super.key});
+class DoctorPage extends StatelessWidget {
+  const DoctorPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class ReceptionPage extends StatelessWidget {
                         child: Row(
                           children: [
                             Obx(
-                              () => HNavigationDrawer(
+                              () => HDoctorNavigationDrawer(
                                   isCollapsed: controller.isCollapsed.value),
                             ),
                             Expanded(
@@ -50,8 +50,8 @@ class ReceptionPage extends StatelessWidget {
                                       ? controller.updateCollapsed(true)
                                       : null;
                                 },
-                                child: Obx(() => receptionPagesList[
-                                    controller.receptionPageIndex.value]),
+                                child: Obx(() => doctorPagesList[
+                                    controller.doctorPageIndex.value]),
                               ),
                             )
                           ],

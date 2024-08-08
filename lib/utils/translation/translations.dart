@@ -16,6 +16,8 @@ class AppTranslation extends Translations {
   Member of Harvard University - USA
           ''',
           'book_button': 'Book Now',
+          'check_section_label': 'Check',
+          'new_check_label': 'New Check',
           'save_button': 'Save',
           'update_button': 'Update',
           'delete_button': 'Delete',
@@ -112,6 +114,8 @@ class AppTranslation extends Translations {
     عضو الجمعية المصرية للسكر
           ''',
           'book_button': 'أحجز الآن',
+          'check_section_label': 'كشف',
+          'new_check_label': 'كشف جديد',
           'name_label': 'الأسم:',
           'book_sheet_label': 'حجز موعد',
           'mobile_label': 'رقم الموبايل:',

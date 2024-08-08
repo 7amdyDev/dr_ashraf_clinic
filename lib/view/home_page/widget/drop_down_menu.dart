@@ -1,3 +1,4 @@
+import 'package:dr_ashraf_clinic/controller/auth_controller.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/filled_button.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,8 @@ class HDropDownMenu extends StatefulWidget {
 
 class _HDropDownMenuState extends State<HDropDownMenu> {
   String _selectedItem = 'Reception';
-
+  TextEditingController password = TextEditingController();
+  var authController = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -24,6 +26,8 @@ class _HDropDownMenuState extends State<HDropDownMenu> {
             children: [
               DropdownButtonFormField<String>(
                 value: _selectedItem,
+                focusColor: Colors.transparent,
+                alignment: Alignment.center,
                 onChanged: (String? value) {
                   setState(() {
                     _selectedItem = value!;
@@ -39,13 +43,7 @@ class _HDropDownMenuState extends State<HDropDownMenu> {
                 ].map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Row(
-                      children: [
-                        // const Icon(Icons.star),
-                        // const SizedBox(width: 10),
-                        Text(value),
-                      ],
-                    ),
+                    child: Center(child: Text(value)),
                   );
                 }).toList(),
               ),
@@ -54,6 +52,11 @@ class _HDropDownMenuState extends State<HDropDownMenu> {
               ),
               TextField(
                 obscureText: true,
+                controller: password,
+                onSubmitted: (value) {
+                  authController.signInWithEmailAndPassword(
+                      _selectedItem, password.text);
+                },
                 decoration: InputDecoration(
                   labelText: 'password_label'.tr,
                   border: const OutlineInputBorder(),
@@ -65,7 +68,8 @@ class _HDropDownMenuState extends State<HDropDownMenu> {
               HFilledButton(
                 text: 'login_button',
                 onPressed: () {
-                  Get.offNamed('/reception');
+                  authController.signInWithEmailAndPassword(
+                      _selectedItem, password.text);
                 },
               ),
             ],

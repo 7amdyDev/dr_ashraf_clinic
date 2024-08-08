@@ -19,6 +19,7 @@ class BookNowSheet extends StatelessWidget {
     TextEditingController dateController = TextEditingController();
     TextEditingController nameController = TextEditingController();
     TextEditingController mobileController = TextEditingController();
+
     var controller = Get.put(ClinicController());
     return Container(
       constraints: const BoxConstraints(maxWidth: 1024),
@@ -104,7 +105,7 @@ class BookNowSheet extends StatelessWidget {
                             name: nameController.text,
                             mobile: mobileController.text,
                             dateTime: dateController.text);
-                        controller.onlineReservData.add(reservation);
+                        controller.createOnlineReserv(reservation);
                         Get.back();
                       },
                     )

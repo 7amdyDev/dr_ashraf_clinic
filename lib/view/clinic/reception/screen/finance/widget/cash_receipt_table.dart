@@ -8,7 +8,7 @@ import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/ta
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CashReceiptTable extends StatelessWidget {
+class CashReceiptTable extends StatefulWidget {
   const CashReceiptTable({
     super.key,
     required this.searchResult,
@@ -16,6 +16,11 @@ class CashReceiptTable extends StatelessWidget {
 
   final List<AssetAccountsModel> searchResult;
 
+  @override
+  State<CashReceiptTable> createState() => _CashReceiptTableState();
+}
+
+class _CashReceiptTableState extends State<CashReceiptTable> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => SingleChildScrollView(
@@ -36,12 +41,14 @@ class CashReceiptTable extends StatelessWidget {
                   DataColumn(
                       label: TableColumnLabel(text: 'patient_paid_label')),
                 ],
-                source: _DataSource(data: searchResult),
+                source: _DataSource(data: widget.searchResult, () {
+                  setState(() {});
+                }),
 
-                rowsPerPage: searchResult.isEmpty
+                rowsPerPage: widget.searchResult.isEmpty
                     ? 1
-                    : searchResult.length < 8
-                        ? searchResult.length
+                    : widget.searchResult.length < 8
+                        ? widget.searchResult.length
                         : 8,
                 // rowsPerPage:
                 //     searchResult.length < 8 ? searchResult.length : 8 ?? 0,
@@ -54,9 +61,10 @@ class CashReceiptTable extends StatelessWidget {
 
 class _DataSource extends DataTableSource {
   final List<AssetAccountsModel> data;
+  final Function selected;
   var patientController = Get.put(PatientController());
   var financeController = Get.put(FinanceController());
-  _DataSource({required this.data});
+  _DataSource(this.selected, {required this.data});
   @override
   DataRow? getRow(int index) {
     if (index >= data.length) {
@@ -65,7 +73,7 @@ class _DataSource extends DataTableSource {
     final item = data[index];
     return DataRow(
         color: financeController.accountRecordId.value == item.id
-            ? WidgetStateProperty.all(Colors.grey)
+            ? WidgetStateProperty.all(Colors.black12)
             : null,
         cells: [
           DataCell(TableDataCell(text: item.patientId.toString())),
@@ -74,6 +82,7 @@ class _DataSource extends DataTableSource {
                 text: patientController.getPatientById(item.patientId).name),
             onTap: () {
               financeController.accountRecordId.value = item.id!;
+              selected();
             },
           ),
           DataCell(TableDataCell(text: item.dateTime)),

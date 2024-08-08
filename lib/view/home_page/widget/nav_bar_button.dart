@@ -8,7 +8,7 @@ class NavBarButton extends StatelessWidget {
     super.key,
     required this.text,
     this.color = HColors.black,
-    this.fontSize = 32,
+    this.fontSize = 28,
     this.withShadow = false,
     this.route = '/',
   });

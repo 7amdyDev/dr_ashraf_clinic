@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site" : "drashrafyehia",
+    "site": "drashrafyehia",
     "public": "build/web",
     "ignore": [
       "firebase.json",
@@ -13,5 +13,20 @@
         "destination": "/index.html"
       }
     ]
+  },
+  "flutter": {
+    "platforms": {
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "ashrafyehiaclinic",
+          "configurations": {
+            "web": "1:1023345209468:web:0549262587251406c6d9f9"
+          }
+        }
+      }
+    }
+  },
+  "database": {
+    "rules": "database.rules.json"
   }
 }

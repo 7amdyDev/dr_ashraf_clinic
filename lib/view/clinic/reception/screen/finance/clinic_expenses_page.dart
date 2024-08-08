@@ -35,15 +35,12 @@ class ClinicExpensesPage extends StatelessWidget {
                   SizedBox(
                     height: HSizes.spaceBtwSections,
                   ),
-                  ExpensesCardWidget(),
-                  SizedBox(
-                    height: HSizes.spaceBtwItems,
-                  ),
                   PageLabelWidget(
                     text: 'expenses_table_label',
                     fontSize: 28,
                   ),
                   ExpensesTable(),
+                  ExpensesCardWidget(),
                 ],
               ),
             ),
