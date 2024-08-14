@@ -31,39 +31,45 @@ class ReservationPage extends StatelessWidget {
         ),
         const PatientSearchBar(),
         Expanded(
-          child: Obx(
-            () => controller.patientId.value != 0
-                ? SingleChildScrollView(
-                    child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      PatientReservationCardWidget(
-                        dateController: dateController,
-                        id: controller.patientId.value,
-                        name: controller.getPatient().name,
-                        mobile: controller.getPatient().mobile,
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            'schedule_table_label'.tr,
-                            style: GoogleFonts.cairo(
-                              fontSize: 22,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          PatientReservationTable(
-                            searchResult:
-                                appointController.getPatientAppointment(
-                                    controller.patientId.value),
-                          )
-                        ],
-                      )
-                    ],
-                  ))
-                : const SizedBox(),
-          ),
-        ),
+          child: Obx(() => !controller.isLoading.value
+              ? FutureBuilder(
+                  future: controller.getPatient(),
+                  builder: (context, snapshot) {
+                    if (snapshot.data != null) {
+                      return SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            PatientReservationCardWidget(
+                                dateController: dateController,
+                                id: controller.patientId.value,
+                                name: snapshot.data!.name,
+                                mobile: snapshot.data!.mobile),
+                            Column(
+                              children: [
+                                Text(
+                                  'schedule_table_label'.tr,
+                                  style: GoogleFonts.cairo(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                PatientReservationTable(
+                                  searchResult:
+                                      appointController.getPatientAppointment(
+                                          controller.patientId.value),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      );
+                    } else {
+                      return const SizedBox();
+                    }
+                  })
+              : Container()),
+        )
       ],
     );
   }

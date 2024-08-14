@@ -1,4 +1,4 @@
-import 'package:dr_ashraf_clinic/controller/finance_controller.dart';
+import 'package:dr_ashraf_clinic/controller/expense_controller.dart';
 import 'package:dr_ashraf_clinic/model/expense_model.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/utils/formatters/formatter.dart';
@@ -18,9 +18,9 @@ class ExpensesCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController descriptionController = TextEditingController();
-    String expenseAccount = '201';
+    int expenseAccount = 201;
     TextEditingController valueController = TextEditingController();
-    final financeController = Get.put(FinanceController());
+    var expenseController = Get.put(ExpenseController());
     final valueKey = GlobalKey<FormState>();
     final descriptionKey = GlobalKey<FormState>();
 
@@ -74,7 +74,7 @@ class ExpensesCardWidget extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height: HSizes.spaceBtwSections,
+                height: HSizes.spaceBtwItems,
               ),
               HFilledButton(
                   text: 'save_button',
@@ -85,12 +85,11 @@ class ExpensesCardWidget extends StatelessWidget {
                       var valueText = HFormatter.convertArabicToEnglishNumbers(
                           valueController.value.text);
                       var expense = ExpenseModel(
-                          id: financeController.expenseSearchResult.length + 1,
                           description: descriptionController.value.text,
                           value: int.parse(valueText),
                           expenseAccount: expenseAccount,
                           dateTime: HFormatter.formatDate(DateTime.now()));
-                      financeController.addExpense(expense);
+                      expenseController.createExpense(expense);
                       descriptionController.clear();
                       valueController.clear();
                     }

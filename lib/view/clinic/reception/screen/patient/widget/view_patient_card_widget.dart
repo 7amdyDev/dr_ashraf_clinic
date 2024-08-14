@@ -53,9 +53,9 @@ class _ViewPatientCardWidgetState extends State<ViewPatientCardWidget> {
     medicine.text = widget.patientRecord.medicine?.toString() ?? '';
     allergies.text = widget.patientRecord.allergies?.toString() ?? '';
     pastMedicalCondition.text =
-        widget.patientRecord.pastMedicalCondition.toString();
+        widget.patientRecord.pastMedicalHistory.toString();
     notes.text = widget.patientRecord.notes.toString();
-    gender = widget.patientRecord.genderType;
+    gender = widget.patientRecord.gender;
     double width = HelperFunctions.clinicPagesWidth();
     return Padding(
       padding: const EdgeInsets.all(HSizes.defaultSpace),
@@ -235,8 +235,8 @@ class _ViewPatientCardWidgetState extends State<ViewPatientCardWidget> {
                                 HFormatter.convertArabicToEnglishNumbers(
                                     age.text)),
                             address: address.text,
-                            genderType: gender,
-                            pastMedicalCondition: pastMedicalCondition.text,
+                            gender: gender,
+                            pastMedicalHistory: pastMedicalCondition.text,
                             familyMedicalHistory: familyHistory.text,
                             medicine: medicine.text,
                             allergies: allergies.text,

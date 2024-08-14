@@ -86,7 +86,10 @@ class _DataSource extends DataTableSource {
       DataCell(TableDataCell(text: (index + 1).toString())),
       DataCell(
         TableDataCell(
-            text: (patientController.getPatientById(item.patientId)).name),
+            text:
+                '' //TOOD:(patientController.getPatientById(item.patientId)).name
+
+            ),
         onTap: () {
           Get.dialog(CashRecieptDialogWidget(
             controller: financeController,

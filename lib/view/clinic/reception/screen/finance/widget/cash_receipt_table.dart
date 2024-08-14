@@ -79,7 +79,9 @@ class _DataSource extends DataTableSource {
           DataCell(TableDataCell(text: item.patientId.toString())),
           DataCell(
             TableDataCell(
-                text: patientController.getPatientById(item.patientId).name),
+                text:
+                    '' //TODO: patientController.getPatientById(item.patientId).name
+                ),
             onTap: () {
               financeController.accountRecordId.value = item.id!;
               selected();

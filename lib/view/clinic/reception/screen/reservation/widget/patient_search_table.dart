@@ -74,7 +74,7 @@ class _DataSource extends DataTableSource {
           finaceController.patientId.value = data[index].id!;
           finaceController.getPatientAccountslst();
           appointmentController.getPatientAppointment(data[index].id!);
-          Get.back();
+          Get.backLegacy();
         },
       ),
       DataCell(TableDataCell(text: data[index].mobile)),

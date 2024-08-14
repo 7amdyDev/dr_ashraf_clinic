@@ -34,8 +34,17 @@ class PatientTabbedPage extends StatelessWidget {
               children: [
                 patientController.patientId.value != 0
                     ? SingleChildScrollView(
-                        child: ViewPatientCardWidget(
-                            patientRecord: patientController.getPatient()),
+                        child: FutureBuilder(
+                            future: patientController.getPatient(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                return ViewPatientCardWidget(
+                                    patientRecord: snapshot.data!);
+                              } else {
+                                return Container();
+                              }
+                            }),
                       )
                     : const Center(),
                 patientController.patientId.value != 0

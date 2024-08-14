@@ -29,8 +29,12 @@ class SearchDialogWidget extends StatelessWidget {
       content: SizedBox(
         width: 800,
         // height: 600,
-        child:
-            PatientSearchTable(searchResult: controller.searchResult.toList()),
+        child: Obx(
+          () => controller.isLoading.value
+              ? const Center(child: CircularProgressIndicator())
+              : PatientSearchTable(
+                  searchResult: controller.searchResult.toList()),
+        ),
       ),
       actionsAlignment: MainAxisAlignment.center,
       actions: [
@@ -38,7 +42,7 @@ class SearchDialogWidget extends StatelessWidget {
             fontSize: 18,
             text: 'cancel_button',
             onPressed: () {
-              Get.back();
+              Get.backLegacy();
             })
       ],
     );

@@ -151,4 +151,20 @@ class HValidator {
     }
     return result;
   }
+
+  static String genderIdValidation(int value) {
+    String result;
+    switch (value) {
+      case (1):
+        result = 'male_label';
+        break;
+      case (2):
+        result = 'female_label';
+        break;
+
+      default:
+        result = 'male_label';
+    }
+    return result;
+  }
 }

@@ -3,6 +3,7 @@ import 'package:dr_ashraf_clinic/model/online_reserv_model.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
+import 'package:dr_ashraf_clinic/utils/validator/validation.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/filled_button.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/label_text_widget.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/page_title_widget.dart';
@@ -19,6 +20,9 @@ class BookNowSheet extends StatelessWidget {
     TextEditingController dateController = TextEditingController();
     TextEditingController nameController = TextEditingController();
     TextEditingController mobileController = TextEditingController();
+    var nameKey = GlobalKey<FormState>();
+    var mobileKey = GlobalKey<FormState>();
+    var dateKey = GlobalKey<FormState>();
 
     var controller = Get.put(ClinicController());
     return Container(
@@ -69,24 +73,42 @@ class BookNowSheet extends StatelessWidget {
                   children: [
                     SizedBox(
                         width: size.width / 4,
-                        child: TextField(
-                          textAlign: TextAlign.center,
-                          controller: nameController,
+                        child: Form(
+                          key: nameKey,
+                          child: TextFormField(
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: HValidator.validateText,
+                            textAlign: TextAlign.center,
+                            controller: nameController,
+                          ),
                         )),
                     const SizedBox(
                       height: HSizes.spaceBtwItems,
                     ),
                     SizedBox(
                         width: size.width / 4,
-                        child: TextField(
-                          textAlign: TextAlign.center,
-                          controller: mobileController,
+                        child: Form(
+                          key: mobileKey,
+                          child: TextFormField(
+                            textAlign: TextAlign.center,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: HValidator.validateText,
+                            controller: mobileController,
+                          ),
                         )),
                     const SizedBox(
                       height: HSizes.spaceBtwItems,
                     ),
-                    PickDateWidget(
-                        width: size.width / 4, dateController: dateController),
+                    Form(
+                      key: dateKey,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      child: PickDateWidget(
+                          validator: HValidator.validateText,
+                          width: size.width / 4,
+                          dateController: dateController),
+                    ),
                     const SizedBox(
                       height: HSizes.spaceBtwItems,
                     ),
@@ -101,12 +123,16 @@ class BookNowSheet extends StatelessWidget {
                     HFilledButton(
                       text: 'save_button',
                       onPressed: () {
-                        var reservation = OnlineReservModel(
-                            name: nameController.text,
-                            mobile: mobileController.text,
-                            dateTime: dateController.text);
-                        controller.createOnlineReserv(reservation);
-                        Get.back();
+                        if (nameKey.currentState!.validate() &&
+                            mobileKey.currentState!.validate() &&
+                            dateKey.currentState!.validate()) {
+                          var reservation = OnlineReservModel(
+                              name: nameController.text,
+                              mobile: mobileController.text,
+                              dateTime: dateController.text);
+                          controller.createOnlineReserv(reservation);
+                          Get.back();
+                        }
                       },
                     )
                   ],

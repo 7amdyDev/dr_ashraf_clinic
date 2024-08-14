@@ -1,3 +1,4 @@
+import 'package:dr_ashraf_clinic/controller/expense_controller.dart';
 import 'package:dr_ashraf_clinic/controller/finance_controller.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/finance/widget/finance_column_widget.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ class DailyFinanceCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var financeController = Get.put(FinanceController());
-
+    var expenseController = Get.put(ExpenseController());
     return SizedBox(
       height: 140,
       child: Card(
@@ -32,7 +33,7 @@ class DailyFinanceCardWidget extends StatelessWidget {
             Obx(
               () => FinanceValueColumn(
                 label: 'expenses_label',
-                value: financeController.totalDailyExpenses.value.toString(),
+                value: expenseController.totalDailyExpenses.value.toString(),
               ),
             ),
             const VerticalDivider(

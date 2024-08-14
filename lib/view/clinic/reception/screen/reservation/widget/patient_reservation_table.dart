@@ -59,12 +59,13 @@ class _DataSource extends DataTableSource {
     final item = data[index];
     return DataRow(cells: [
       DataCell(TableDataCell(text: '${index + 1}')),
-      DataCell(TableDataCell(text: controller.getPatient().name)),
+      DataCell(TableDataCell(text: '' //TODO:controller.getPatient().name)
+          )),
       DataCell(TableDataCell(text: item.dateTime)),
       DataCell(TableDataCell(
           text: HValidator.serviceIdValidation(item.serviceId).tr)),
       DataCell(
-          TableDataCell(text: HValidator.statusIdValidation(item.status).tr)),
+          TableDataCell(text: HValidator.statusIdValidation(item.statusId).tr)),
     ]);
   }
 

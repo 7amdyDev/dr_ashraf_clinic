@@ -16,6 +16,7 @@ class AppTranslation extends Translations {
   Member of Harvard University - USA
           ''',
           'book_button': 'Book Now',
+          'appointment_success': 'Appointment added successfully',
           'check_section_label': 'Check',
           'new_check_label': 'New Check',
           'save_button': 'Save',
@@ -115,6 +116,7 @@ class AppTranslation extends Translations {
           ''',
           'book_button': 'أحجز الآن',
           'check_section_label': 'كشف',
+          'appointment_success': 'تم حجز الموعد',
           'new_check_label': 'كشف جديد',
           'name_label': 'الأسم:',
           'book_sheet_label': 'حجز موعد',

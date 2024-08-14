@@ -1,6 +1,7 @@
 import 'package:dr_ashraf_clinic/model/online_reserv_model.dart';
 import 'package:dr_ashraf_clinic/utils/constants/api_constants.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ClinicController extends GetxController {
@@ -46,7 +47,23 @@ class ClinicController extends GetxController {
       'date': model.dateTime,
       'mobile': model.mobile,
     }).then((_) {
-      // debugPrint('User added successfully');
+      Get.dialog(
+        AlertDialog(
+          title: const Center(child: Text('Success')),
+          content: Text(
+            'appointment_success'.tr,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 18),
+          ),
+          alignment: Alignment.center,
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: const Center(child: Text('OK')),
+            ),
+          ],
+        ),
+      );
     }).catchError((error) {
       //debugPrint('Error adding user: $error');
     });

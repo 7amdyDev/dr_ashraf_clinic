@@ -220,7 +220,6 @@ class _NewPatientCardWidgetState extends State<NewPatientCardWidget> {
                               fontSize: 22,
                               onPressed: () {
                                 var patient = PatientModel(
-                                  id: controller.patientList.length + 1,
                                   name: name.text,
                                   mobile:
                                       HFormatter.convertArabicToEnglishNumbers(
@@ -229,9 +228,8 @@ class _NewPatientCardWidgetState extends State<NewPatientCardWidget> {
                                       HFormatter.convertArabicToEnglishNumbers(
                                           age.text)),
                                   address: address.text,
-                                  genderType: gender,
-                                  pastMedicalCondition:
-                                      pastMedicalCondition.text,
+                                  gender: gender,
+                                  pastMedicalHistory: pastMedicalCondition.text,
                                   familyMedicalHistory: familyHistory.text,
                                   medicine: medicine.text,
                                   allergies: allergies.text,
@@ -242,12 +240,32 @@ class _NewPatientCardWidgetState extends State<NewPatientCardWidget> {
                                     telephoneKey.currentState!.validate() &&
                                     ageKey.currentState!.validate()) {
                                   if (id.text == '') {
-                                    controller.addNewPatient(patient);
-                                    setState(() {
-                                      id.text = (controller.patientList.length)
-                                          .toString();
+                                    controller.addNewPatient(patient).then((_) {
+                                      setState(() {
+                                        id.text =
+                                            (controller.patientId).toString();
+                                      });
                                     });
                                   } else {
+                                    var patient = PatientModel(
+                                      id: controller.patientId.value,
+                                      name: name.text,
+                                      mobile: HFormatter
+                                          .convertArabicToEnglishNumbers(
+                                              mobile.text),
+                                      age: int.parse(HFormatter
+                                          .convertArabicToEnglishNumbers(
+                                              age.text)),
+                                      address: address.text,
+                                      gender: gender,
+                                      pastMedicalHistory:
+                                          pastMedicalCondition.text,
+                                      familyMedicalHistory: familyHistory.text,
+                                      medicine: medicine.text,
+                                      allergies: allergies.text,
+                                      surgicalHistory: surgicalHistory.text,
+                                      notes: notes.text,
+                                    );
                                     controller.updatePatient(patient);
                                   }
                                 }

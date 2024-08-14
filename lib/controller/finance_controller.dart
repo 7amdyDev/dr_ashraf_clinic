@@ -1,5 +1,4 @@
 import 'package:dr_ashraf_clinic/model/appointment_model.dart';
-import 'package:dr_ashraf_clinic/model/expense_model.dart';
 import 'package:dr_ashraf_clinic/model/finance_models.dart';
 import 'package:dr_ashraf_clinic/utils/formatters/formatter.dart';
 import 'package:get/get.dart';
@@ -22,32 +21,10 @@ class FinanceController extends GetxController {
   RxInt patientTotalUnPaid = 0.obs;
   RxInt accountRecordId = 0.obs;
   RxInt dailyIncome = 0.obs;
-  RxInt totalDailyExpenses = 0.obs;
+
   RxInt cash = 0.obs;
-  RxList<ExpenseModel> expenseSearchResult = <ExpenseModel>[].obs;
+
   RxInt patientId = 0.obs;
-// -------- Expenses Functions --------------- //
-  void addExpense(ExpenseModel expense) {
-    expenseSearchResult.add(expense); // Update the list
-    // Call your function here
-    onExpenseListUpdated(); // Example function call
-  }
-
-  void deleteExpense(int id) {
-    expenseSearchResult
-        .removeWhere((element) => element.id == id); // Update the list
-    // Call your function here
-    onExpenseListUpdated(); // Example function call
-  }
-
-  void onExpenseListUpdated() {
-    int totalExpense = 0;
-    for (var item in expenseSearchResult) {
-      totalExpense += item.value;
-    }
-    totalDailyExpenses.value = totalExpense;
-    cash.value = dailyIncome.value - totalDailyExpenses.value;
-  }
 
 // ------------ Account Assets ----------- //
 
@@ -179,7 +156,7 @@ class FinanceController extends GetxController {
       }
     }
     dailyIncome.value = balance;
-    cash.value = dailyIncome.value - totalDailyExpenses.value;
+    // TODO  cash.value = dailyIncome.value - totalDailyExpenses.value;
   }
 
   void addAssetCashOnHand({

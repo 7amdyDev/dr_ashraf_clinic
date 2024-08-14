@@ -101,15 +101,14 @@ class PatientReservationCardWidget extends StatelessWidget {
                   fontSize: 22,
                   onPressed: () {
                     appointment = AppointmentModel(
-                        id: controller.appointmentlst.length + 1,
-                        status: 0,
+                        statusId: 0,
                         mobile: mobile!,
                         patientId: id!,
                         serviceId: controller.serviceId.value,
                         dateTime: dateController.text);
                     if (dateKey.currentState!.validate()) {
                       controller.addAppointment(appointment);
-                      controller.getPatientAppointment(id!);
+                      //TODO: controller.getPatientAppointment(id!);
 
                       if (controller.paid.value) {
                         financeController.addAssetCashOnHand(

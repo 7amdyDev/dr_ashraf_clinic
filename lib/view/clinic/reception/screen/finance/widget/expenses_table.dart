@@ -1,4 +1,4 @@
-import 'package:dr_ashraf_clinic/controller/finance_controller.dart';
+import 'package:dr_ashraf_clinic/controller/expense_controller.dart';
 import 'package:dr_ashraf_clinic/model/expense_model.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
@@ -23,9 +23,8 @@ class _ExpensesTableState extends State<ExpensesTable> {
 
   @override
   Widget build(BuildContext context) {
-    final financeController = Get.put(FinanceController());
-    final List<ExpenseModel> searchResult =
-        financeController.expenseSearchResult;
+    final expenseController = Get.put(ExpenseController());
+    final List<ExpenseModel> searchResult = expenseController.expenseslst;
 
     return SingleChildScrollView(
       child: Column(
@@ -73,7 +72,7 @@ class _ExpensesTableState extends State<ExpensesTable> {
                       text: 'delete_button',
                       fontSize: 22,
                       onPressed: () {
-                        financeController.deleteExpense(expenseId!);
+                        expenseController.removeExpense(expenseId!);
                         setState(() {
                           expenseId = null;
                         });
@@ -120,9 +119,8 @@ class _DataSource extends DataTableSource {
           ),
           DataCell(TableDataCell(text: item.dateTime)),
           DataCell(TableDataCell(
-              text: HValidator.expenseCodeValidation(
-                      int.parse(item.expenseAccount))
-                  .tr)),
+              text:
+                  HValidator.expenseCodeValidation((item.expenseAccount)).tr)),
           DataCell(TableDataCell(text: item.value.toString())),
         ]);
   }

@@ -71,19 +71,22 @@ class _DataSource extends DataTableSource {
 
     return DataRow(cells: [
       DataCell(TableDataCell(text: (index + 1).toString())),
-      DataCell(TableDataCell(
-          text: patientController.getPatientById(item.patientId).name)),
+      DataCell(TableDataCell(text: ''
+          //TODO: text: patientController.getPatientById(item.patientId).name
+          )),
       DataCell(TableDataCell(text: item.dateTime)),
       DataCell(TableDataCell(
           text: HValidator.serviceIdValidation(item.serviceId).tr)),
       DataCell(TableDataCell(
-          text: patientController.getPatientById(item.patientId).mobile)),
+          text:
+              '' //TODO: patientController.getPatientById(item.patientId).mobile
+          )),
       // DataCell(TableDataCell(
       //     text: financeController.getAppointmentAccount(item.).toString())),
       DataCell(Center(
           child: FittedBox(
               fit: BoxFit.scaleDown,
-              child: CustomDropDownWidget(statusId: item.status)))),
+              child: CustomDropDownWidget(statusId: item.statusId)))),
     ]);
   }
 

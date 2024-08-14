@@ -1,3 +1,4 @@
+import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -39,11 +40,11 @@ class HelperFunctions {
     }
   }
 
-  static void showSnackBar(String message) {
-    ScaffoldMessenger.of(Get.context!).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
-  }
+  // static void showSnackBar(String message) {
+  //   ScaffoldMessenger.of(Get.context!).showSnackBar(
+  //     SnackBar(content: Text(message)),
+  //   );
+  // }
 
   static bool isLocalEnglish() {
     return Get.locale == const Locale('en', 'US');
@@ -122,5 +123,27 @@ class HelperFunctions {
         ? HelperFunctions.screenWidth() - 100
         : 1024;
     return width;
+  }
+
+  static showSnackBar(String message) {
+    Get.snackbar(
+      message,
+      '',
+      shouldIconPulse: true,
+      icon: const Icon(
+        Icons.check,
+        color: Colors.white,
+        size: 32,
+      ),
+      snackPosition: SnackPosition.bottom,
+      backgroundColor: HColors.primary,
+      borderRadius: 20,
+      maxWidth: 500,
+      margin: const EdgeInsets.all(15),
+      colorText: Colors.white,
+      duration: const Duration(seconds: 3),
+      isDismissible: true,
+      forwardAnimationCurve: Curves.easeOutBack,
+    );
   }
 }
