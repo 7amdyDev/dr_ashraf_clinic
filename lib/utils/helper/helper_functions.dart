@@ -135,7 +135,7 @@ class HelperFunctions {
         color: Colors.white,
         size: 32,
       ),
-      snackPosition: SnackPosition.bottom,
+      snackPosition: SnackPosition.BOTTOM,
       backgroundColor: HColors.primary,
       borderRadius: 20,
       maxWidth: 500,

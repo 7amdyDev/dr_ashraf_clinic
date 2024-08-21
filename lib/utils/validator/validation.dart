@@ -115,10 +115,10 @@ class HValidator {
   static String serviceIdValidation(int value) {
     String result;
     switch (value) {
-      case (0):
+      case (1):
         result = 'check_label';
         break;
-      case (1):
+      case (2):
         result = 'consult_label';
         break;
 

@@ -27,7 +27,7 @@ class AuthController extends GetxController {
       Get.snackbar(
         'Alert',
         e.message.toString(),
-        snackPosition: SnackPosition.bottom,
+        snackPosition: SnackPosition.BOTTOM,
         duration: const Duration(seconds: 4),
       );
     }

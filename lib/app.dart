@@ -1,3 +1,4 @@
+import 'package:dr_ashraf_clinic/controller/my_binding.dart';
 import 'package:dr_ashraf_clinic/utils/constants/pages_routes.dart';
 import 'package:dr_ashraf_clinic/utils/constants/text_strings.dart';
 import 'package:dr_ashraf_clinic/utils/theme/theme.dart';
@@ -21,8 +22,8 @@ class App extends StatelessWidget {
       title: HTexts.appName,
       initialRoute: '/',
       getPages: routes,
-      // initialBinding: RootBinding(),
       home: const HomePage(),
+      initialBinding: MyBinding(),
     );
   }
 }

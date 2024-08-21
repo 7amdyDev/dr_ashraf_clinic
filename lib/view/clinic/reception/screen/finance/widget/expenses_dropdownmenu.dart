@@ -1,3 +1,5 @@
+import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
+import 'package:dr_ashraf_clinic/utils/validator/validation.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/table_data_cell.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,40 +18,18 @@ class _MyDropdownState extends State<ExpensesDropdownMenu> {
 
   @override
   Widget build(BuildContext context) {
+    var clinicController = Get.put(ClinicController());
     return DropdownButtonFormField<int>(
       value: _selectedValue, // Currently selected value
-      items: [
-        DropdownMenuItem<int>(
-          value: 201,
+      items: clinicController.expensesId.map((expense) {
+        return DropdownMenuItem<int>(
+          value: expense.id,
           child: TableDataCell(
-            text: 'medical_supplies_label'.tr,
+            text: HValidator.expenseCodeValidation(expense.id).tr,
           ),
-        ),
-        DropdownMenuItem<int>(
-          value: 202,
-          child: TableDataCell(
-            text: 'rent_label'.tr,
-          ),
-        ),
-        DropdownMenuItem<int>(
-          value: 203,
-          child: TableDataCell(
-            text: 'utilities_label'.tr,
-          ),
-        ),
-        DropdownMenuItem<int>(
-          value: 204,
-          child: TableDataCell(
-            text: 'salaries_label'.tr,
-          ),
-        ),
-        DropdownMenuItem<int>(
-          value: 205,
-          child: TableDataCell(
-            text: 'other_label'.tr,
-          ),
-        ),
-      ],
+        );
+      }).toList(),
+
       onChanged: (value) {
         setState(() {
           _selectedValue = value!; // Update selected value

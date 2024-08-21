@@ -1,3 +1,5 @@
+import 'package:dr_ashraf_clinic/db/clinic_api.dart';
+import 'package:dr_ashraf_clinic/model/clinic_models.dart';
 import 'package:dr_ashraf_clinic/model/online_reserv_model.dart';
 import 'package:dr_ashraf_clinic/utils/constants/api_constants.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -5,18 +7,25 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ClinicController extends GetxController {
+  var clinicApi = Get.find<ClinicApi>();
   RxBool isCollapsed = true.obs;
   RxList<OnlineReservModel> onlineReservData = <OnlineReservModel>[].obs;
   RxInt receptionPageIndex = 0.obs;
   RxInt doctorPageIndex = 0.obs;
+  RxList<ServicesId> servicesId = <ServicesId>[].obs;
+  RxList<AccountsId> expensesId = <AccountsId>[].obs;
   final database = FirebaseDatabase.instance;
 
   @override
   void onInit() {
     super.onInit();
+    getClinicData();
+    getOnlineReservationData();
+  }
+
+  void getOnlineReservationData() {
     database.databaseURL = dBUrl;
     final DatabaseReference reference = database.ref().child('Appointment');
-
     reference.onValue.listen((DatabaseEvent event) {
       final data = event.snapshot.value as Map?;
       onlineReservData.clear();
@@ -30,6 +39,24 @@ class ClinicController extends GetxController {
         });
       }
     });
+  }
+
+  Future<void> getClinicData() async {
+    try {
+      var response = await clinicApi.getServices();
+
+      if (response.statusCode == 200 && response.body != null) {
+        servicesId.addAll(response.body!);
+      }
+    } finally {}
+
+    try {
+      var response = await clinicApi.getExpensesId();
+
+      if (response.statusCode == 200 && response.body != null) {
+        expensesId.addAll(response.body!);
+      }
+    } finally {}
   }
 
   void updateCollapsed(bool collapsed) {

@@ -2,6 +2,7 @@ import 'package:dr_ashraf_clinic/controller/expense_controller.dart';
 import 'package:dr_ashraf_clinic/model/expense_model.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
+import 'package:dr_ashraf_clinic/utils/formatters/formatter.dart';
 import 'package:dr_ashraf_clinic/utils/validator/validation.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/table_column_label.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/table_data_cell.dart';
@@ -117,10 +118,9 @@ class _DataSource extends DataTableSource {
               onSelected(item.id!);
             },
           ),
-          DataCell(TableDataCell(text: item.dateTime)),
+          DataCell(TableDataCell(text: HFormatter.formatStringDate(item.date))),
           DataCell(TableDataCell(
-              text:
-                  HValidator.expenseCodeValidation((item.expenseAccount)).tr)),
+              text: HValidator.expenseCodeValidation((item.accountId)).tr)),
           DataCell(TableDataCell(text: item.value.toString())),
         ]);
   }

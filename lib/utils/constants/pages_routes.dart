@@ -13,12 +13,12 @@ import 'package:get/get.dart';
 final routes = [
   GetPage(name: '/', page: () => const HomePage()),
   GetPage(name: '/clinic', page: () => const ClinicPage()),
-  GetPage(name: '/reception', page: () => const ReceptionPage()),
+  GetPage(name: '/reception', page: () => ReceptionPage()),
   GetPage(name: '/newPatient', page: () => const NewPatientPage()),
   GetPage(name: '/patientSearch', page: () => const PatientSearchPage()),
-  GetPage(name: '/dialyIncome', page: () => const DailyIcomePage()),
+  GetPage(name: '/dialyIncome', page: () => DailyIncomePage()),
   GetPage(name: '/patientFinance', page: () => const PatientFinance()),
   GetPage(name: '/clinicExpenses', page: () => const ClinicExpensesPage()),
-  GetPage(name: '/reserve', page: () => const ReservationPage()),
+  GetPage(name: '/reserve', page: () => ReservationPage()),
   GetPage(name: '/doctor', page: () => const DoctorPage()),
 ];

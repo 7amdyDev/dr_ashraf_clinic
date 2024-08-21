@@ -18,54 +18,56 @@ class PatientTabbedPage extends StatelessWidget {
     return Obx(() => DefaultTabController(
           length: 3,
           child: Scaffold(
-            backgroundColor: HColors.secondary,
-            appBar: AppBar(
-              toolbarHeight: 0,
-              automaticallyImplyLeading: false,
-              bottom: TabBar(
-                tabs: [
-                  Tab(text: 'patient_label2'.tr),
-                  Tab(text: 'schedule_table_label'.tr),
-                  Tab(text: 'patient_finance_label2'.tr),
-                ],
+              backgroundColor: HColors.secondary,
+              appBar: AppBar(
+                toolbarHeight: 0,
+                automaticallyImplyLeading: false,
+                bottom: TabBar(
+                  tabs: [
+                    Tab(text: 'patient_label2'.tr),
+                    Tab(text: 'schedule_table_label'.tr),
+                    Tab(text: 'patient_finance_label2'.tr),
+                  ],
+                ),
               ),
-            ),
-            body: TabBarView(
-              children: [
-                patientController.patientId.value != 0
-                    ? SingleChildScrollView(
-                        child: FutureBuilder(
-                            future: patientController.getPatient(),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                return ViewPatientCardWidget(
-                                    patientRecord: snapshot.data!);
-                              } else {
-                                return Container();
-                              }
-                            }),
-                      )
-                    : const Center(),
-                patientController.patientId.value != 0
-                    ? SizedBox(
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: HSizes.spaceBtwSections),
-                          child: PatientReservationTable(
-                              searchResult:
-                                  appointmentController.patientAppointlst),
-                        ),
-                      )
-                    : const Center(),
-                patientController.patientId.value != 0
-                    ? const PatientFinance(
-                        show: false,
-                      )
-                    : const Center(),
-              ],
-            ),
-          ),
+              body: FutureBuilder(
+                  future: patientController.getPatient(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.data != null) {
+                      appointmentController
+                          .getPatientAppointment(snapshot.data!.id!);
+
+                      return TabBarView(
+                        children: [
+                          patientController.patientId.value != 0
+                              ? SingleChildScrollView(
+                                  child: ViewPatientCardWidget(
+                                      patientRecord: snapshot.data!),
+                                )
+                              : const Center(),
+                          patientController.patientId.value != 0
+                              ? SizedBox(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: HSizes.spaceBtwSections),
+                                    child: PatientReservationTable(
+                                        searchResult: appointmentController
+                                            .patientAppointlst),
+                                  ),
+                                )
+                              : const Center(),
+                          patientController.patientId.value != 0
+                              ? const PatientFinance(
+                                  show: false,
+                                )
+                              : const Center(),
+                        ],
+                      );
+                    } else {
+                      return Container();
+                    }
+                  })),
         ));
   }
 }

@@ -1,8 +1,8 @@
 import 'package:dr_ashraf_clinic/controller/appointment_controller.dart';
 import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
+import 'package:dr_ashraf_clinic/controller/finance_controller.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
-import 'package:dr_ashraf_clinic/utils/formatters/formatter.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/online_reservation_table.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/schedule_table_widget.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/page_label_widget.dart';
@@ -11,12 +11,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ReceptionSchedulePage extends StatelessWidget {
-  const ReceptionSchedulePage({super.key});
-
+  ReceptionSchedulePage({super.key});
+  final AppointmentController appointmentController =
+      Get.find<AppointmentController>();
+  final ClinicController clinicController = Get.find<ClinicController>();
   @override
   Widget build(BuildContext context) {
-    var controller = Get.put(ClinicController());
-    var appointmentController = Get.put(AppointmentController());
     return Column(
       children: [
         const SizedBox(
@@ -57,7 +57,7 @@ class ReceptionSchedulePage extends StatelessWidget {
                   text: 'online_table_label',
                 ),
                 HOnlineReservationTable(
-                    onlineReserv: controller.onlineReservData)
+                    onlineReserv: clinicController.onlineReservData)
               ],
             ),
           ),
@@ -91,7 +91,7 @@ void datePickerDialog(context, AppointmentController controller) {
     },
   );
   picked.then((onValue) {
-    controller.getAppointsByDate(date: HFormatter.formatDate(onValue));
+    controller.getAppointsByDate(date: onValue);
     // dateController.text = HFormatter.formatDate(onValue);
   });
 }

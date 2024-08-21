@@ -5,14 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DailyFinanceCardWidget extends StatelessWidget {
-  const DailyFinanceCardWidget({
+  DailyFinanceCardWidget({
     super.key,
   });
-
+  final financeController = Get.put(FinanceController());
+  final expenseController = Get.put(ExpenseController());
   @override
   Widget build(BuildContext context) {
-    var financeController = Get.put(FinanceController());
-    var expenseController = Get.put(ExpenseController());
     return SizedBox(
       height: 140,
       child: Card(

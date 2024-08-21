@@ -1,8 +1,5 @@
-import 'package:dr_ashraf_clinic/controller/appointment_controller.dart';
 import 'package:dr_ashraf_clinic/controller/auth_controller.dart';
 import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
-import 'package:dr_ashraf_clinic/controller/expense_controller.dart';
-import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
 import 'package:dr_ashraf_clinic/model/pages_list.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
@@ -14,16 +11,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ReceptionPage extends StatelessWidget {
-  const ReceptionPage({super.key});
+  ReceptionPage({super.key});
+  final ClinicController controller = Get.find<ClinicController>();
+  final AuthController authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ClinicController());
-    Get.put(ExpenseApi());
-    Get.put(PatientApi());
-    Get.put(AppointmentApi());
     double maxPageWidth = HSizes.maxPageWidth;
-    var authController = Get.put(AuthController());
     return Obx(() => authController.user.value != null
         ? Scaffold(
             backgroundColor: HColors.secondary,

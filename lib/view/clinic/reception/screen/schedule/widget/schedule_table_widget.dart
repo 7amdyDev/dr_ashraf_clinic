@@ -1,8 +1,11 @@
+import 'package:dr_ashraf_clinic/controller/appointment_controller.dart';
 import 'package:dr_ashraf_clinic/controller/finance_controller.dart';
 import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
 import 'package:dr_ashraf_clinic/model/appointment_model.dart';
+import 'package:dr_ashraf_clinic/model/finance_models.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
+import 'package:dr_ashraf_clinic/utils/formatters/formatter.dart';
 import 'package:dr_ashraf_clinic/utils/validator/validation.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/custom_dropdown_widget.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/table_column_label.dart';
@@ -59,6 +62,7 @@ class _DataSource extends DataTableSource {
   final List<AppointmentModel> data;
   final patientController = Get.put(PatientController());
   final financeController = Get.put(FinanceController());
+  final appointmentController = Get.put(AppointmentController());
 
   _DataSource({required this.data});
   @override
@@ -71,22 +75,31 @@ class _DataSource extends DataTableSource {
 
     return DataRow(cells: [
       DataCell(TableDataCell(text: (index + 1).toString())),
-      DataCell(TableDataCell(text: ''
-          //TODO: text: patientController.getPatientById(item.patientId).name
-          )),
-      DataCell(TableDataCell(text: item.dateTime)),
+      DataCell(FutureBuilder(
+          future: patientController.getPatientById(item.patientId),
+          builder: (context, snapshot) {
+            if (snapshot.data != null) {
+              return TableDataCell(text: snapshot.data!.name);
+            } else {
+              return const CircularProgressIndicator();
+            }
+          })),
+      DataCell(TableDataCell(text: item.date)),
       DataCell(TableDataCell(
           text: HValidator.serviceIdValidation(item.serviceId).tr)),
-      DataCell(TableDataCell(
-          text:
-              '' //TODO: patientController.getPatientById(item.patientId).mobile
-          )),
+      DataCell(TableDataCell(text: '')), //item.mobile)),
       // DataCell(TableDataCell(
       //     text: financeController.getAppointmentAccount(item.).toString())),
       DataCell(Center(
           child: FittedBox(
               fit: BoxFit.scaleDown,
-              child: CustomDropDownWidget(statusId: item.statusId)))),
+              child: CustomDropDownWidget(
+                statusId: item.statusId,
+                onSelected: (value) {
+                  var updatedItem = item.copyWith(statusId: value);
+                  appointmentController.updateAppointment(updatedItem);
+                },
+              )))),
     ]);
   }
 

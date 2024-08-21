@@ -85,10 +85,12 @@ class ExpensesCardWidget extends StatelessWidget {
                       var valueText = HFormatter.convertArabicToEnglishNumbers(
                           valueController.value.text);
                       var expense = ExpenseModel(
-                          description: descriptionController.value.text,
-                          value: int.parse(valueText),
-                          expenseAccount: expenseAccount,
-                          dateTime: HFormatter.formatDate(DateTime.now()));
+                        description: descriptionController.value.text,
+                        value: int.parse(valueText),
+                        accountId: expenseAccount,
+                        date: DateUtils.dateOnly(DateTime.now()).toString(),
+                      );
+
                       expenseController.createExpense(expense);
                       descriptionController.clear();
                       valueController.clear();

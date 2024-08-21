@@ -10,20 +10,20 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PatientReceiptCashCard extends StatelessWidget {
-  const PatientReceiptCashCard({
+  PatientReceiptCashCard({
     super.key,
     required this.appointData,
   });
   final AppointmentModel appointData;
+  final financeController = Get.find<FinanceController>();
 
   @override
   Widget build(BuildContext context) {
     TextEditingController valueController = TextEditingController();
     TextEditingController unPaidController = TextEditingController();
 
-    final financeController = Get.put(FinanceController());
     final valueKey = GlobalKey<FormState>();
-    financeController.getAppointmentBalance(appointData.id!);
+    //TODO financeController.getAppointmentBalance(appointData.id!);
     int unPaidBalance = financeController.appointUnPaid.value;
     unPaidController.text = unPaidBalance.toString();
     return Obx(() => Card(
@@ -49,7 +49,7 @@ class PatientReceiptCashCard extends StatelessWidget {
                         //  width: 120,
                         label: 'date_label'.tr,
                         enable: false,
-                        value: appointData.dateTime,
+                        value: appointData.date,
                       ),
                       DataTextWidget(
                         //width: 120,

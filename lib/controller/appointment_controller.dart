@@ -1,34 +1,22 @@
+import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
+import 'package:dr_ashraf_clinic/controller/finance_controller.dart';
+import 'package:dr_ashraf_clinic/db/appointment_api.dart';
 import 'package:dr_ashraf_clinic/model/appointment_model.dart';
 import 'package:dr_ashraf_clinic/utils/formatters/formatter.dart';
+import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AppointmentController extends GetxController {
-  var appointmentApi = Get.find<AppointmentApi>();
-
+  final _appointmentApi = Get.find<AppointmentApi>();
+  final _financeController = Get.find<FinanceController>();
+  final _clinicController = Get.find<ClinicController>();
   RxList<AppointmentModel> appointmentlst = <AppointmentModel>[].obs;
   RxList<AppointmentModel> patientAppointlst = <AppointmentModel>[].obs;
   RxList<AppointmentModel> appointListByDate = <AppointmentModel>[].obs;
-  RxInt serviceId = 0.obs;
+  RxInt serviceId = 1.obs;
   RxBool paid = false.obs;
   RxBool appointmentsLoading = false.obs;
-
-  Future<void> addAppointment(AppointmentModel appointment) async {
-    // appointmentlst.add(appointment);
-    // appointListByDate.clear();
-    // getAppointsByDate();
-    appointmentsLoading.value = true;
-    try {
-      var response = await appointmentApi.create(appointment);
-
-      if (response.statusCode == 201 && response.body != null) {
-        // expenseId.value = (response.body!.id!);
-        // getExpensesList();
-        print(response.body?.id);
-      }
-    } finally {
-      appointmentsLoading.value = false;
-    }
-  }
 
   @override
   void onInit() {
@@ -37,29 +25,78 @@ class AppointmentController extends GetxController {
     super.onInit();
   }
 
-  void getAppointsByDate({String? date}) {
+  Future<void> addAppointment(AppointmentModel appointment) async {
+    appointmentsLoading.value = true;
+    try {
+      var response = await _appointmentApi.create(appointment);
+
+      if (response.statusCode == 201 && response.body != null) {
+        HelperFunctions.showSnackBar('The Appointment Added Successfully');
+        getPatientAppointment(appointment.patientId);
+        addAppointmentFinance(response.body!);
+      }
+    } finally {
+      appointmentsLoading.value = false;
+    }
+  }
+
+  Future<void> updateAppointment(AppointmentModel appointment) async {
+    try {
+      var response = await _appointmentApi.update(appointment);
+
+      if (response.statusCode == 201 && response.body != null) {
+        // patientId.value = (response.body!.id!);
+        getAppointsByDate();
+        HelperFunctions.showSnackBar('Appointment Updated Successfully');
+      }
+    } finally {}
+  }
+
+  Future<void> getAppointsByDate({DateTime? date}) async {
     appointListByDate.clear();
     if (date == null) {
-      for (var record in appointmentlst) {
-        if (record.dateTime == HFormatter.formatDate(DateTime.now())) {
-          appointListByDate.add(record);
+      appointmentsLoading.value = true;
+      try {
+        var response =
+            await _appointmentApi.getByDate(DateUtils.dateOnly(DateTime.now()));
+
+        if (response.statusCode == 200 && response.body != null) {
+          appointListByDate.addAll(response.body!);
         }
+      } finally {
+        appointmentsLoading.value = false;
       }
     } else {
-      for (var record in appointmentlst) {
-        if (record.dateTime == date) {
-          appointListByDate.add(record);
+      appointmentsLoading.value = true;
+      try {
+        var response = await _appointmentApi.getByDate(date);
+
+        if (response.statusCode == 200 && response.body != null) {
+          appointListByDate.addAll(response.body!);
         }
+      } finally {
+        appointmentsLoading.value = false;
       }
     }
   }
 
-  String getAppointmentDateById(int appId) {
-    return appointmentlst.firstWhere((element) => element.id == appId).dateTime;
-  }
+  // String getAppointmentDateById(int appId) {
+  //   return appointmentlst.firstWhere((element) => element.id == appId).date;
+  // }
 
-  AppointmentModel getAppointmentById(int appId) {
-    return appointmentlst.firstWhere((element) => element.id == appId);
+  Future<AppointmentModel> getAppointmentById(int appId) async {
+    appointListByDate.clear();
+    appointmentsLoading.value = true;
+    try {
+      var response = await _appointmentApi.getById(appId);
+
+      if (response.statusCode == 200 && response.body != null) {
+        appointListByDate.add(response.body!);
+      }
+      return appointListByDate.first;
+    } finally {
+      appointmentsLoading.value = false;
+    }
   }
 
   int getAppointmentService(int appId) {
@@ -68,48 +105,91 @@ class AppointmentController extends GetxController {
         .serviceId;
   }
 
-  List<AppointmentModel> getPatientAppointment(int id) {
+  Future<void> getPatientAppointment(int id) async {
     patientAppointlst.clear();
-    for (var item in appointmentlst) {
-      if (item.patientId == id) {
-        patientAppointlst.add(item);
+    appointmentsLoading.value = true;
+    try {
+      var response = await _appointmentApi.getByPatientId(id);
+
+      if (response.statusCode == 200 && response.body != null) {
+        patientAppointlst.addAll(response.body!);
       }
+    } finally {
+      appointmentsLoading.value = false;
     }
-
-    // sorting list in descending order
-    if (patientAppointlst.isNotEmpty) {
-      patientAppointlst.sort((a, b) => b.dateTime.compareTo(a.dateTime));
-    }
-
-    return patientAppointlst;
-  }
-}
-
-class AppointmentApi extends GetConnect {
-  @override
-  void onInit() {
-    super.onInit();
-    httpClient.baseUrl = 'http://localhost:8080';
-    httpClient.defaultContentType = 'application/json; charset=UTF-8';
   }
 
-  Future<Response<List<AppointmentModel>>> getAll() =>
-      get('/appointments', decoder: AppointmentModel.listFromJson);
+  void addAppointmentFinance(AppointmentModel appointment) {
+    int serviceFee = _clinicController.servicesId
+        .firstWhere((service) => service.id == appointment.serviceId)
+        .fee;
+    if (paid.value) {
+      _financeController.addAssetCashOnHand(
+          appointmentId: appointment.id!,
+          patientId: appointment.patientId,
+          date: HFormatter.formatDate(DateTime.now(), reversed: true),
+          serviceId: appointment.serviceId,
+          fee: serviceFee,
+          debit: serviceFee);
 
-  Future<Response<AppointmentModel>> getById(int id) =>
-      get('/appointments/$id', decoder: AppointmentModel.fromJson);
+      _financeController.addAccountRecievable(
+        appointmentId: appointment.id!,
+        patientId: appointment.patientId,
+        serviceId: appointment.serviceId,
+        date: HFormatter.formatDate(DateTime.now(), reversed: true),
+        fee: 0,
+        debit: 0,
+      );
+    } else {
+      _financeController.addAssetCashOnHand(
+          appointmentId: appointment.id!,
+          patientId: appointment.patientId,
+          date: HFormatter.formatDate(DateTime.now(), reversed: true),
+          serviceId: appointment.serviceId,
+          fee: 0,
+          debit: 0);
 
-  Future<Response<List<AppointmentModel>>> getByDate(String dateTime) =>
-      get('/appointments/date/$dateTime',
-          decoder: AppointmentModel.listFromJson);
-
-  Future<Response<AppointmentModel>> create(AppointmentModel appointment) =>
-      post('/appointments', appointment.toJson(),
-          decoder: AppointmentModel.fromJson);
-
-  Future<Response<AppointmentModel>> update(AppointmentModel appointment) =>
-      put('/appointments/${appointment.id}', appointment.toJson(),
-          decoder: AppointmentModel.fromJson);
-
-  Future<Response> remove(int id) => delete('/appointments/$id');
+      _financeController.addAccountRecievable(
+        appointmentId: appointment.id!,
+        patientId: appointment.patientId,
+        serviceId: appointment.serviceId,
+        date: HFormatter.formatDate(DateTime.now(), reversed: true),
+        fee: serviceFee,
+        debit: serviceFee,
+      );
+    }
+  }
 }
+// if (controller.paid.value) {
+                      //   financeController.addAssetCashOnHand(
+                      //       appointmentId: controller.appointmentlst.length,
+                      //       patientId: id!,
+                      //       dateTime: HFormatter.formatDate(DateTime.now()),
+                      //       serviceId: controller.serviceId.value,
+                      //       fee: 400,
+                      //       debit: 400);
+                      //   financeController.addAccountRecievable(
+                      //     appointmentId: controller.appointmentlst.length,
+                      //     patientId: id!,
+                      //     serviceId: controller.serviceId.value,
+                      //     dateTime: dateController.text,
+                      //     fee: 0,
+                      //     debit: 0,
+                      //   );
+                      // } else {
+                      //   financeController.addAccountRecievable(
+                      //     appointmentId: controller.appointmentlst.length,
+                      //     patientId: id!,
+                      //     serviceId: controller.serviceId.value,
+                      //     dateTime: dateController.text,
+                      //     fee: 400,
+                      //     debit: 400,
+                      //   );
+                      //   financeController.addAssetCashOnHand(
+                      //       appointmentId: controller.appointmentlst.length,
+                      //       patientId: id!,
+                      //       dateTime: HFormatter.formatDate(DateTime.now()),
+                      //       serviceId: controller.serviceId.value,
+                      //       fee: 0,
+                      //       debit: 0);
+                      // }

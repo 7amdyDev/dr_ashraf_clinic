@@ -64,7 +64,7 @@ class _DataSource extends DataTableSource {
       DataCell(TableDataCell(
           text: '' //TODO: controller.getPatientById(item.patientId).name
           )),
-      DataCell(TableDataCell(text: item.dateTime)),
+      DataCell(TableDataCell(text: item.date)),
       DataCell(TableDataCell(
           text: HValidator.serviceIdValidation(item.serviceId).tr)),
       DataCell(TableDataCell(text: item.debit.toString())),

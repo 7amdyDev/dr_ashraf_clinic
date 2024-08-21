@@ -4,6 +4,7 @@ import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
 import 'package:dr_ashraf_clinic/model/finance_models.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
+import 'package:dr_ashraf_clinic/utils/formatters/formatter.dart';
 import 'package:dr_ashraf_clinic/utils/validator/validation.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/finance/widget/cash_reciept_dialog.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/table_column_label.dart';
@@ -12,15 +13,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PatientAccountTable extends StatelessWidget {
-  const PatientAccountTable({
+  PatientAccountTable({
     super.key,
   });
+  final financeController = Get.find<FinanceController>();
 
   @override
   Widget build(BuildContext context) {
-    final financeController = Get.put(FinanceController());
     final List<AppointmentFinance> searchResult =
-        financeController.appointmentAccountslst;
+        financeController.totalAppointmentAccountslst;
 
     return SingleChildScrollView(
       child: Column(
@@ -70,9 +71,8 @@ class PatientAccountTable extends StatelessWidget {
 
 class _DataSource extends DataTableSource {
   final List<AppointmentFinance> data;
-  final patientController = Get.put(PatientController());
-  final financeController = Get.put(FinanceController());
-  final appointmentController = Get.put(AppointmentController());
+  final financeController = Get.find<FinanceController>();
+  final appointmentController = Get.find<AppointmentController>();
 
   _DataSource({required this.data});
   @override
@@ -85,27 +85,28 @@ class _DataSource extends DataTableSource {
     return DataRow(cells: [
       DataCell(TableDataCell(text: (index + 1).toString())),
       DataCell(
-        TableDataCell(
-            text:
-                '' //TOOD:(patientController.getPatientById(item.patientId)).name
-
-            ),
+        TableDataCell(text: item.name),
         onTap: () {
-          Get.dialog(CashRecieptDialogWidget(
-            controller: financeController,
-            appointData:
-                appointmentController.getAppointmentById(item.appointId),
-          ));
+          Get.dialog(FutureBuilder(
+              future:
+                  appointmentController.getAppointmentById(item.appointmentId),
+              builder: (context, snapshot) {
+                if (snapshot.data != null) {
+                  return CashRecieptDialogWidget(
+                    controller: financeController,
+                    appointData: snapshot.data!,
+                  );
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              }));
           //  financeController.accountRecordId.value = item.id!;
         },
       ),
+      DataCell(TableDataCell(text: HFormatter.formatStringDate(item.date))),
       DataCell(TableDataCell(
-          text: appointmentController.getAppointmentDateById(item.appointId))),
-      DataCell(TableDataCell(
-          text: HValidator.serviceIdValidation(
-                  appointmentController.getAppointmentService(item.appointId))
-              .tr)),
-      DataCell(TableDataCell(text: item.serviceFee.toString())),
+          text: HValidator.serviceIdValidation(item.serviceId).tr)),
+      DataCell(TableDataCell(text: item.fee.toString())),
       DataCell(TableDataCell(text: item.paid.toString())),
       DataCell(TableDataCell(text: item.unPaid.toString())),
 

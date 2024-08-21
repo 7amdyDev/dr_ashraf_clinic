@@ -8,21 +8,21 @@ import 'package:dr_ashraf_clinic/view/clinic/reception/screen/reservation/reserv
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/reception_schedule_page.dart';
 
 List receptionPagesList = [
-  const ReceptionSchedulePage(),
-  const ReservationPage(),
+  ReceptionSchedulePage(),
+  ReservationPage(),
   const NewPatientPage(),
   const PatientSearchPage(),
-  const DailyIcomePage(),
+  DailyIncomePage(),
   const PatientFinance(),
   const ClinicExpensesPage(),
 ];
 
 List doctorPagesList = [
-  const ReceptionSchedulePage(),
-  const ReservationPage(),
+  ReceptionSchedulePage(),
+  ReservationPage(),
   const NewPatientPage(),
   const PatientSearchPage(),
-  const DailyIcomePage(),
+  DailyIncomePage(),
   const PatientFinance(),
   const ClinicExpensesPage(),
   const NewCheckPage(),

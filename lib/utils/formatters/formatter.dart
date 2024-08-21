@@ -1,10 +1,23 @@
 import 'package:intl/intl.dart';
 
 class HFormatter {
-  static String formatDate(DateTime? date) {
+  static String formatDate(DateTime? date, {bool reversed = false}) {
     date ??= DateTime.now();
-    return DateFormat('dd-MM-yyyy')
-        .format(date); // Customize the date format as needed
+    if (reversed) {
+      return DateFormat('yyyy-MM-dd').format(date);
+    } else {
+      return DateFormat('dd-MM-yyyy')
+          .format(date); // Customize the date format as needed
+    }
+  }
+
+  static String formatStringDate(String mysqlDateString) {
+    DateTime dateTime = DateTime.parse(mysqlDateString);
+    dateTime = dateTime
+        .add(const Duration(hours: 4)); // to get the difference in time zone
+    DateFormat formatter = DateFormat('dd-MM-yyyy'); // Adjust format as needed
+    String formattedDate = formatter.format(dateTime);
+    return formattedDate;
   }
 
   static int countDuration(String duration) {
@@ -45,9 +58,11 @@ class HFormatter {
     return result;
   }
 
-  static DateTime formatStringToDate(String date, String time) {
-    DateTime dateTime = DateFormat("dd-MM-yyyy hh:mm:ss").parse("$date $time");
-    return dateTime;
+  static String reverseFormatDate(String date) {
+    DateTime dateTime = DateFormat("dd-MM-yyyy").parse(date);
+    DateFormat outputFormat = DateFormat('yyyy/MM/dd');
+    String formattedDate = outputFormat.format(dateTime);
+    return formattedDate;
   }
 
   static String formatCurrency(double amount) {

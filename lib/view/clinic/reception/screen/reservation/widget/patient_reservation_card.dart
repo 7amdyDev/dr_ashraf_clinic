@@ -1,5 +1,4 @@
 import 'package:dr_ashraf_clinic/controller/appointment_controller.dart';
-import 'package:dr_ashraf_clinic/controller/finance_controller.dart';
 import 'package:dr_ashraf_clinic/model/appointment_model.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/utils/formatters/formatter.dart';
@@ -14,13 +13,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PatientReservationCardWidget extends StatelessWidget {
-  const PatientReservationCardWidget({
+  PatientReservationCardWidget({
     super.key,
     required this.dateController,
     required this.id,
     required this.name,
     required this.mobile,
   });
+  final AppointmentController appointmentController =
+      Get.find<AppointmentController>();
 
   final TextEditingController dateController;
   final int? id;
@@ -31,8 +32,6 @@ class PatientReservationCardWidget extends StatelessWidget {
     double width = HelperFunctions.clinicPagesWidth();
     final dateKey = GlobalKey<FormState>();
     AppointmentModel appointment;
-    var controller = Get.put(AppointmentController());
-    var financeController = Get.put(FinanceController());
     return Card(
       child: Padding(
           padding: const EdgeInsets.all(HSizes.defaultSpace),
@@ -69,9 +68,9 @@ class PatientReservationCardWidget extends StatelessWidget {
                     label: 'service_type_label'.tr,
                     width: width / 6,
                     child: ServiceTypeDropDownMenu(
-                      serviceId: controller.serviceId.value,
+                      serviceId: appointmentController.serviceId.value,
                       onSelected: (value) {
-                        controller.serviceId.value = value;
+                        appointmentController.serviceId.value = value;
                       },
                     ),
                   ),
@@ -102,47 +101,13 @@ class PatientReservationCardWidget extends StatelessWidget {
                   onPressed: () {
                     appointment = AppointmentModel(
                         statusId: 0,
-                        mobile: mobile!,
                         patientId: id!,
-                        serviceId: controller.serviceId.value,
-                        dateTime: dateController.text);
+                        serviceId: appointmentController.serviceId.value,
+                        date:
+                            HFormatter.reverseFormatDate(dateController.text));
                     if (dateKey.currentState!.validate()) {
-                      controller.addAppointment(appointment);
-                      //TODO: controller.getPatientAppointment(id!);
-
-                      if (controller.paid.value) {
-                        financeController.addAssetCashOnHand(
-                            appointmentId: controller.appointmentlst.length,
-                            patientId: id!,
-                            dateTime: HFormatter.formatDate(DateTime.now()),
-                            serviceId: controller.serviceId.value,
-                            fee: 400,
-                            debit: 400);
-                        financeController.addAccountRecievable(
-                          appointmentId: controller.appointmentlst.length,
-                          patientId: id!,
-                          serviceId: controller.serviceId.value,
-                          dateTime: dateController.text,
-                          fee: 0,
-                          debit: 0,
-                        );
-                      } else {
-                        financeController.addAccountRecievable(
-                          appointmentId: controller.appointmentlst.length,
-                          patientId: id!,
-                          serviceId: controller.serviceId.value,
-                          dateTime: dateController.text,
-                          fee: 400,
-                          debit: 400,
-                        );
-                        financeController.addAssetCashOnHand(
-                            appointmentId: controller.appointmentlst.length,
-                            patientId: id!,
-                            dateTime: HFormatter.formatDate(DateTime.now()),
-                            serviceId: controller.serviceId.value,
-                            fee: 0,
-                            debit: 0);
-                      }
+                      appointmentController.addAppointment(appointment);
+                      appointmentController.getPatientAppointment(id!);
                     }
                   })
             ],

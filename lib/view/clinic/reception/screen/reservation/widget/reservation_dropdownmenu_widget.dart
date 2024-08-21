@@ -1,5 +1,8 @@
+import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
+import 'package:dr_ashraf_clinic/utils/validator/validation.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/table_data_cell.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ServiceTypeDropDownMenu extends StatefulWidget {
   final Function(int) onSelected; // Callback for selection change
@@ -17,22 +20,29 @@ class _MyDropdownState extends State<ServiceTypeDropDownMenu> {
   @override
   Widget build(BuildContext context) {
     int selectedValue = widget.serviceId;
+    var clinicController = Get.put(ClinicController());
     return DropdownButtonFormField<int>(
       value: selectedValue, // Currently selected value
-      items: const [
-        DropdownMenuItem<int>(
-          value: 0,
-          child: TableDataCell(
-            text: 'كشف',
-          ),
-        ),
-        DropdownMenuItem<int>(
-          value: 1,
-          child: TableDataCell(
-            text: 'متابعة',
-          ),
-        ),
-      ],
+      items: clinicController.servicesId
+          .map((service) {
+            return DropdownMenuItem<int>(
+              value: service.id,
+              child: TableDataCell(
+                text: HValidator.serviceIdValidation(service.id).tr,
+              ),
+            );
+          })
+          .take(2)
+          .toList(),
+      // [
+
+      //   DropdownMenuItem<int>(
+      //     value: 1,
+      //     child: TableDataCell(
+      //       text: 'متابعة',
+      //     ),
+      //   ),
+      // ],
       onChanged: (value) {
         setState(() {
           selectedValue = value!; // Update selected value

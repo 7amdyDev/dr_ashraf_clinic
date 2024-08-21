@@ -7,7 +7,10 @@ class CustomDropDownWidget extends StatefulWidget {
   const CustomDropDownWidget({
     super.key,
     required this.statusId,
+    required this.onSelected,
   });
+  final Function(int) onSelected; // Callback for selection change
+
   final int statusId;
   @override
   State<CustomDropDownWidget> createState() => _CustomDropDownWidgetState();
@@ -31,8 +34,8 @@ class _CustomDropDownWidgetState extends State<CustomDropDownWidget> {
               child: TableDataCell(text: HValidator.statusIdValidation(2).tr)),
           DropdownMenuItem(
               value: 3,
-              child: TableDataCell(text: HValidator.statusIdValidation(0).tr)),
+              child: TableDataCell(text: HValidator.statusIdValidation(3).tr)),
         ],
-        onChanged: (value) => setState(() => value!));
+        onChanged: (value) => setState(() => widget.onSelected(value!)));
   }
 }

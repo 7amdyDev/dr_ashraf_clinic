@@ -33,7 +33,7 @@ class SearchDialogWidget extends StatelessWidget {
           () => controller.isLoading.value
               ? const Center(child: CircularProgressIndicator())
               : PatientSearchTable(
-                  searchResult: controller.searchResult.toList()),
+                  searchResult: controller.patientList.toList()),
         ),
       ),
       actionsAlignment: MainAxisAlignment.center,
@@ -42,7 +42,7 @@ class SearchDialogWidget extends StatelessWidget {
             fontSize: 18,
             text: 'cancel_button',
             onPressed: () {
-              Get.backLegacy();
+              Get.back();
             })
       ],
     );

@@ -10,20 +10,20 @@ class ClinicExpensesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
-        SizedBox(
+        const SizedBox(
           height: HSizes.spaceBtwSections,
         ),
-        PageLabelWidget(
+        const PageLabelWidget(
           text: 'expenses_label',
         ),
-        SizedBox(
+        const SizedBox(
           height: HSizes.spaceBtwSections,
         ),
         DailyFinanceCardWidget(),
-        Expanded(
+        const Expanded(
           child: SingleChildScrollView(
             child: SizedBox(
               width: double.infinity,

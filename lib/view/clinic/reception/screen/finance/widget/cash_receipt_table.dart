@@ -87,7 +87,7 @@ class _DataSource extends DataTableSource {
               selected();
             },
           ),
-          DataCell(TableDataCell(text: item.dateTime)),
+          DataCell(TableDataCell(text: item.date)),
           DataCell(TableDataCell(
               text: HValidator.serviceIdValidation(item.serviceId).tr)),
           DataCell(TableDataCell(text: item.debit.toString())),

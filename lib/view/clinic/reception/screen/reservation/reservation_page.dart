@@ -10,15 +10,13 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ReservationPage extends StatelessWidget {
-  const ReservationPage({
+  ReservationPage({
     super.key,
   });
-
+  final patientController = Get.find<PatientController>();
+  final appointController = Get.find<AppointmentController>();
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(PatientController());
-    final appointController = Get.put(AppointmentController());
-    appointController.getPatientAppointment(controller.patientId.value);
     TextEditingController dateController = TextEditingController();
     return Column(
       mainAxisSize: MainAxisSize.max,
@@ -30,19 +28,20 @@ class ReservationPage extends StatelessWidget {
           text: 'appointment_page_label',
         ),
         const PatientSearchBar(),
-        Expanded(
-          child: Obx(() => !controller.isLoading.value
-              ? FutureBuilder(
-                  future: controller.getPatient(),
+        Obx(() => Expanded(
+              child: FutureBuilder(
+                  future: patientController.getPatient(),
                   builder: (context, snapshot) {
                     if (snapshot.data != null) {
+                      appointController.getPatientAppointment(
+                          patientController.patientId.value);
                       return SingleChildScrollView(
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             PatientReservationCardWidget(
                                 dateController: dateController,
-                                id: controller.patientId.value,
+                                id: patientController.patientId.value,
                                 name: snapshot.data!.name,
                                 mobile: snapshot.data!.mobile),
                             Column(
@@ -56,8 +55,7 @@ class ReservationPage extends StatelessWidget {
                                 ),
                                 PatientReservationTable(
                                   searchResult:
-                                      appointController.getPatientAppointment(
-                                          controller.patientId.value),
+                                      appointController.patientAppointlst,
                                 )
                               ],
                             )
@@ -67,9 +65,8 @@ class ReservationPage extends StatelessWidget {
                     } else {
                       return const SizedBox();
                     }
-                  })
-              : Container()),
-        )
+                  }),
+            ))
       ],
     );
   }

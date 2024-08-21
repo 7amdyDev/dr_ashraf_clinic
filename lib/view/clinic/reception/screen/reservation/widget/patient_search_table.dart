@@ -64,17 +64,17 @@ class _DataSource extends DataTableSource {
       return null;
     }
 
-    //  final item = data[index];
+    final item = data[index];
     return DataRow(cells: [
-      DataCell(TableDataCell(text: data[index].id.toString())),
+      DataCell(TableDataCell(text: item.id.toString())),
       DataCell(
-        TableDataCell(text: data[index].name),
+        TableDataCell(text: item.name),
         onTap: () {
-          controller.choosePatient(data[index].id!);
-          finaceController.patientId.value = data[index].id!;
-          finaceController.getPatientAccountslst();
-          appointmentController.getPatientAppointment(data[index].id!);
-          Get.backLegacy();
+          controller.choosePatient(item.id!);
+          finaceController.patientId.value = item.id!;
+          finaceController.onPatientAccountListUpdated();
+          appointmentController.getPatientAppointment(item.id!);
+          Get.back();
         },
       ),
       DataCell(TableDataCell(text: data[index].mobile)),

@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PatientFinanceCardWidget extends StatelessWidget {
-  const PatientFinanceCardWidget({
+  PatientFinanceCardWidget({
     super.key,
   });
+  final FinanceController finaceController = Get.find<FinanceController>();
 
   @override
   Widget build(BuildContext context) {
-    var finaceController = Get.put(FinanceController());
     return SizedBox(
       height: 140,
       child: Card(

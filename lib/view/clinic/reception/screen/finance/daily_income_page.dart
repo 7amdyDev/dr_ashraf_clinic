@@ -6,12 +6,12 @@ import 'package:dr_ashraf_clinic/view/clinic/reception/widget/page_label_widget.
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class DailyIcomePage extends StatelessWidget {
-  const DailyIcomePage({super.key});
+class DailyIncomePage extends StatelessWidget {
+  DailyIncomePage({super.key});
+  final financeController = Get.find<FinanceController>();
 
   @override
   Widget build(BuildContext context) {
-    final financeController = Get.put(FinanceController());
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -33,7 +33,7 @@ class DailyIcomePage extends StatelessWidget {
                   const SizedBox(
                     height: HSizes.spaceBtwSections,
                   ),
-                  const DailyFinanceCardWidget(),
+                  DailyFinanceCardWidget(),
                   const SizedBox(
                     height: HSizes.spaceBtwSections,
                   ),

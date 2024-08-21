@@ -63,4 +63,34 @@ class PatientModel {
     return List<PatientModel>.from(
         json.map((patient) => PatientModel.fromJson(patient)));
   }
+
+  PatientModel copyWith({
+    int? id,
+    String? name,
+    String? mobile,
+    int? age,
+    String? address,
+    int? gender,
+    String? familyMedicalHistory,
+    String? surgicalHistory,
+    String? medicine,
+    String? allergies,
+    String? pastMedicalHistory,
+    String? notes,
+  }) {
+    return PatientModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      mobile: mobile ?? this.mobile,
+      age: age ?? this.age,
+      address: address ?? this.address,
+      gender: gender ?? this.gender,
+      familyMedicalHistory: familyMedicalHistory ?? this.familyMedicalHistory,
+      surgicalHistory: surgicalHistory ?? this.surgicalHistory,
+      medicine: medicine ?? this.medicine,
+      allergies: allergies ?? this.allergies,
+      pastMedicalHistory: pastMedicalHistory ?? this.pastMedicalHistory,
+      notes: notes ?? this.notes,
+    );
+  }
 }

@@ -28,8 +28,8 @@ class PatientFinance extends StatelessWidget {
           height: HSizes.spaceBtwSections,
         ),
         show ? const PatientSearchBar() : const SizedBox(),
-        const PatientFinanceCardWidget(),
-        const Expanded(
+        PatientFinanceCardWidget(),
+        Expanded(
           child: SingleChildScrollView(
             child: SizedBox(
               width: double.infinity,
@@ -38,15 +38,15 @@ class PatientFinance extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: HSizes.spaceBtwItems,
                   ),
-                  PageLabelWidget(
+                  const PageLabelWidget(
                     text: 'patient_accounts_label',
                     fontSize: 28,
                   ),
                   PatientAccountTable(),
-                  SizedBox(
+                  const SizedBox(
                     height: HSizes.spaceBtwSections,
                   )
                 ],

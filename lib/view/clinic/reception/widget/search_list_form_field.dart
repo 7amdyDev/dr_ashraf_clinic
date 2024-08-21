@@ -80,7 +80,7 @@ class _SearchListFormFieldState extends State<SearchListFormField> {
                       ],
                     ),
                     onTap: () {
-                      controller.choosePatient(0);
+                      //  controller.choosePatient(0);
                       switch (index) {
                         case 0:
                           controller.patientSearch(name: _searchText);
