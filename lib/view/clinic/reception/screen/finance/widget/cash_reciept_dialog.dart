@@ -19,6 +19,7 @@ class CashRecieptDialogWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     controller.getCashRecieptOnAppointment(appointData.id!);
+    controller.getAppointmentBalance(appointData.id!);
     return AlertDialog(
       elevation: 5,
       shadowColor: HColors.dark,

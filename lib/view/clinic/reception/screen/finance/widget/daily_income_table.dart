@@ -1,6 +1,7 @@
 import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
 import 'package:dr_ashraf_clinic/model/finance_models.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
+import 'package:dr_ashraf_clinic/utils/formatters/formatter.dart';
 import 'package:dr_ashraf_clinic/utils/validator/validation.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/table_column_label.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/table_data_cell.dart';
@@ -16,35 +17,35 @@ class DailyIncomeTable extends StatelessWidget {
   final List<AssetAccountsModel> searchResult;
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: SizedBox(
-        width: double.infinity,
-        child: PaginatedDataTable(
-          headingRowHeight: 48,
-          horizontalMargin: 12,
-          headingRowColor: const WidgetStatePropertyAll(HColors.accent),
-          columnSpacing: 12,
-          columns: const [
-            DataColumn(label: TableColumnLabel(text: 'id_no_label')),
-            DataColumn(label: TableColumnLabel(text: 'patient_name_label')),
-            DataColumn(label: TableColumnLabel(text: 'date_label')),
-            DataColumn(label: TableColumnLabel(text: 'service_type_label')),
-            DataColumn(label: TableColumnLabel(text: 'patient_paid_label')),
-          ],
-          source: _DataSource(data: searchResult),
+    return Obx(() => SingleChildScrollView(
+          child: SizedBox(
+            width: double.infinity,
+            child: PaginatedDataTable(
+              headingRowHeight: 48,
+              horizontalMargin: 12,
+              headingRowColor: const WidgetStatePropertyAll(HColors.accent),
+              columnSpacing: 12,
+              columns: const [
+                DataColumn(label: TableColumnLabel(text: 'id_no_label')),
+                DataColumn(label: TableColumnLabel(text: 'patient_name_label')),
+                DataColumn(label: TableColumnLabel(text: 'date_label')),
+                DataColumn(label: TableColumnLabel(text: 'service_type_label')),
+                DataColumn(label: TableColumnLabel(text: 'patient_paid_label')),
+              ],
+              source: _DataSource(data: searchResult),
 
-          rowsPerPage: searchResult.isEmpty
-              ? 1
-              : searchResult.length < 8
-                  ? searchResult.length
-                  : 8,
-          // rowsPerPage:
-          //     searchResult.length < 8 ? searchResult.length : 8 ?? 0,
-          // horizontalMargin: 60,
-          showEmptyRows: false,
-        ),
-      ),
-    );
+              rowsPerPage: searchResult.isEmpty
+                  ? 1
+                  : searchResult.length < 8
+                      ? searchResult.length
+                      : 8,
+              // rowsPerPage:
+              //     searchResult.length < 8 ? searchResult.length : 8 ?? 0,
+              // horizontalMargin: 60,
+              showEmptyRows: false,
+            ),
+          ),
+        ));
   }
 }
 
@@ -61,10 +62,16 @@ class _DataSource extends DataTableSource {
     final item = data[index];
     return DataRow(cells: [
       DataCell(TableDataCell(text: item.patientId.toString())),
-      DataCell(TableDataCell(
-          text: '' //TODO: controller.getPatientById(item.patientId).name
-          )),
-      DataCell(TableDataCell(text: item.date)),
+      DataCell(FutureBuilder(
+          future: controller.getPatientById(item.patientId),
+          builder: (context, snapshot) {
+            if (snapshot.data != null) {
+              return TableDataCell(text: snapshot.data!.name);
+            } else {
+              return const CircularProgressIndicator();
+            }
+          })),
+      DataCell(TableDataCell(text: HFormatter.formatStringDate(item.date))),
       DataCell(TableDataCell(
           text: HValidator.serviceIdValidation(item.serviceId).tr)),
       DataCell(TableDataCell(text: item.debit.toString())),

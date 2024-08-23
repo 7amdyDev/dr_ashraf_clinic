@@ -1,7 +1,4 @@
 import 'package:dr_ashraf_clinic/controller/appointment_controller.dart';
-import 'package:dr_ashraf_clinic/controller/finance_controller.dart';
-import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
-import 'package:dr_ashraf_clinic/model/appointment_model.dart';
 import 'package:dr_ashraf_clinic/model/finance_models.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
@@ -19,7 +16,7 @@ class HScheduleDataTable extends StatelessWidget {
     required this.searchResult,
   });
 
-  final List<AppointmentModel> searchResult;
+  final List<AppointmentFinance> searchResult;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +38,7 @@ class HScheduleDataTable extends StatelessWidget {
                   DataColumn(
                       label: TableColumnLabel(text: 'service_type_label')),
                   DataColumn(label: TableColumnLabel(text: 'telephone_label')),
-                  //  DataColumn(label: TableColumnLabel(text: 'finance_label')),
+                  DataColumn(label: TableColumnLabel(text: 'finance_label')),
                   DataColumn(label: TableColumnLabel(text: 'status_label')),
                 ],
                 source: _DataSource(data: searchResult),
@@ -59,10 +56,8 @@ class HScheduleDataTable extends StatelessWidget {
 }
 
 class _DataSource extends DataTableSource {
-  final List<AppointmentModel> data;
-  final patientController = Get.put(PatientController());
-  final financeController = Get.put(FinanceController());
-  final appointmentController = Get.put(AppointmentController());
+  final List<AppointmentFinance> data;
+  final appointmentController = Get.find<AppointmentController>();
 
   _DataSource({required this.data});
   @override
@@ -75,31 +70,41 @@ class _DataSource extends DataTableSource {
 
     return DataRow(cells: [
       DataCell(TableDataCell(text: (index + 1).toString())),
-      DataCell(FutureBuilder(
-          future: patientController.getPatientById(item.patientId),
-          builder: (context, snapshot) {
-            if (snapshot.data != null) {
-              return TableDataCell(text: snapshot.data!.name);
-            } else {
-              return const CircularProgressIndicator();
-            }
-          })),
-      DataCell(TableDataCell(text: item.date)),
+      DataCell(TableDataCell(text: item.name)),
+      DataCell(TableDataCell(text: HFormatter.formatStringDate(item.date))),
       DataCell(TableDataCell(
           text: HValidator.serviceIdValidation(item.serviceId).tr)),
-      DataCell(TableDataCell(text: '')), //item.mobile)),
-      // DataCell(TableDataCell(
-      //     text: financeController.getAppointmentAccount(item.).toString())),
-      DataCell(Center(
-          child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: CustomDropDownWidget(
-                statusId: item.statusId,
-                onSelected: (value) {
-                  var updatedItem = item.copyWith(statusId: value);
-                  appointmentController.updateAppointment(updatedItem);
-                },
-              )))),
+      DataCell(TableDataCell(text: item.mobile)),
+      DataCell(
+          TableDataCell(text: item.unPaid == '0' ? 'Paid'.tr : item.unPaid)),
+      HFormatter.formatStringDate(item.date) ==
+              HFormatter.formatDate(
+                DateTime.now(),
+              )
+          ? DataCell(
+              Center(
+                child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: CustomDropDownWidget(
+                      statusId: appointmentController
+                          .getAppointmentStatus(item.appointmentId),
+                      onSelected: (value) {
+                        var appointment =
+                            appointmentController.appointListByDate.firstWhere(
+                                (record) => record.id == item.appointmentId);
+                        var updatedItem = appointment.copyWith(
+                            statusId: value,
+                            date: HFormatter.formatStringDate(item.date,
+                                reversed: true));
+                        appointmentController.updateAppointment(updatedItem);
+                      },
+                    )),
+              ),
+            )
+          : DataCell(TableDataCell(
+              text: HValidator.statusIdValidation(appointmentController
+                      .getAppointmentStatus(item.appointmentId))
+                  .tr)),
     ]);
   }
 

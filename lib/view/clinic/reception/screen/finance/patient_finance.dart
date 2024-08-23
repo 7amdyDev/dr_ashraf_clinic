@@ -7,7 +7,6 @@ import 'package:dr_ashraf_clinic/view/clinic/reception/widget/page_label_widget.
 
 class PatientFinance extends StatelessWidget {
   const PatientFinance({super.key, this.show = true});
-
   final bool show;
   @override
   Widget build(BuildContext context) {

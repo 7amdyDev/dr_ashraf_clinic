@@ -12,9 +12,10 @@ import 'package:get/get.dart';
 
 class ReceptionSchedulePage extends StatelessWidget {
   ReceptionSchedulePage({super.key});
+  final FinanceController financeController = Get.find<FinanceController>();
+  final ClinicController clinicController = Get.find<ClinicController>();
   final AppointmentController appointmentController =
       Get.find<AppointmentController>();
-  final ClinicController clinicController = Get.find<ClinicController>();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -34,12 +35,14 @@ class ReceptionSchedulePage extends StatelessWidget {
             HFilledButton(
                 text: 'today_label'.tr,
                 onPressed: () {
+                  financeController.getAppointsFinanceByDate();
                   appointmentController.getAppointsByDate();
                 }),
             HFilledButton(
                 text: 'choose_date_label'.tr,
                 onPressed: () {
-                  datePickerDialog(context, appointmentController);
+                  datePickerDialog(
+                      context, financeController, appointmentController);
                 }),
           ],
         ),
@@ -52,7 +55,8 @@ class ReceptionSchedulePage extends StatelessWidget {
                   height: HSizes.spaceBtwItems,
                 ),
                 HScheduleDataTable(
-                    searchResult: appointmentController.appointListByDate),
+                    searchResult:
+                        financeController.appointmentFinanceByDatelst),
                 const PageLabelWidget(
                   text: 'online_table_label',
                 ),
@@ -67,10 +71,10 @@ class ReceptionSchedulePage extends StatelessWidget {
   }
 }
 
-void datePickerDialog(context, AppointmentController controller) {
+void datePickerDialog(context, FinanceController controller,
+    AppointmentController appointmentController) {
   final Future<DateTime?> picked = showDatePicker(
     context: context,
-    //s  selectableDayPredicate: (DateTime val) => val.weekday == 5 ? false : true,
     currentDate: DateTime.now(),
     initialDate: DateTime.now(),
     firstDate: DateTime(2024),
@@ -91,7 +95,8 @@ void datePickerDialog(context, AppointmentController controller) {
     },
   );
   picked.then((onValue) {
-    controller.getAppointsByDate(date: onValue);
+    controller.getAppointsFinanceByDate(date: onValue);
+    appointmentController.getAppointsByDate(date: onValue);
     // dateController.text = HFormatter.formatDate(onValue);
   });
 }

@@ -24,7 +24,7 @@ class _ExpensesTableState extends State<ExpensesTable> {
 
   @override
   Widget build(BuildContext context) {
-    final expenseController = Get.put(ExpenseController());
+    final expenseController = Get.find<ExpenseController>();
     final List<ExpenseModel> searchResult = expenseController.expenseslst;
 
     return SingleChildScrollView(

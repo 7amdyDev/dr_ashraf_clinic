@@ -13,7 +13,7 @@ List receptionPagesList = [
   const NewPatientPage(),
   const PatientSearchPage(),
   DailyIncomePage(),
-  const PatientFinance(),
+  PatientFinance(),
   const ClinicExpensesPage(),
 ];
 
@@ -23,7 +23,7 @@ List doctorPagesList = [
   const NewPatientPage(),
   const PatientSearchPage(),
   DailyIncomePage(),
-  const PatientFinance(),
+  PatientFinance(),
   const ClinicExpensesPage(),
   const NewCheckPage(),
 ];

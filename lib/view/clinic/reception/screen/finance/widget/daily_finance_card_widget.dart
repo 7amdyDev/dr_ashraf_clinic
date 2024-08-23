@@ -21,7 +21,7 @@ class DailyFinanceCardWidget extends StatelessWidget {
             Obx(
               () => FinanceValueColumn(
                 label: 'daily_revenue_label',
-                value: financeController.dailyIncome.value.toString(),
+                value: financeController.dailyIncome.string,
               ),
             ),
             const VerticalDivider(
@@ -32,7 +32,7 @@ class DailyFinanceCardWidget extends StatelessWidget {
             Obx(
               () => FinanceValueColumn(
                 label: 'expenses_label',
-                value: expenseController.totalDailyExpenses.value.toString(),
+                value: expenseController.totalDailyExpenses.string,
               ),
             ),
             const VerticalDivider(
@@ -43,7 +43,7 @@ class DailyFinanceCardWidget extends StatelessWidget {
             Obx(
               () => FinanceValueColumn(
                 label: 'cash_label',
-                value: financeController.cash.value.toString(),
+                value: financeController.cash.string,
               ),
             ),
           ],

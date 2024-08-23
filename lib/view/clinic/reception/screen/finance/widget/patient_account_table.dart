@@ -1,6 +1,5 @@
 import 'package:dr_ashraf_clinic/controller/appointment_controller.dart';
 import 'package:dr_ashraf_clinic/controller/finance_controller.dart';
-import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
 import 'package:dr_ashraf_clinic/model/finance_models.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
@@ -20,6 +19,7 @@ class PatientAccountTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    financeController.onPatientAccountListUpdated();
     final List<AppointmentFinance> searchResult =
         financeController.totalAppointmentAccountslst;
 

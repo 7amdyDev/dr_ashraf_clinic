@@ -2,6 +2,7 @@ import 'package:dr_ashraf_clinic/controller/finance_controller.dart';
 import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
 import 'package:dr_ashraf_clinic/model/finance_models.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
+import 'package:dr_ashraf_clinic/utils/formatters/formatter.dart';
 import 'package:dr_ashraf_clinic/utils/validator/validation.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/table_column_label.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/table_data_cell.dart';
@@ -62,8 +63,8 @@ class _CashReceiptTableState extends State<CashReceiptTable> {
 class _DataSource extends DataTableSource {
   final List<AssetAccountsModel> data;
   final Function selected;
-  var patientController = Get.put(PatientController());
-  var financeController = Get.put(FinanceController());
+  var patientController = Get.find<PatientController>();
+  var financeController = Get.find<FinanceController>();
   _DataSource(this.selected, {required this.data});
   @override
   DataRow? getRow(int index) {
@@ -71,6 +72,8 @@ class _DataSource extends DataTableSource {
       return null;
     }
     final item = data[index];
+    var patient = patientController.patientList
+        .firstWhere((patient) => patient.id == item.patientId);
     return DataRow(
         color: financeController.accountRecordId.value == item.id
             ? WidgetStateProperty.all(Colors.black12)
@@ -78,16 +81,13 @@ class _DataSource extends DataTableSource {
         cells: [
           DataCell(TableDataCell(text: item.patientId.toString())),
           DataCell(
-            TableDataCell(
-                text:
-                    '' //TODO: patientController.getPatientById(item.patientId).name
-                ),
+            TableDataCell(text: patient.name),
             onTap: () {
               financeController.accountRecordId.value = item.id!;
               selected();
             },
           ),
-          DataCell(TableDataCell(text: item.date)),
+          DataCell(TableDataCell(text: HFormatter.formatStringDate(item.date))),
           DataCell(TableDataCell(
               text: HValidator.serviceIdValidation(item.serviceId).tr)),
           DataCell(TableDataCell(text: item.debit.toString())),

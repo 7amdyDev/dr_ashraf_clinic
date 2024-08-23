@@ -56,7 +56,7 @@ class ReservationPage extends StatelessWidget {
                                 PatientReservationTable(
                                   searchResult:
                                       appointController.patientAppointlst,
-                                )
+                                ),
                               ],
                             )
                           ],

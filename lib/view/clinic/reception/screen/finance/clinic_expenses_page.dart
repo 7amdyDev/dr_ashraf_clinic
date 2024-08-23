@@ -33,7 +33,7 @@ class ClinicExpensesPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: HSizes.spaceBtwSections,
+                    height: HSizes.spaceBtwItems,
                   ),
                   PageLabelWidget(
                     text: 'expenses_table_label',

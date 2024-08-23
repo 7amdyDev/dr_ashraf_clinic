@@ -11,11 +11,19 @@ class HFormatter {
     }
   }
 
-  static String formatStringDate(String mysqlDateString) {
+  static String formatStringDate(String mysqlDateString,
+      {bool reversed = false}) {
     DateTime dateTime = DateTime.parse(mysqlDateString);
+    DateFormat formatter;
     dateTime = dateTime
         .add(const Duration(hours: 4)); // to get the difference in time zone
-    DateFormat formatter = DateFormat('dd-MM-yyyy'); // Adjust format as needed
+    if (reversed) {
+      formatter = DateFormat('yyyy-MM-dd');
+    } else {
+      formatter = DateFormat('dd-MM-yyyy');
+      // Customize the date format as needed
+    }
+
     String formattedDate = formatter.format(dateTime);
     return formattedDate;
   }

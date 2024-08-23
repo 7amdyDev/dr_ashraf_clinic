@@ -1,13 +1,17 @@
+import 'package:dr_ashraf_clinic/controller/expense_controller.dart';
 import 'package:dr_ashraf_clinic/db/asset_api.dart';
 import 'package:dr_ashraf_clinic/db/revenue_api.dart';
 import 'package:dr_ashraf_clinic/model/appointment_model.dart';
 import 'package:dr_ashraf_clinic/model/finance_models.dart';
 import 'package:dr_ashraf_clinic/utils/formatters/formatter.dart';
+import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
 import 'package:get/get.dart';
 
 class FinanceController extends GetxController {
   RxList<RevenueAccounts> revenueAccountlst = <RevenueAccounts>[].obs;
   RxList<AppointmentFinance> totalAppointmentAccountslst =
+      <AppointmentFinance>[].obs;
+  RxList<AppointmentFinance> appointmentFinanceByDatelst =
       <AppointmentFinance>[].obs;
   RxList<AssetAccountsModel> assetAccountslst = <AssetAccountsModel>[].obs;
   RxList<AssetAccountsModel> assetDailyIncomelst = <AssetAccountsModel>[].obs;
@@ -15,7 +19,6 @@ class FinanceController extends GetxController {
       <AssetAccountsModel>[].obs;
   RxList<AssetAccountsModel> appointmentCashReciept =
       <AssetAccountsModel>[].obs;
-  RxList<int> patientAppointslst = <int>[].obs;
   RxInt appointUnPaid = 0.obs;
   RxInt patientBalance = 0.obs;
   RxInt patientTotalPaid = 0.obs;
@@ -27,18 +30,23 @@ class FinanceController extends GetxController {
   RxInt cash = 0.obs;
   RxInt patientId = 0.obs;
   RxBool finaceLoading = false.obs;
-
+  var expenseController = Get.find<ExpenseController>();
 // ------------ Account Assets ----------- //
 
   void onPatientAccountListUpdated() async {
+    assetDailyIncomelst.clear();
+    totalAppointmentAccountslst.clear();
     await getPatientAppointTotalAccount(patientId.value);
     await getPatientAssetList(patientId.value);
     getPatientCardFinance();
+    getFinanceList();
   }
 
   @override
   void onInit() {
     getFinanceList();
+    getCash();
+    getAppointsFinanceByDate();
     super.onInit();
   }
 
@@ -57,6 +65,45 @@ class FinanceController extends GetxController {
     } finally {
       finaceLoading.value = false;
     }
+    cash.value =
+        (dailyIncome.value - expenseController.totalDailyExpenses.value);
+  }
+
+// reception page schedueled table
+  Future<void> getAppointsFinanceByDate({DateTime? date}) async {
+    appointmentFinanceByDatelst.clear();
+    if (date == null) {
+      finaceLoading.value = true;
+      try {
+        var response = await assetApi.getAppointmentFinanceByDate(
+            HFormatter.formatDate(DateTime.now(), reversed: true));
+
+        if (response.statusCode == 200 && response.body != null) {
+          appointmentFinanceByDatelst.addAll(response.body!);
+        }
+      } finally {
+        finaceLoading.value = false;
+      }
+    } else {
+      finaceLoading.value = true;
+      try {
+        var response = await assetApi.getAppointmentFinanceByDate(
+            HFormatter.formatDate(date, reversed: true));
+
+        if (response.statusCode == 200 && response.body != null) {
+          appointmentFinanceByDatelst.addAll(response.body!);
+        }
+      } finally {
+        finaceLoading.value = false;
+      }
+    }
+  }
+
+  void getCash() {
+    ever(expenseController.totalDailyExpenses, (value) {
+      // Call a function when observableValue changes
+      cash.value = (dailyIncome.value - value);
+    });
   }
 
   Future<void> getPatientAppointTotalAccount(int id) async {
@@ -85,11 +132,13 @@ class FinanceController extends GetxController {
     }
   }
 
-  // void getAppointmentBalance(int appointId) {
-  //   appointUnPaid.value = totalAppointmentAccountslst
-  //       .firstWhere((appointment) => appointment.appointmentId == appointId)
-  //       .unPaid;
-  // }
+  void getAppointmentBalance(int appointId) {
+    appointUnPaid.value = assetAccountslst
+        .firstWhere((appointment) =>
+            appointment.appointmentId == appointId &&
+            appointment.accountId == 302)
+        .debit;
+  }
 
   void getPatientCardFinance() {
     int amount = 0;
@@ -109,42 +158,93 @@ class FinanceController extends GetxController {
     patientTotalUnPaid.value = unPaid;
   }
 
-  void addPatientCashReceipt(AppointmentModel appointData, int amount) {
-    for (var item in patientAssetAccountslst) {
+  Future<void> addPatientCashReceipt(
+      AppointmentModel appointData, int amount) async {
+    try {
+      var response = await assetApi.create(AssetAccountsModel(
+          accountId: 301,
+          appointmentId: appointData.id!,
+          patientId: appointData.patientId,
+          date: HFormatter.formatDate(DateTime.now(), reversed: true),
+          serviceId: appointData.serviceId,
+          fee: 0,
+          debit: amount));
+      if (response.statusCode == 201 && response.body != null) {}
+    } finally {}
+    for (var item in assetAccountslst) {
       if (item.accountId == 302 && item.appointmentId == appointData.id!) {
-        item.debit -= amount;
+        finaceLoading.value = true;
+
+        try {
+          var response = await assetApi.update(
+            item.copyWith(
+                patientId: item.patientId,
+                debit: item.debit - amount,
+                date: HFormatter.formatDate(DateTime.now(), reversed: true),
+                id: item.id),
+          );
+          if (response.statusCode == 201 && response.body != null) {
+            HelperFunctions.showSnackBar('Record Updated Succesfully');
+          }
+        } finally {
+          finaceLoading.value = false;
+        }
       }
     }
-    addAssetCashOnHand(
-        appointmentId: appointData.id!,
-        patientId: appointData.patientId,
-        date: HFormatter.formatDate(DateTime.now()),
-        serviceId: appointData.serviceId,
-        fee: 0,
-        debit: amount);
+    getPatientAssetList(appointData.patientId).then(
+      (value) {
+        getCashRecieptOnAppointment(appointData.id!);
+        getAppointmentBalance(appointData.id!);
+      },
+    );
     onPatientAccountListUpdated();
-    // getAppointmentBalance(appointData.id!);
   }
 
-  void removePatientCashReceipt(int recordId) {
-    int amount = 0;
-    int appointId = 0;
-    int recordIndex =
-        assetAccountslst.indexWhere((record) => record.id == recordId);
-    if (recordIndex != -1) {
-      amount = assetAccountslst[recordIndex].debit;
-      assetAccountslst[recordIndex].debit = 0;
-    }
-    for (var item in patientAssetAccountslst) {
-      if (item.accountId == 302 &&
-          item.appointmentId == assetAccountslst[recordIndex].appointmentId) {
-        item.debit += amount;
-        appointId = item.appointmentId;
+  Future<void> removePatientCashReceipt(int recordId, int appointId) async {
+    var assetRecord =
+        assetAccountslst.firstWhere((asset) => asset.id == recordId);
+
+    for (var item in assetAccountslst) {
+      if (item.accountId == 302 && item.appointmentId == appointId) {
+        finaceLoading.value = true;
+
+        try {
+          var response = await assetApi.update(
+            item.copyWith(
+                patientId: item.patientId,
+                debit: item.debit + assetRecord.debit,
+                date: HFormatter.formatDate(DateTime.now(), reversed: true),
+                id: item.id),
+          );
+          if (response.statusCode == 201 && response.body != null) {
+            HelperFunctions.showSnackBar('Record Updated Succesfully');
+          }
+        } finally {
+          finaceLoading.value = false;
+        }
       }
+    }
+
+    try {
+      var response = await assetApi.update(assetRecord.copyWith(
+          debit: 0,
+          date: HFormatter.formatDate(DateTime.now(), reversed: true),
+          id: recordId));
+
+      if (response.statusCode == 201 && response.body != null) {}
+    } finally {
+      finaceLoading.value = false;
+      cash.value =
+          (dailyIncome.value - expenseController.totalDailyExpenses.value);
     }
     accountRecordId.value = 0;
     onPatientAccountListUpdated();
-    // if (appointId != 0) getAppointmentBalance(appointId);
+    getPatientAssetList(patientId.value).then(
+      (value) {
+        getCashRecieptOnAppointment(appointId);
+        getAppointmentBalance(appointId);
+      },
+    );
   }
 
   Future<void> getTotalDailyIncome() async {
@@ -157,8 +257,9 @@ class FinanceController extends GetxController {
       }
     } finally {
       finaceLoading.value = false;
-      //  cash.value = dailyIncome.value - totalDailyExpenses.value;
     }
+    cash.value =
+        (dailyIncome.value - expenseController.totalDailyExpenses.value);
   }
 
   void addAssetCashOnHand({

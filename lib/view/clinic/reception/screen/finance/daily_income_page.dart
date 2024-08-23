@@ -12,6 +12,7 @@ class DailyIncomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    financeController.getFinanceList();
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [

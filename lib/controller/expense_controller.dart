@@ -39,6 +39,8 @@ class ExpenseController extends GetxController {
       var response = await expenseApi.getTotalDailyExpenses();
       if (response.statusCode == 200 && response.body != null) {
         totalDailyExpenses.value = response.body!.total!;
+      } else {
+        totalDailyExpenses.value = 0;
       }
     } finally {
       expensesLoading.value = false;

@@ -1,5 +1,6 @@
 import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/controller/finance_controller.dart';
+import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
 import 'package:dr_ashraf_clinic/db/appointment_api.dart';
 import 'package:dr_ashraf_clinic/model/appointment_model.dart';
 import 'package:dr_ashraf_clinic/utils/formatters/formatter.dart';
@@ -11,6 +12,7 @@ class AppointmentController extends GetxController {
   final _appointmentApi = Get.find<AppointmentApi>();
   final _financeController = Get.find<FinanceController>();
   final _clinicController = Get.find<ClinicController>();
+  final _patientController = Get.find<PatientController>();
   RxList<AppointmentModel> appointmentlst = <AppointmentModel>[].obs;
   RxList<AppointmentModel> patientAppointlst = <AppointmentModel>[].obs;
   RxList<AppointmentModel> appointListByDate = <AppointmentModel>[].obs;
@@ -34,6 +36,7 @@ class AppointmentController extends GetxController {
         HelperFunctions.showSnackBar('The Appointment Added Successfully');
         getPatientAppointment(appointment.patientId);
         addAppointmentFinance(response.body!);
+        _financeController.onPatientAccountListUpdated();
       }
     } finally {
       appointmentsLoading.value = false;
@@ -47,7 +50,21 @@ class AppointmentController extends GetxController {
       if (response.statusCode == 201 && response.body != null) {
         // patientId.value = (response.body!.id!);
         getAppointsByDate();
+        _financeController.getAppointsFinanceByDate();
         HelperFunctions.showSnackBar('Appointment Updated Successfully');
+      }
+    } finally {}
+  }
+
+  Future<void> removeAppointment(int appointId) async {
+    try {
+      var response = await _appointmentApi.remove(appointId);
+
+      if (response.statusCode == 200 && response.body != null) {
+        // patientId.value = (response.body!.id!);
+        getPatientAppointment(_patientController.patientId.value);
+        _financeController.getAppointsFinanceByDate();
+        HelperFunctions.showSnackBar('Appointment Deleted Successfully');
       }
     } finally {}
   }
@@ -99,10 +116,10 @@ class AppointmentController extends GetxController {
     }
   }
 
-  int getAppointmentService(int appId) {
-    return appointmentlst
+  int getAppointmentStatus(int appId) {
+    return appointListByDate
         .firstWhere((element) => element.id == appId)
-        .serviceId;
+        .statusId;
   }
 
   Future<void> getPatientAppointment(int id) async {
@@ -160,36 +177,3 @@ class AppointmentController extends GetxController {
     }
   }
 }
-// if (controller.paid.value) {
-                      //   financeController.addAssetCashOnHand(
-                      //       appointmentId: controller.appointmentlst.length,
-                      //       patientId: id!,
-                      //       dateTime: HFormatter.formatDate(DateTime.now()),
-                      //       serviceId: controller.serviceId.value,
-                      //       fee: 400,
-                      //       debit: 400);
-                      //   financeController.addAccountRecievable(
-                      //     appointmentId: controller.appointmentlst.length,
-                      //     patientId: id!,
-                      //     serviceId: controller.serviceId.value,
-                      //     dateTime: dateController.text,
-                      //     fee: 0,
-                      //     debit: 0,
-                      //   );
-                      // } else {
-                      //   financeController.addAccountRecievable(
-                      //     appointmentId: controller.appointmentlst.length,
-                      //     patientId: id!,
-                      //     serviceId: controller.serviceId.value,
-                      //     dateTime: dateController.text,
-                      //     fee: 400,
-                      //     debit: 400,
-                      //   );
-                      //   financeController.addAssetCashOnHand(
-                      //       appointmentId: controller.appointmentlst.length,
-                      //       patientId: id!,
-                      //       dateTime: HFormatter.formatDate(DateTime.now()),
-                      //       serviceId: controller.serviceId.value,
-                      //       fee: 0,
-                      //       debit: 0);
-                      // }

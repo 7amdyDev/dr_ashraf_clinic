@@ -58,7 +58,7 @@ class PatientTabbedPage extends StatelessWidget {
                                 )
                               : const Center(),
                           patientController.patientId.value != 0
-                              ? const PatientFinance(
+                              ? PatientFinance(
                                   show: false,
                                 )
                               : const Center(),
