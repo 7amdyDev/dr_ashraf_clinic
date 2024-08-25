@@ -9,15 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HNavigationDrawer extends StatelessWidget {
-  const HNavigationDrawer({super.key, required this.isCollapsed});
+  HNavigationDrawer({super.key, required this.isCollapsed});
   final bool isCollapsed;
+  final authController = Get.find<AuthController>();
+  final controller = Get.find<ClinicController>();
   @override
   Widget build(BuildContext context) {
-    final authcontroller = Get.put(AuthController());
     final size = HelperFunctions.screenSize();
     double maxPageWidth = HSizes.maxPageWidth;
 
-    final controller = Get.put(ClinicController());
     double drawerWidth = size.width < maxPageWidth ? size.width * 0.22 : 200;
     return SizedBox(
       width: isCollapsed ? drawerWidth / 2.5 : drawerWidth,
@@ -123,7 +123,7 @@ class HNavigationDrawer extends StatelessWidget {
                 imagePath: 'assets/icons/logout.png',
                 title: 'logout_label',
                 onPressed: () {
-                  authcontroller.signOut();
+                  authController.signOut();
                 },
               ),
               const SizedBox(

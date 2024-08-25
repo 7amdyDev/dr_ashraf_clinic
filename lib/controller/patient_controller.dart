@@ -16,19 +16,6 @@ class PatientController extends GetxController {
     patientId.value = id;
   }
 
-  // Future<void> getPatientList() async {
-  //   isLoading.value = true;
-  //   try {
-  //     var response = await patientApi.getAll();
-
-  //     if (response.statusCode == 200 && response.body != null) {
-  //       patientList.value = (response.body!);
-  //     }
-  //   } finally {
-  //     isLoading.value = false;
-  //   }
-  // }
-
   Future<void> addNewPatient(PatientModel patient) async {
     patientList.clear();
     try {

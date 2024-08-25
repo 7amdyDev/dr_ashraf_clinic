@@ -24,6 +24,7 @@ class AppointmentController extends GetxController {
   void onInit() {
     appointListByDate.clear();
     getAppointsByDate();
+    _financeController.getAppointsFinanceByDate();
     super.onInit();
   }
 
@@ -102,15 +103,16 @@ class AppointmentController extends GetxController {
   // }
 
   Future<AppointmentModel> getAppointmentById(int appId) async {
-    appointListByDate.clear();
+    patientAppointlst.clear();
     appointmentsLoading.value = true;
     try {
       var response = await _appointmentApi.getById(appId);
 
       if (response.statusCode == 200 && response.body != null) {
-        appointListByDate.add(response.body!);
+        patientAppointlst.add(response.body!);
       }
-      return appointListByDate.first;
+      return patientAppointlst
+          .firstWhere((appointment) => appointment.id == appId);
     } finally {
       appointmentsLoading.value = false;
     }

@@ -1,4 +1,5 @@
 import 'package:dr_ashraf_clinic/controller/expense_controller.dart';
+import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
 import 'package:dr_ashraf_clinic/db/asset_api.dart';
 import 'package:dr_ashraf_clinic/db/revenue_api.dart';
 import 'package:dr_ashraf_clinic/model/appointment_model.dart';
@@ -31,14 +32,18 @@ class FinanceController extends GetxController {
   RxInt patientId = 0.obs;
   RxBool finaceLoading = false.obs;
   var expenseController = Get.find<ExpenseController>();
+  var patientController = Get.find<PatientController>();
 // ------------ Account Assets ----------- //
 
   void onPatientAccountListUpdated() async {
     assetDailyIncomelst.clear();
     totalAppointmentAccountslst.clear();
-    await getPatientAppointTotalAccount(patientId.value);
-    await getPatientAssetList(patientId.value);
-    getPatientCardFinance();
+    if (patientId.value != 0) {
+      await getPatientAppointTotalAccount(patientId.value);
+      await getPatientAssetList(patientId.value);
+      getPatientCardFinance();
+    }
+
     getFinanceList();
   }
 
@@ -46,7 +51,7 @@ class FinanceController extends GetxController {
   void onInit() {
     getFinanceList();
     getCash();
-    getAppointsFinanceByDate();
+    patientChanged();
     super.onInit();
   }
 
@@ -97,6 +102,12 @@ class FinanceController extends GetxController {
         finaceLoading.value = false;
       }
     }
+  }
+
+  void patientChanged() {
+    ever(patientController.patientId, (value) {
+      patientId.value = value;
+    });
   }
 
   void getCash() {

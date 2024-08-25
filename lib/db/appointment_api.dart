@@ -5,7 +5,7 @@ class AppointmentApi extends GetConnect {
   @override
   void onInit() {
     super.onInit();
-    httpClient.baseUrl = 'http://localhost:8080';
+    httpClient.baseUrl = 'https://clinicnode.up.railway.app';
     httpClient.defaultContentType = 'application/json; charset=UTF-8';
   }
 

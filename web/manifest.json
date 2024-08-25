@@ -1,11 +1,11 @@
 {
-    "name": "dr_ashraf_clinic",
-    "short_name": "dr_ashraf_clinic",
+    "name": "Dr Ashraf Yehia Clinics",
+    "short_name": "Dr Ashraf Yehia",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Dr Ashraf Yehia Clinics.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

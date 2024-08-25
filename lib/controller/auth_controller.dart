@@ -1,3 +1,4 @@
+import 'package:dr_ashraf_clinic/view/home_page/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
@@ -12,14 +13,15 @@ class AuthController extends GetxController {
       email = 'doctor@drashrafyehia.web.app';
     }
     try {
-      final userCredential = await _auth.signInWithEmailAndPassword(
+      final UserCredential userCredential =
+          await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
       user.value = userCredential.user;
-      if (user.value!.uid == '6FmqXWkkIcRKLN98pWBqk1jOhH43') {
+      if (userCredential.user?.email == 'reception@drashrafyehia.web.app') {
         Get.toNamed('/reception');
-      } else if (user.value!.uid == 'jTZCJBMYBIRW6UCOettsgnYNCeo2') {
+      } else if (userCredential.user?.email == 'doctor@drashrafyehia.web.app') {
         Get.toNamed('/doctor');
       }
     } on FirebaseAuthException catch (e) {
@@ -35,10 +37,14 @@ class AuthController extends GetxController {
 
   Future<void> signOut() async {
     try {
-      await _auth.signOut();
+      await _auth.signOut().then((_) {
+        // Clear all dependenciess
+        Get.to(() => const HomePage());
+      });
       user.value = null;
+
       // Navigate to login screen or home screen based on your app logic
-      Get.offAllNamed('/'); // Replace '/login' with your desired route
+      // Replace '/login' with your desired route
     } catch (e) {
       // Handle sign-out errors
     }

@@ -33,15 +33,11 @@ class DailyIncomeTable extends StatelessWidget {
                 DataColumn(label: TableColumnLabel(text: 'patient_paid_label')),
               ],
               source: _DataSource(data: searchResult),
-
               rowsPerPage: searchResult.isEmpty
                   ? 1
                   : searchResult.length < 8
                       ? searchResult.length
                       : 8,
-              // rowsPerPage:
-              //     searchResult.length < 8 ? searchResult.length : 8 ?? 0,
-              // horizontalMargin: 60,
               showEmptyRows: false,
             ),
           ),

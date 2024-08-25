@@ -11,10 +11,12 @@ class HDropDownMenu extends StatefulWidget {
   State<HDropDownMenu> createState() => _HDropDownMenuState();
 }
 
+final authController = Get.find<AuthController>();
+
 class _HDropDownMenuState extends State<HDropDownMenu> {
   String _selectedItem = 'Reception';
   TextEditingController password = TextEditingController();
-  var authController = Get.put(AuthController());
+
   @override
   Widget build(BuildContext context) {
     return Padding(

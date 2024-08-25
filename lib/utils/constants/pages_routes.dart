@@ -7,6 +7,7 @@ import 'package:dr_ashraf_clinic/view/clinic/reception/screen/patient/new_patien
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/patient/patient_search_page.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/reception_page.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/reservation/reservation_page.dart';
+import 'package:dr_ashraf_clinic/view/contact_us/contact_us_page.dart';
 import 'package:dr_ashraf_clinic/view/home_page/home_page.dart';
 import 'package:get/get.dart';
 
@@ -17,8 +18,9 @@ final routes = [
   GetPage(name: '/newPatient', page: () => const NewPatientPage()),
   GetPage(name: '/patientSearch', page: () => const PatientSearchPage()),
   GetPage(name: '/dialyIncome', page: () => DailyIncomePage()),
-  GetPage(name: '/patientFinance', page: () => PatientFinance()),
+  GetPage(name: '/patientFinance', page: () => const PatientFinance()),
   GetPage(name: '/clinicExpenses', page: () => const ClinicExpensesPage()),
   GetPage(name: '/reserve', page: () => ReservationPage()),
   GetPage(name: '/doctor', page: () => const DoctorPage()),
+  GetPage(name: '/contact_us', page: () => const ContactUsPage()),
 ];

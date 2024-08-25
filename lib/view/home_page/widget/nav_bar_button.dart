@@ -27,10 +27,13 @@ class NavBarButton extends StatelessWidget {
           onPressed: () {
             switch (route) {
               case '/':
-                Get.offNamed('/');
+                Get.toNamed('/');
                 break;
               case '/clinic':
-                Get.offNamed(route);
+                Get.toNamed(route);
+                break;
+              case '/contact_us':
+                Get.toNamed(route);
                 break;
             }
           },
