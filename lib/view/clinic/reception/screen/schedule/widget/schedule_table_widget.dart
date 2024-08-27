@@ -1,4 +1,8 @@
 import 'package:dr_ashraf_clinic/controller/appointment_controller.dart';
+import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
+import 'package:dr_ashraf_clinic/controller/consultation_controller.dart';
+import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
+import 'package:dr_ashraf_clinic/db/consultation_api.dart';
 import 'package:dr_ashraf_clinic/model/finance_models.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
@@ -57,8 +61,10 @@ class HScheduleDataTable extends StatelessWidget {
 
 class _DataSource extends DataTableSource {
   final List<AppointmentFinance> data;
+  final consultationController = Get.find<ConsultationController>();
   final appointmentController = Get.find<AppointmentController>();
-
+  final patientController = Get.find<PatientController>();
+  final clinicController = Get.find<ClinicController>();
   _DataSource({required this.data});
   @override
   DataRow? getRow(int index) {
@@ -70,7 +76,18 @@ class _DataSource extends DataTableSource {
 
     return DataRow(cells: [
       DataCell(TableDataCell(text: (index + 1).toString())),
-      DataCell(TableDataCell(text: item.name)),
+      DataCell(
+        TableDataCell(text: item.name),
+        onTap: () {
+          patientController.choosePatient(item.patientId);
+          var route = Get.currentRoute;
+          if (route == '/doctor') {
+            consultationController.getConsultIdByAppointId(item.appointmentId);
+            consultationController.getConsultationByPatientId(item.patientId);
+            clinicController.doctorPageIndex.value = 7;
+          }
+        },
+      ),
       DataCell(TableDataCell(text: HFormatter.formatStringDate(item.date))),
       DataCell(TableDataCell(
           text: HValidator.serviceIdValidation(item.serviceId).tr)),

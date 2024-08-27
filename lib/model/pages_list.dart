@@ -25,5 +25,5 @@ List doctorPagesList = [
   DailyIncomePage(),
   const PatientFinance(),
   const ClinicExpensesPage(),
-  const NewCheckPage(),
+  NewCheckPage(),
 ];

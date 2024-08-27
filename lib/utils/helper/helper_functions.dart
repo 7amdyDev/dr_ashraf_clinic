@@ -141,7 +141,7 @@ class HelperFunctions {
       maxWidth: 500,
       margin: const EdgeInsets.all(15),
       colorText: Colors.white,
-      duration: const Duration(seconds: 3),
+      duration: const Duration(seconds: 2),
       isDismissible: true,
       forwardAnimationCurve: Curves.easeOutBack,
     );

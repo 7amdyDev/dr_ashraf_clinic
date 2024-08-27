@@ -197,6 +197,11 @@ class AppTranslation extends Translations {
           'check_label': 'كشف',
           'consult_label': 'متابعة',
           'cash_receipt_label': 'إيصال دفع',
+          'temperature_label': '',
+          'blood_pressure_label': '',
+          'symptoms_label': '',
+          'diagnosis_label': '',
+          'prescription_label': '',
         },
       };
 }

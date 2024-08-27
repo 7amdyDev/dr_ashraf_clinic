@@ -11,7 +11,7 @@ class PatientInfoTable extends StatelessWidget {
     super.key,
     required this.patientModel,
   });
-  final List<PatientModel> patientModel;
+  final PatientModel patientModel;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -37,16 +37,15 @@ class PatientInfoTable extends StatelessWidget {
             DataRow(
               color: const WidgetStatePropertyAll(HColors.primaryBackground),
               cells: [
-                DataCell(TableDataCell(text: '${patientModel[0].id}')),
-                DataCell(TableDataCell(text: patientModel[0].name)),
-                DataCell(TableDataCell(text: patientModel[0].age.toString())),
+                DataCell(TableDataCell(text: '${patientModel.id}')),
+                DataCell(TableDataCell(text: patientModel.name)),
+                DataCell(TableDataCell(text: patientModel.age.toString())),
                 DataCell(
                   TableDataCell(
-                      text:
-                          HValidator.genderIdValidation(patientModel[0].gender)
-                              .tr),
+                      text: HValidator.genderIdValidation(patientModel.gender)
+                          .tr),
                 ),
-                DataCell(TableDataCell(text: patientModel[0].address)),
+                DataCell(TableDataCell(text: patientModel.address)),
               ],
             ),
           ],
