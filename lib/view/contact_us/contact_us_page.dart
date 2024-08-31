@@ -1,8 +1,3 @@
-import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
-import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
-import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
-import 'package:dr_ashraf_clinic/view/home_page/widget/nav_bar.dart';
-import 'package:dr_ashraf_clinic/view/home_page/widget/rectangle_image_shadow.dart';
 import 'package:flutter/material.dart';
 
 class ContactUsPage extends StatelessWidget {
@@ -10,36 +5,145 @@ class ContactUsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = HelperFunctions.screenSize();
-    double maxPageWidth = HSizes.maxPageWidth;
     return Scaffold(
-      backgroundColor: HColors.secondary,
+      backgroundColor: Color(0xFFEDF3FF),
       body: Center(
-        heightFactor: 1,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Container(
-            constraints: BoxConstraints(maxWidth: maxPageWidth),
-            child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 50),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
                 children: [
-                  const HNavBar(),
-                  const SizedBox(
-                    height: HSizes.spaceBtwSections * 2,
+                  Text(
+                    'Connect with Us!',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  RectangleImage(
-                      width: size.width / 3,
-                      height: size.width / 3.5,
-                      shadow: false,
-                      imagePath: 'assets/images/Personal.png'),
-                  const SizedBox(
-                    height: HSizes.spaceBtwSections,
+                  SizedBox(height: 16),
+                  Text(
+                    'Feel free to reach out to us for further information!',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black54,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),
             ),
-          ),
+            SizedBox(height: 20),
+            ContactSection(
+              phoneNumber: '01270777375',
+              timings: 'المواعيد من ٨ الي ١١ مساء\nعدا الجمعة',
+              address: 'عيادة سموحة ٥٧ ش فيكتور عمانويل أمام زهران مول',
+            ),
+            SizedBox(height: 16),
+            ContactSection(
+              phoneNumber: '01157512697 / 034111190',
+              timings: 'المواعيد من ٨ الي ١١ مساء\nعدا الجمعة',
+              address:
+                  'عيادة العجمي أبو يوسف ش إسكندرية مطروح أمام صيدلية المعراج',
+            ),
+            SizedBox(height: 30),
+            Column(
+              children: [
+                CircleAvatar(
+                  radius: 60,
+                  backgroundImage: AssetImage(
+                      'assets/dr_ashraf_yehia.png'), // Replace with the actual image path
+                ),
+                SizedBox(height: 16),
+                Text(
+                  'Dr. Ashraf Yehia',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
+      ),
+    );
+  }
+}
+
+class ContactSection extends StatelessWidget {
+  final String phoneNumber;
+  final String timings;
+  final String address;
+
+  ContactSection({
+    required this.phoneNumber,
+    required this.timings,
+    required this.address,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(16),
+      margin: EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        color: Color(0xFFFFE39F),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Icon(Icons.phone, color: Colors.black),
+              SizedBox(width: 10),
+              Text(
+                phoneNumber,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 16),
+          Row(
+            children: [
+              Icon(Icons.access_time, color: Colors.black),
+              SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  timings,
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 16),
+          Row(
+            children: [
+              Icon(Icons.location_on, color: Colors.black),
+              SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  address,
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

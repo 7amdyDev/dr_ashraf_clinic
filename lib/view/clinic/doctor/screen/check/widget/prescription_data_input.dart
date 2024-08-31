@@ -1,6 +1,7 @@
 import 'package:dr_ashraf_clinic/controller/consultation_controller.dart';
 import 'package:dr_ashraf_clinic/model/consultation_model.dart';
-import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
+import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
+import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/doctor_text_add.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/label_text_widget.dart';
 import 'package:flutter/material.dart';
@@ -16,29 +17,33 @@ class PrescriptionDataInput extends StatelessWidget {
     TextEditingController prescriptionEditingController =
         TextEditingController();
     return Container(
-      width: HelperFunctions.screenWidth() / 4,
+      padding: const EdgeInsets.all(8),
+      width: HSizes.maxPageWidth / 4,
       decoration: BoxDecoration(
           border: Border.all(width: 1),
+          color: HColors.primaryBackground,
           boxShadow: const [
             BoxShadow(
               blurRadius: 2,
-              color: Colors.white10,
+              color: Colors.black,
               offset: Offset(0, 2),
             )
           ],
           borderRadius: BorderRadius.circular(10)),
       child: Column(
         children: [
-          const LabelTextWidget(text: 'Prescription'),
+          LabelTextWidget(text: 'prescription_label'.tr),
           DoctorTextAddWidget(
             textEditingController: prescriptionEditingController,
-            label: 'Medicine',
+            label: 'medicine_label'.tr,
             onPressed: () {
-              PrescriptionModel record = PrescriptionModel(
-                  consultationId: consultationController.consultId.value,
-                  medicine: prescriptionEditingController.text);
-              consultationController.addPrescription(record);
-              prescriptionEditingController.clear();
+              if (prescriptionEditingController.text.isNotEmpty) {
+                PrescriptionModel record = PrescriptionModel(
+                    consultationId: consultationController.consultId.value,
+                    medicine: prescriptionEditingController.text);
+                consultationController.addPrescription(record);
+                prescriptionEditingController.clear();
+              }
             },
           ),
         ],

@@ -20,8 +20,6 @@ class NewCheckPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var consultationlst = consultationController.consultationList;
-
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -87,23 +85,17 @@ class NewCheckPage extends StatelessWidget {
                 const SizedBox(
                   height: HSizes.spaceBtwSections,
                 ),
-                Obx(() => consultationController.consultId.value != 0
-                    ? Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          PrescriptionTableWidget(
-                              consultationId:
-                                  consultationController.consultId.value),
-                          DiagnosisTableWidget(
-                              consultationId:
-                                  consultationController.consultId.value),
-                          SymptomsTableWidget(
-                              consultationId:
-                                  consultationController.consultId.value),
-                        ],
-                      )
-                    : const SizedBox())
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SymptomsTableWidget(
+                        consultationId: consultationController.consultId.value),
+                    DiagnosisTableWidget(
+                        consultationId: consultationController.consultId.value),
+                    PrescriptionTableWidget(),
+                  ],
+                )
               ],
             ),
           ),

@@ -50,6 +50,7 @@ class DoctorTextAddWidget extends StatelessWidget {
             style: TextStyle(
               fontSize: textFontSize,
             ),
+            onEditingComplete: onPressed,
             decoration: InputDecoration(
               prefixIcon: IconButton(
                 icon: const Icon(

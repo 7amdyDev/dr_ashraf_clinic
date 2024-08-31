@@ -41,10 +41,22 @@ class ConsultationController extends GetxController {
 
       if (response.statusCode == 200 && response.body != null) {
         consultId.value = response.body!.id!;
+        getConsultAllData();
       }
     } finally {
       consultLoading.value = false;
     }
+  }
+
+  Future<void> updateConsultation(ConsultationModel consult) async {
+    try {
+      var response = await consultationApi.update(consult);
+
+      if (response.statusCode == 201 && response.body != null) {
+        HelperFunctions.showSnackBar('Record Updated Successfully');
+        getConsultationByPatientId(consult.patientId);
+      }
+    } finally {}
   }
 
   Future<ConsultationModel> getConsultById(int id) async {

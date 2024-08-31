@@ -4,7 +4,7 @@ class ConsultationModel {
   String dateTime;
   int patientId;
   String? bloodPressure;
-  int? temperature;
+  String? temperature;
   String? note;
   int serviceId;
   ConsultationModel(
@@ -54,7 +54,7 @@ class ConsultationModel {
     String? dateTime,
     int? patientId,
     String? bloodPressure,
-    int? temperature,
+    String? temperature,
     String? note,
     int? serviceId,
   }) {

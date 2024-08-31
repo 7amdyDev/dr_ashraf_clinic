@@ -2,7 +2,6 @@ import 'package:dr_ashraf_clinic/controller/appointment_controller.dart';
 import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/controller/consultation_controller.dart';
 import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
-import 'package:dr_ashraf_clinic/db/consultation_api.dart';
 import 'package:dr_ashraf_clinic/model/finance_models.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
