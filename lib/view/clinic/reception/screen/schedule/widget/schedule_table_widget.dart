@@ -83,6 +83,7 @@ class _DataSource extends DataTableSource {
           if (route == '/doctor') {
             consultationController.getConsultIdByAppointId(item.appointmentId);
             consultationController.getConsultationByPatientId(item.patientId);
+            consultationController.appointId.value = item.appointmentId;
             clinicController.doctorPageIndex.value = 7;
           }
         },

@@ -1,4 +1,5 @@
 import 'package:dr_ashraf_clinic/controller/consultation_controller.dart';
+import 'package:dr_ashraf_clinic/model/consultation_model.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
@@ -9,10 +10,12 @@ import 'package:get/get.dart';
 class DiagnosisTableWidget extends StatelessWidget {
   DiagnosisTableWidget({
     super.key,
-    required this.consultationId,
+    required this.diagnosisList,
+    this.previousCheck = false,
   });
 
-  final int consultationId;
+  final bool previousCheck;
+  final List<DiagnosisModel> diagnosisList;
   final consultationController = Get.find<ConsultationController>();
   @override
   Widget build(BuildContext context) {
@@ -20,6 +23,13 @@ class DiagnosisTableWidget extends StatelessWidget {
           constraints: const BoxConstraints(maxWidth: HSizes.maxPageWidth / 4),
           decoration: BoxDecoration(
               color: HColors.primaryBackground,
+              boxShadow: const [
+                BoxShadow(
+                  offset: Offset(0, 2),
+                  blurRadius: 5,
+                  color: Colors.black54,
+                )
+              ],
               borderRadius: BorderRadius.circular(10),
               border: Border.all(width: 2)),
           child: Column(
@@ -40,14 +50,16 @@ class DiagnosisTableWidget extends StatelessWidget {
                     style: const TextStyle(
                         fontSize: 24, fontWeight: FontWeight.bold),
                   )),
-              SizedBox(
-                height: HelperFunctions.screenHeight() / 3.5,
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                    maxHeight: HelperFunctions.screenHeight() / 4,
+                    minHeight: 40),
                 child: ListView.separated(
                   shrinkWrap: true,
                   separatorBuilder: (context, int index) => const Divider(
                     height: 1,
                   ),
-                  itemCount: consultationController.diagnosisList.length,
+                  itemCount: diagnosisList.length,
                   itemBuilder: (context, int index) {
                     return SizedBox(
                       height: 40,
@@ -57,21 +69,21 @@ class DiagnosisTableWidget extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            InkWell(
-                              child: const Icon(
-                                Icons.delete_forever,
-                                color: Colors.red,
-                              ),
-                              onTap: () {
-                                consultationController.deleteDiagnosis(
-                                    consultationController
-                                        .diagnosisList[index].id!);
-                              },
-                            ),
+                            !previousCheck
+                                ? InkWell(
+                                    child: const Icon(
+                                      Icons.delete_forever,
+                                      color: Colors.red,
+                                    ),
+                                    onTap: () {
+                                      consultationController.deleteDiagnosis(
+                                          diagnosisList[index].id!);
+                                    },
+                                  )
+                                : Container(),
                             Expanded(
                               child: TableDataCell(
-                                  text: consultationController
-                                      .diagnosisList[index].description),
+                                  text: diagnosisList[index].description),
                             ),
                           ],
                         ),

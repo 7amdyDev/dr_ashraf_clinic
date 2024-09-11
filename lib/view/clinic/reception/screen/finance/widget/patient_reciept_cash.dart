@@ -101,8 +101,8 @@ class PatientReceiptCashCard extends StatelessWidget {
                               financeController.addPatientCashReceipt(
                                   appointData, amount);
                               valueController.clear();
-                              financeController
-                                  .getCashRecieptOnAppointment(appointData.id!);
+                              financeController.getCashRecieptOnAppointment(
+                                  appointData.id!, appointData.serviceId);
                             }
                           }
                         })
@@ -117,9 +117,9 @@ class PatientReceiptCashCard extends StatelessWidget {
                       onPressed: () {
                         financeController.removePatientCashReceipt(
                             financeController.accountRecordId.value,
-                            appointData.id!);
-                        financeController
-                            .getCashRecieptOnAppointment(appointData.id!);
+                            appointData);
+                        financeController.getCashRecieptOnAppointment(
+                            appointData.id!, appointData.serviceId);
                       })
                   : const SizedBox(
                       width: 0,

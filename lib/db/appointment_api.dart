@@ -15,6 +15,9 @@ class AppointmentApi extends GetConnect {
   Future<Response<AppointmentModel>> getById(int id) =>
       get('/appointments/$id', decoder: AppointmentModel.fromJson);
 
+  // Future<Response<AppointmentModel>> getByIdService(int id, int serviceId) =>
+  //     get('/appointments/$id/$serviceId', decoder: AppointmentModel.fromJson);
+
   Future<Response<List<AppointmentModel>>> getByDate(DateTime date) =>
       get('/appointments/date/$date', decoder: AppointmentModel.listFromJson);
 

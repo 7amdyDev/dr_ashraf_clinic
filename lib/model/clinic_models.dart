@@ -33,18 +33,16 @@ class AccountsId {
 class ServicesId {
   final int id;
   final String serviceName;
-  final int fee;
+
   ServicesId({
     required this.id,
     required this.serviceName,
-    required this.fee,
   });
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'service_name': serviceName,
-      'fee': fee,
     };
   }
 
@@ -52,12 +50,73 @@ class ServicesId {
     return ServicesId(
       id: json['id'],
       serviceName: json['service_name'],
-      fee: json['fee'],
     );
   }
 
   static List<ServicesId> listFromJson(dynamic json) {
     return List<ServicesId>.from(
         json.map((service) => ServicesId.fromJson(service)));
+  }
+}
+
+class ClinicId {
+  final int id;
+  final String branch;
+  ClinicId({
+    required this.id,
+    required this.branch,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'branch': branch,
+    };
+  }
+
+  factory ClinicId.fromJson(dynamic json) {
+    return ClinicId(
+      id: json['id'] as int,
+      branch: json['branch'] as String,
+    );
+  }
+
+  static List<ClinicId> listFromJson(dynamic json) {
+    return List<ClinicId>.from(json.map((clinic) => ClinicId.fromJson(clinic)));
+  }
+}
+
+class Fee {
+  final int id;
+  final int fee;
+  final int serviceId;
+  final int clinicId;
+  Fee({
+    required this.id,
+    required this.fee,
+    required this.serviceId,
+    required this.clinicId,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'fee': fee,
+      'service_id': serviceId,
+      'clinic_id': clinicId,
+    };
+  }
+
+  factory Fee.fromJson(dynamic json) {
+    return Fee(
+      id: json['id'] as int,
+      fee: json['fee'] as int,
+      serviceId: json['service_id'] as int,
+      clinicId: json['clinic_id'] as int,
+    );
+  }
+
+  static List<Fee> listFromJson(dynamic json) {
+    return List<Fee>.from(json.map((fee) => Fee.fromJson(fee)));
   }
 }

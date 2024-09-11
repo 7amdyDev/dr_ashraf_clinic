@@ -6,6 +6,7 @@ class AssetAccountsModel {
   final String date;
   final int serviceId;
   final int fee;
+  final int clinicId;
   int discount;
   int debit;
 
@@ -17,6 +18,7 @@ class AssetAccountsModel {
     required this.date,
     required this.serviceId,
     required this.fee,
+    required this.clinicId,
     this.discount = 0,
     required this.debit,
   });
@@ -31,6 +33,7 @@ class AssetAccountsModel {
     int? fee,
     int? discount,
     int? debit,
+    int? clinicId,
   }) {
     return AssetAccountsModel(
       id: id ?? this.id,
@@ -42,6 +45,7 @@ class AssetAccountsModel {
       fee: fee ?? this.fee,
       discount: discount ?? this.discount,
       debit: debit ?? this.debit,
+      clinicId: clinicId ?? this.clinicId,
     );
   }
 
@@ -56,21 +60,22 @@ class AssetAccountsModel {
       'fee': fee,
       'discount': discount,
       'debit': debit,
+      'clinic_id': clinicId,
     };
   }
 
   factory AssetAccountsModel.fromJson(dynamic json) {
     return AssetAccountsModel(
-      id: json['id'],
-      accountId: json['account_id'],
-      appointmentId: json['appointment_id'],
-      patientId: json['patient_id'],
-      date: json['date'],
-      serviceId: json['service_id'],
-      fee: json['fee'],
-      discount: json['discount'],
-      debit: json['debit'],
-    );
+        id: json['id'],
+        accountId: json['account_id'],
+        appointmentId: json['appointment_id'],
+        patientId: json['patient_id'],
+        date: json['date'],
+        serviceId: json['service_id'],
+        fee: json['fee'],
+        discount: json['discount'],
+        debit: json['debit'],
+        clinicId: json['clinic_id']);
   }
 
   static List<AssetAccountsModel> listFromJson(dynamic json) {
@@ -87,6 +92,7 @@ class RevenueAccounts {
   final String dateTime;
   final int amount;
   final int serviceId;
+  final int clinicId;
 
   RevenueAccounts({
     this.id,
@@ -96,6 +102,7 @@ class RevenueAccounts {
     required this.dateTime,
     required this.amount,
     required this.serviceId,
+    required this.clinicId,
   });
 
   RevenueAccounts copyWith({
@@ -106,6 +113,7 @@ class RevenueAccounts {
     String? dateTime,
     int? amount,
     int? serviceId,
+    int? clinicId,
   }) {
     return RevenueAccounts(
       id: id ?? this.id,
@@ -115,6 +123,7 @@ class RevenueAccounts {
       dateTime: dateTime ?? this.dateTime,
       amount: amount ?? this.amount,
       serviceId: serviceId ?? this.serviceId,
+      clinicId: clinicId ?? this.clinicId,
     );
   }
 
@@ -122,11 +131,12 @@ class RevenueAccounts {
     return {
       'id': id,
       'revenue_account': revenueAccount,
-      'appointment_Id': appointmentId,
-      'patient_Id': patientId,
+      'appointment_id': appointmentId,
+      'patient_id': patientId,
       'dateTime': dateTime,
       'amount': amount,
-      'service_Id': serviceId,
+      'service_id': serviceId,
+      'clinic_id': clinicId,
     };
   }
 
@@ -134,11 +144,12 @@ class RevenueAccounts {
     return RevenueAccounts(
       id: json['id'],
       revenueAccount: json['revenue_account'],
-      appointmentId: json['appointment_Id'],
-      patientId: json['patient_Id'],
+      appointmentId: json['appointment_id'],
+      patientId: json['patient_id'],
       dateTime: json['dateTime'],
       amount: json['amount'],
-      serviceId: json['service_Id'],
+      serviceId: json['service_id'],
+      clinicId: json['clinic_id'],
     );
   }
 
@@ -152,10 +163,11 @@ class AppointmentFinance {
   final int appointmentId;
   final int patientId;
   final String fee;
-  final String paid;
+  final String? paid;
   final String unPaid;
   final String date;
   final int serviceId;
+  final int clinicId;
   final String name;
   final String mobile;
   AppointmentFinance({
@@ -166,6 +178,7 @@ class AppointmentFinance {
     required this.unPaid,
     required this.date,
     required this.serviceId,
+    required this.clinicId,
     required this.name,
     required this.mobile,
   });
@@ -179,6 +192,7 @@ class AppointmentFinance {
       'unpaid': unPaid,
       'date': date,
       'service_id': serviceId,
+      'clinic_id': clinicId,
       'name': name,
       'mobile': mobile,
     };
@@ -189,10 +203,11 @@ class AppointmentFinance {
       appointmentId: json['appointment_id'],
       patientId: json['patient_id'],
       fee: json['fee'],
-      paid: json['paid'],
+      paid: json['paid'] ?? 0,
       unPaid: json['unpaid'],
       date: json['date'],
       serviceId: json['service_id'],
+      clinicId: json['clinic_id'],
       name: json['name'],
       mobile: json['mobile'],
     );
@@ -200,7 +215,7 @@ class AppointmentFinance {
 
   static List<AppointmentFinance> listFromJson(dynamic json) {
     return List<AppointmentFinance>.from(
-        json.map((revenue) => AppointmentFinance.fromJson(revenue)));
+        json.map((finance) => AppointmentFinance.fromJson(finance)));
   }
 }
 

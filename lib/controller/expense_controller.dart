@@ -1,3 +1,4 @@
+import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/db/expense_api.dart';
 import 'package:dr_ashraf_clinic/model/expense_model.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,7 @@ class ExpenseController extends GetxController {
   RxInt expenseId = 0.obs;
   RxInt totalDailyExpenses = 0.obs;
   RxList<ExpenseModel> expenseslst = <ExpenseModel>[].obs;
-
+  final _clinicController = Get.find<ClinicController>();
   @override
   void onInit() {
     getExpensesList();
@@ -24,7 +25,8 @@ class ExpenseController extends GetxController {
   Future<void> getExpensesByDate(DateTime date) async {
     expensesLoading.value = true;
     try {
-      var response = await expenseApi.getByDate(date);
+      var response =
+          await expenseApi.getByDate(_clinicController.clinicId.value, date);
       if (response.statusCode == 200) {
         expenseslst.value = response.body!;
       }
@@ -36,7 +38,8 @@ class ExpenseController extends GetxController {
   Future<void> getTotalDailyExpenses() async {
     expensesLoading.value = true;
     try {
-      var response = await expenseApi.getTotalDailyExpenses();
+      var response = await expenseApi
+          .getTotalDailyExpenses(_clinicController.clinicId.value);
       if (response.statusCode == 200 && response.body != null) {
         totalDailyExpenses.value = response.body!.total!;
       } else {

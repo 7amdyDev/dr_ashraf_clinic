@@ -1,4 +1,5 @@
 import 'package:dr_ashraf_clinic/controller/consultation_controller.dart';
+import 'package:dr_ashraf_clinic/model/consultation_model.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
@@ -9,10 +10,12 @@ import 'package:get/get.dart';
 class SymptomsTableWidget extends StatelessWidget {
   SymptomsTableWidget({
     super.key,
-    required this.consultationId,
+    required this.symptomsList,
+    this.previousCheck = false,
   });
 
-  final int consultationId;
+  final List<SymptomsModel> symptomsList;
+  final bool previousCheck;
   final consultationController = Get.find<ConsultationController>();
   @override
   Widget build(BuildContext context) {
@@ -21,6 +24,13 @@ class SymptomsTableWidget extends StatelessWidget {
           constraints: const BoxConstraints(maxWidth: HSizes.maxPageWidth / 4),
           decoration: BoxDecoration(
               color: HColors.primaryBackground,
+              boxShadow: const [
+                BoxShadow(
+                  offset: Offset(0, 2),
+                  blurRadius: 5,
+                  color: Colors.black54,
+                )
+              ],
               borderRadius: BorderRadius.circular(10),
               border: Border.all(width: 2)),
           child: Column(
@@ -41,13 +51,17 @@ class SymptomsTableWidget extends StatelessWidget {
                     style: const TextStyle(
                         fontSize: 24, fontWeight: FontWeight.bold),
                   )),
-              SizedBox(
-                height: HelperFunctions.screenHeight() / 3.5,
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                    maxHeight: HelperFunctions.screenHeight() / 4,
+                    minHeight: 40),
                 child: ListView.separated(
                   separatorBuilder: (context, int index) => const Divider(
                     height: 1,
                   ),
-                  itemCount: consultationController.symptomsList.length,
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: symptomsList.length,
                   itemBuilder: (context, int index) {
                     return SizedBox(
                       height: 40,
@@ -57,21 +71,21 @@ class SymptomsTableWidget extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            InkWell(
-                              child: const Icon(
-                                Icons.delete_forever,
-                                color: Colors.red,
-                              ),
-                              onTap: () {
-                                consultationController.deleteSymptoms(
-                                    consultationController
-                                        .symptomsList[index].id!);
-                              },
-                            ),
+                            !previousCheck
+                                ? InkWell(
+                                    child: const Icon(
+                                      Icons.delete_forever,
+                                      color: Colors.red,
+                                    ),
+                                    onTap: () {
+                                      consultationController.deleteSymptoms(
+                                          symptomsList[index].id!);
+                                    },
+                                  )
+                                : Container(),
                             Expanded(
                               child: TableDataCell(
-                                  text: consultationController
-                                      .symptomsList[index].description),
+                                  text: symptomsList[index].description),
                             ),
                           ],
                         ),

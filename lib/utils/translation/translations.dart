@@ -103,6 +103,10 @@ class AppTranslation extends Translations {
           'diagnosis_label': 'Diagnostics',
           'prescription_label': 'Prescription',
           'medicine_label': 'Medicine',
+          'previous_check_label': 'Previous Check',
+          'check_finance_label': 'Check Finance',
+          'upper_endoscopy_label': 'Upper Endoscopy',
+          'lower_endoscopy_label': 'Lower Endoscopy',
         },
         'ar_EG': {
           'app_name': 'عيادات الدكتور أشرف يحيي',
@@ -209,6 +213,10 @@ class AppTranslation extends Translations {
           'diagnosis_label': 'التشخيص',
           'prescription_label': 'الروشتة',
           'medicine_label': 'الدواء',
+          'previous_check_label': 'كشف سابق',
+          'check_finance_label': 'حسابات الكشف',
+          'upper_endoscopy_label': 'منظار علوي',
+          'lower_endoscopy_label': 'منظار سفلي',
         },
       };
 }

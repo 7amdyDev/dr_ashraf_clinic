@@ -1,4 +1,5 @@
 import 'package:dr_ashraf_clinic/controller/appointment_controller.dart';
+import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/model/appointment_model.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/utils/formatters/formatter.dart';
@@ -22,6 +23,7 @@ class PatientReservationCardWidget extends StatelessWidget {
   });
   final AppointmentController appointmentController =
       Get.find<AppointmentController>();
+  final _clinicController = Get.find<ClinicController>();
 
   final TextEditingController dateController;
   final int? id;
@@ -102,6 +104,7 @@ class PatientReservationCardWidget extends StatelessWidget {
                     appointment = AppointmentModel(
                         statusId: 0,
                         patientId: id!,
+                        clinicId: _clinicController.clinicId.value,
                         serviceId: appointmentController.serviceId.value,
                         date:
                             HFormatter.reverseFormatDate(dateController.text));

@@ -23,7 +23,7 @@ class ClinicNameLogo extends StatelessWidget {
         ),
         FittedBox(
           fit: BoxFit.scaleDown,
-          child: ButtonBar(children: [
+          child: OverflowBar(children: [
             Text(
               'app_name'.tr,
               style: Get.locale == const Locale('en', 'US')

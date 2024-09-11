@@ -1,4 +1,4 @@
-import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/new_check_page.dart';
+import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/check_page.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/finance/clinic_expenses_page.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/finance/daily_income_page.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/finance/patient_finance.dart';
@@ -25,5 +25,5 @@ List doctorPagesList = [
   DailyIncomePage(),
   const PatientFinance(),
   const ClinicExpensesPage(),
-  NewCheckPage(),
+  CheckPage(),
 ];

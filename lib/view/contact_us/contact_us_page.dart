@@ -5,7 +5,7 @@ class ContactUsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Color(0xFFEDF3FF),
       body: Center(
         child: Column(
@@ -13,7 +13,7 @@ class ContactUsPage extends StatelessWidget {
           children: [
             SizedBox(height: 50),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
                 children: [
                   Text(
@@ -81,7 +81,7 @@ class ContactSection extends StatelessWidget {
   final String timings;
   final String address;
 
-  ContactSection({
+  const ContactSection({super.key, 
     required this.phoneNumber,
     required this.timings,
     required this.address,
@@ -90,36 +90,36 @@ class ContactSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
-      margin: EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: Color(0xFFFFE39F),
+        color: const Color(0xFFFFE39F),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
         children: [
           Row(
             children: [
-              Icon(Icons.phone, color: Colors.black),
-              SizedBox(width: 10),
+              const Icon(Icons.phone, color: Colors.black),
+              const SizedBox(width: 10),
               Text(
                 phoneNumber,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   color: Colors.black,
                 ),
               ),
             ],
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Row(
             children: [
-              Icon(Icons.access_time, color: Colors.black),
-              SizedBox(width: 10),
+              const Icon(Icons.access_time, color: Colors.black),
+              const SizedBox(width: 10),
               Expanded(
                 child: Text(
                   timings,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                     color: Colors.black,
                   ),
@@ -127,15 +127,15 @@ class ContactSection extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Row(
             children: [
-              Icon(Icons.location_on, color: Colors.black),
-              SizedBox(width: 10),
+              const Icon(Icons.location_on, color: Colors.black),
+              const SizedBox(width: 10),
               Expanded(
                 child: Text(
                   address,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                     color: Colors.black,
                   ),

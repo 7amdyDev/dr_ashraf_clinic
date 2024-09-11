@@ -5,6 +5,7 @@ import 'package:dr_ashraf_clinic/utils/constants/api_constants.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logging/logging.dart';
 
 class ClinicController extends GetxController {
   var clinicApi = Get.find<ClinicApi>();
@@ -14,6 +15,8 @@ class ClinicController extends GetxController {
   RxInt doctorPageIndex = 0.obs;
   RxList<ServicesId> servicesId = <ServicesId>[].obs;
   RxList<AccountsId> expensesId = <AccountsId>[].obs;
+  RxList<Fee> feeList = <Fee>[].obs;
+  RxInt clinicId = 1.obs;
   final database = FirebaseDatabase.instance;
 
   @override
@@ -42,6 +45,8 @@ class ClinicController extends GetxController {
   }
 
   Future<void> getClinicData() async {
+    var log = Logger('get Clinic Data');
+
     try {
       var response = await clinicApi.getServices();
 
@@ -55,6 +60,15 @@ class ClinicController extends GetxController {
 
       if (response.statusCode == 200 && response.body != null) {
         expensesId.addAll(response.body!);
+      }
+    } finally {}
+
+    try {
+      var response = await clinicApi.getFee();
+
+      if (response.statusCode == 200 && response.body != null) {
+        log.fine(response.body);
+        feeList.addAll(response.body!);
       }
     } finally {}
   }

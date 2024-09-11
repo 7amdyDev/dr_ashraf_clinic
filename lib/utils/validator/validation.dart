@@ -121,6 +121,12 @@ class HValidator {
       case (2):
         result = 'consult_label';
         break;
+      case (3):
+        result = 'upper_endoscopy_label';
+        break;
+      case (4):
+        result = 'lower_endoscopy_label';
+        break;
 
       default:
         result = 'check_label';

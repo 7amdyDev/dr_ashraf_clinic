@@ -15,6 +15,9 @@ class ClinicApi extends GetConnect {
   Future<Response<List<AccountsId>>> getExpensesId() =>
       get('/getExpensesId', decoder: AccountsId.listFromJson);
 
+  Future<Response<List<Fee>>> getFee() =>
+      get('/getFee', decoder: Fee.listFromJson);
+
   // Future<Response<List<AssetAccountsModel>>> getByPatientId(int id) =>
   //     get('/assets/patient/$id', decoder: AssetAccountsModel.listFromJson);
 

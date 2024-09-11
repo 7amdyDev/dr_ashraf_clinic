@@ -77,7 +77,7 @@ class AppointmentController extends GetxController {
       try {
         var response =
             await _appointmentApi.getByDate(DateUtils.dateOnly(DateTime.now()));
-
+        print(response.body);
         if (response.statusCode == 200 && response.body != null) {
           appointListByDate.addAll(response.body!);
         }
@@ -139,8 +139,10 @@ class AppointmentController extends GetxController {
   }
 
   void addAppointmentFinance(AppointmentModel appointment) {
-    int serviceFee = _clinicController.servicesId
-        .firstWhere((service) => service.id == appointment.serviceId)
+    int serviceFee = _clinicController.feeList
+        .firstWhere((fee) =>
+            fee.serviceId == appointment.serviceId &&
+            fee.clinicId == appointment.clinicId)
         .fee;
     if (paid.value) {
       _financeController.addAssetCashOnHand(

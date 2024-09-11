@@ -3,12 +3,14 @@ class ExpenseModel {
   String description;
   int value;
   int accountId;
+  int clinicId;
   String date;
   ExpenseModel({
     this.id,
     required this.description,
     required this.value,
     required this.accountId,
+    required this.clinicId,
     required this.date,
   });
   Map<String, dynamic> toJson() {
@@ -17,17 +19,18 @@ class ExpenseModel {
       'description': description,
       'value': value,
       'account_id': accountId,
-      'date': date
+      'date': date,
+      'clinic_id': clinicId,
     };
   }
 
   factory ExpenseModel.fromJson(dynamic json) => ExpenseModel(
-        id: json["id"],
-        description: json["description"],
-        value: json["value"],
-        accountId: json["account_id"],
-        date: json["date"],
-      );
+      id: json["id"],
+      description: json["description"],
+      value: json["value"],
+      accountId: json["account_id"],
+      date: json["date"],
+      clinicId: json["clinic_id"]);
 
   static List<ExpenseModel> listFromJson(dynamic json) {
     return List<ExpenseModel>.from(
@@ -40,6 +43,7 @@ class ExpenseModel {
     int? value,
     int? accountId,
     String? date,
+    int? clinicId,
   }) {
     return ExpenseModel(
       id: id ?? this.id,
@@ -47,6 +51,7 @@ class ExpenseModel {
       value: value ?? this.value,
       accountId: accountId ?? this.accountId,
       date: date ?? this.date,
+      clinicId: clinicId ?? this.clinicId,
     );
   }
 }

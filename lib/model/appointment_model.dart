@@ -3,6 +3,7 @@ class AppointmentModel {
   final int patientId;
   final int serviceId;
   final int statusId;
+  final int clinicId;
   final String date;
   final String? notes;
 
@@ -12,6 +13,7 @@ class AppointmentModel {
     required this.serviceId,
     required this.date,
     required this.statusId,
+    required this.clinicId,
     this.notes,
   });
   AppointmentModel copyWith({
@@ -19,6 +21,7 @@ class AppointmentModel {
     int? patientId,
     int? serviceId,
     int? statusId,
+    int? clinicId,
     String? date,
     String? mobile,
     String? notes,
@@ -29,6 +32,7 @@ class AppointmentModel {
       serviceId: serviceId ?? this.serviceId,
       date: date ?? this.date,
       statusId: statusId ?? this.statusId,
+      clinicId: clinicId ?? this.clinicId,
       notes: notes ?? this.notes,
     );
   }
@@ -40,6 +44,7 @@ class AppointmentModel {
       'service_id': serviceId,
       'date': date,
       'statusId': statusId,
+      'clinic_id': clinicId,
       'notes': notes,
     };
   }
@@ -50,6 +55,7 @@ class AppointmentModel {
         serviceId: json["service_id"],
         date: json["date"],
         statusId: json["statusId"],
+        clinicId: json["clinic_id"],
         notes: json["notes"],
       );
 

@@ -22,7 +22,7 @@ class NavBarButton extends StatelessWidget {
     bool currentPage = Get.currentRoute == route;
     return FittedBox(
       fit: BoxFit.scaleDown,
-      child: ButtonBar(children: [
+      child: OverflowBar(children: [
         TextButton(
           onPressed: () {
             switch (route) {

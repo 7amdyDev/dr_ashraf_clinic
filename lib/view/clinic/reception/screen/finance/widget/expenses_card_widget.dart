@@ -1,3 +1,4 @@
+import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/controller/expense_controller.dart';
 import 'package:dr_ashraf_clinic/model/expense_model.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
@@ -21,6 +22,7 @@ class ExpensesCardWidget extends StatelessWidget {
     int expenseAccount = 201;
     TextEditingController valueController = TextEditingController();
     var expenseController = Get.put(ExpenseController());
+    final clinicController = Get.find<ClinicController>();
     final valueKey = GlobalKey<FormState>();
     final descriptionKey = GlobalKey<FormState>();
 
@@ -87,6 +89,7 @@ class ExpensesCardWidget extends StatelessWidget {
                       var expense = ExpenseModel(
                         description: descriptionController.value.text,
                         value: int.parse(valueText),
+                        clinicId: clinicController.clinicId.value,
                         accountId: expenseAccount,
                         date: DateUtils.dateOnly(DateTime.now()).toString(),
                       );
