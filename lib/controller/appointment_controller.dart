@@ -77,7 +77,6 @@ class AppointmentController extends GetxController {
       try {
         var response =
             await _appointmentApi.getByDate(DateUtils.dateOnly(DateTime.now()));
-        print(response.body);
         if (response.statusCode == 200 && response.body != null) {
           appointListByDate.addAll(response.body!);
         }

@@ -13,8 +13,10 @@ class PatientReceiptCashCard extends StatelessWidget {
   PatientReceiptCashCard({
     super.key,
     required this.appointData,
+    required this.serviceId,
   });
   final AppointmentModel appointData;
+  final int serviceId;
 
   final financeController = Get.find<FinanceController>();
 
@@ -51,7 +53,7 @@ class PatientReceiptCashCard extends StatelessWidget {
                 //width: 120,
                 label: 'service_type_label'.tr,
                 enable: false,
-                value: HValidator.serviceIdValidation(appointData.serviceId).tr,
+                value: HValidator.serviceIdValidation(serviceId).tr,
               ),
               Obx(
                 () => DataTextWidget(
@@ -99,10 +101,10 @@ class PatientReceiptCashCard extends StatelessWidget {
                             if (amount <=
                                 financeController.appointUnPaid.value) {
                               financeController.addPatientCashReceipt(
-                                  appointData, amount);
+                                  appointData, serviceId, amount);
                               valueController.clear();
                               financeController.getCashRecieptOnAppointment(
-                                  appointData.id!, appointData.serviceId);
+                                  appointData.id!, serviceId);
                             }
                           }
                         })
@@ -117,9 +119,10 @@ class PatientReceiptCashCard extends StatelessWidget {
                       onPressed: () {
                         financeController.removePatientCashReceipt(
                             financeController.accountRecordId.value,
-                            appointData);
+                            appointData,
+                            serviceId);
                         financeController.getCashRecieptOnAppointment(
-                            appointData.id!, appointData.serviceId);
+                            appointData.id!, serviceId);
                       })
                   : const SizedBox(
                       width: 0,

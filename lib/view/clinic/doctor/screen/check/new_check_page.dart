@@ -3,6 +3,7 @@ import 'package:dr_ashraf_clinic/controller/finance_controller.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/diagnosis_data_input.dart';
 import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/diagnosis_table_widget.dart';
+import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/doctor_finance_dialog.dart';
 import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/prescription_data_input.dart';
 import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/prescription_table_widget.dart';
 import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/symptoms_data_widget.dart';
@@ -69,25 +70,16 @@ class NewCheckPage extends StatelessWidget {
                       },
                     ),
                     HFilledButton(
-                      text: 'Finance',
-                      onPressed: () {
-                        // Get.dialog(FutureBuilder(
-                        //     future: appointmentController.getAppointmentById(
-                        //         consultationController.appointId.value),
-                        //     builder: (context, snapshot) {
-                        //       if (snapshot.data != null) {
-                        //         return DoctorFinanceDialogWidget(
-                        //           controller: financeController,
-                        //         );
-                        //       } else {
-                        //         return const CircularProgressIndicator();
-                        //       }
-                        //     }));
+                        text: 'Finance',
+                        onPressed: () {
+                          Get.dialog(DoctorFinanceDialogWidget(
+                            controller: financeController,
+                            appointId: consultationController.appointId.value,
+                          ));
+                        }),
 
-                        // financeController.getAppointmentBalance(
-                        //     consultationController.appointId.value);
-                      },
-                    ),
+                    // financeController.getAppointmentBalance(
+                    //     consultationController.appointId.value);
                   ],
                 ),
                 const SizedBox(

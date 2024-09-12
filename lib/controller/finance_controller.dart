@@ -176,21 +176,23 @@ class FinanceController extends GetxController {
   }
 
   Future<void> addPatientCashReceipt(
-      AppointmentModel appointData, int amount) async {
+      AppointmentModel appointData, int serviceId, int amount) async {
     try {
       var response = await assetApi.create(AssetAccountsModel(
           accountId: 301,
           appointmentId: appointData.id!,
           patientId: appointData.patientId,
           date: HFormatter.formatDate(DateTime.now(), reversed: true),
-          serviceId: appointData.serviceId,
+          serviceId: serviceId,
           clinicId: _clinicController.clinicId.value,
           fee: 0,
           debit: amount));
       if (response.statusCode == 201 && response.body != null) {}
     } finally {}
     for (var item in assetAccountslst) {
-      if (item.accountId == 302 && item.appointmentId == appointData.id!) {
+      if (item.accountId == 302 &&
+          item.appointmentId == appointData.id! &&
+          item.serviceId == serviceId) {
         finaceLoading.value = true;
 
         try {
@@ -198,6 +200,7 @@ class FinanceController extends GetxController {
             item.copyWith(
                 patientId: item.patientId,
                 debit: item.debit - amount,
+                serviceId: serviceId,
                 date: HFormatter.formatDate(DateTime.now(), reversed: true),
                 id: item.id),
           );
@@ -211,20 +214,22 @@ class FinanceController extends GetxController {
     }
     getPatientAssetList(appointData.patientId).then(
       (value) {
-        getCashRecieptOnAppointment(appointData.id!, appointData.serviceId);
-        getAppointmentBalance(appointData.id!, appointData.serviceId);
+        getCashRecieptOnAppointment(appointData.id!, serviceId);
+        getAppointmentBalance(appointData.id!, serviceId);
       },
     );
     onPatientAccountListUpdated();
   }
 
   Future<void> removePatientCashReceipt(
-      int recordId, AppointmentModel appointData) async {
+      int recordId, AppointmentModel appointData, int serviceId) async {
     var assetRecord =
         assetAccountslst.firstWhere((asset) => asset.id == recordId);
 
     for (var item in assetAccountslst) {
-      if (item.accountId == 302 && item.appointmentId == appointData.id) {
+      if (item.accountId == 302 &&
+          item.appointmentId == appointData.id &&
+          item.serviceId == serviceId) {
         finaceLoading.value = true;
 
         try {
@@ -232,6 +237,7 @@ class FinanceController extends GetxController {
             item.copyWith(
                 patientId: item.patientId,
                 debit: item.debit + assetRecord.debit,
+                serviceId: serviceId,
                 date: HFormatter.formatDate(DateTime.now(), reversed: true),
                 id: item.id),
           );
@@ -247,6 +253,7 @@ class FinanceController extends GetxController {
     try {
       var response = await assetApi.update(assetRecord.copyWith(
           debit: 0,
+          serviceId: serviceId,
           date: HFormatter.formatDate(DateTime.now(), reversed: true),
           id: recordId));
 
@@ -260,8 +267,8 @@ class FinanceController extends GetxController {
     onPatientAccountListUpdated();
     getPatientAssetList(patientId.value).then(
       (value) {
-        getCashRecieptOnAppointment(appointData.id!, appointData.serviceId);
-        getAppointmentBalance(appointData.id!, appointData.serviceId);
+        getCashRecieptOnAppointment(appointData.id!, serviceId);
+        getAppointmentBalance(appointData.id!, serviceId);
       },
     );
   }

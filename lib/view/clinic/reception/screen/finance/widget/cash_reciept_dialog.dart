@@ -12,15 +12,16 @@ class CashRecieptDialogWidget extends StatelessWidget {
     super.key,
     required this.controller,
     required this.appointData,
+    required this.serviceId,
   });
   final AppointmentModel appointData;
   final FinanceController controller;
+  final int serviceId;
 
   @override
   Widget build(BuildContext context) {
-    controller.getCashRecieptOnAppointment(
-        appointData.id!, appointData.serviceId);
-    controller.getAppointmentBalance(appointData.id!, appointData.serviceId);
+    controller.getCashRecieptOnAppointment(appointData.id!, serviceId);
+    controller.getAppointmentBalance(appointData.id!, serviceId);
     return AlertDialog(
       elevation: 5,
       shadowColor: HColors.dark,
@@ -41,6 +42,7 @@ class CashRecieptDialogWidget extends StatelessWidget {
             const SizedBox(height: HSizes.spaceBtwItems),
             PatientReceiptCashCard(
               appointData: appointData,
+              serviceId: serviceId,
             )
           ],
         ),

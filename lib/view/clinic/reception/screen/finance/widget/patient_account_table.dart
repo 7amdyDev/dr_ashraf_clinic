@@ -14,14 +14,22 @@ import 'package:get/get.dart';
 class PatientAccountTable extends StatelessWidget {
   PatientAccountTable({
     super.key,
+    this.appointId,
   });
   final financeController = Get.find<FinanceController>();
-
+  final int? appointId;
   @override
   Widget build(BuildContext context) {
     financeController.onPatientAccountListUpdated();
     final List<AppointmentFinance> searchResult =
         financeController.totalAppointmentAccountslst;
+    late List<AppointmentFinance> filteredList;
+    if (appointId != null) {
+      filteredList = searchResult
+          .where((list) => list.appointmentId == appointId)
+          .toList();
+      print(searchResult);
+    }
 
     return SingleChildScrollView(
       child: Column(
@@ -47,7 +55,8 @@ class PatientAccountTable extends StatelessWidget {
                   DataColumn(
                       label: TableColumnLabel(text: 'patient_unpaid_label')),
                 ],
-                source: _DataSource(data: searchResult),
+                source: _DataSource(
+                    data: appointId != null ? filteredList : searchResult),
                 rowsPerPage: searchResult.isEmpty
                     ? 1
                     : searchResult.length < 8
@@ -93,9 +102,9 @@ class _DataSource extends DataTableSource {
               builder: (context, snapshot) {
                 if (snapshot.data != null) {
                   return CashRecieptDialogWidget(
-                    controller: financeController,
-                    appointData: snapshot.data!,
-                  );
+                      controller: financeController,
+                      appointData: snapshot.data!,
+                      serviceId: item.serviceId);
                 } else {
                   return const CircularProgressIndicator();
                 }
