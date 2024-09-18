@@ -60,10 +60,10 @@ class HScheduleDataTable extends StatelessWidget {
 
 class _DataSource extends DataTableSource {
   final List<AppointmentFinance> data;
-  final consultationController = Get.find<ConsultationController>();
-  final appointmentController = Get.find<AppointmentController>();
-  final patientController = Get.find<PatientController>();
-  final clinicController = Get.find<ClinicController>();
+  final _consultationController = Get.find<ConsultationController>();
+  final _appointmentController = Get.find<AppointmentController>();
+  final _patientController = Get.find<PatientController>();
+  final _clinicController = Get.find<ClinicController>();
   _DataSource({required this.data});
   @override
   DataRow? getRow(int index) {
@@ -78,13 +78,15 @@ class _DataSource extends DataTableSource {
       DataCell(
         TableDataCell(text: item.name),
         onTap: () {
-          patientController.choosePatient(item.patientId);
+          _patientController.choosePatient(item.patientId);
           var route = Get.currentRoute;
           if (route == '/doctor') {
-            consultationController.getConsultIdByAppointId(item.appointmentId);
-            consultationController.getConsultationByPatientId(item.patientId);
-            consultationController.appointId.value = item.appointmentId;
-            clinicController.doctorPageIndex.value = 7;
+            _consultationController.getConsultIdByAppointId(item.appointmentId);
+            _consultationController.getConsultationByPatientId(item.patientId);
+            _consultationController.appointId.value = item.appointmentId;
+            _clinicController.doctorPageIndex.value = 7;
+          } else {
+            _clinicController.receptionPageIndex.value = 5;
           }
         },
       ),
@@ -103,23 +105,23 @@ class _DataSource extends DataTableSource {
                 child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: CustomDropDownWidget(
-                      statusId: appointmentController
+                      statusId: _appointmentController
                           .getAppointmentStatus(item.appointmentId),
                       onSelected: (value) {
                         var appointment =
-                            appointmentController.appointListByDate.firstWhere(
+                            _appointmentController.appointListByDate.firstWhere(
                                 (record) => record.id == item.appointmentId);
                         var updatedItem = appointment.copyWith(
                             statusId: value,
                             date: HFormatter.formatStringDate(item.date,
                                 reversed: true));
-                        appointmentController.updateAppointment(updatedItem);
+                        _appointmentController.updateAppointment(updatedItem);
                       },
                     )),
               ),
             )
           : DataCell(TableDataCell(
-              text: HValidator.statusIdValidation(appointmentController
+              text: HValidator.statusIdValidation(_appointmentController
                       .getAppointmentStatus(item.appointmentId))
                   .tr)),
     ]);

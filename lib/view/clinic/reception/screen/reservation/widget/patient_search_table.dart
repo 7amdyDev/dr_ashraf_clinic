@@ -54,9 +54,9 @@ class PatientSearchTable extends StatelessWidget {
 
 class _DataSource extends DataTableSource {
   final List<PatientModel> data;
-  final controller = Get.put(PatientController());
-  final finaceController = Get.put(FinanceController());
-  final appointmentController = AppointmentController();
+  final _patientController = Get.find<PatientController>();
+  final _finaceController = Get.find<FinanceController>();
+  final _appointmentController = Get.find<AppointmentController>();
   _DataSource({required this.data});
   @override
   DataRow? getRow(int index) {
@@ -70,10 +70,9 @@ class _DataSource extends DataTableSource {
       DataCell(
         TableDataCell(text: item.name),
         onTap: () {
-          controller.choosePatient(item.id!);
-          finaceController.patientId.value = item.id!;
-          finaceController.onPatientAccountListUpdated();
-          appointmentController.getPatientAppointment(item.id!);
+          _patientController.choosePatient(item.id!);
+          _finaceController.onPatientAccountListUpdated();
+          _appointmentController.getPatientAppointment(item.id!);
           Get.back();
         },
       ),

@@ -5,21 +5,20 @@ import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
 import 'package:get/get.dart';
 
 class PatientController extends GetxController {
-  var patientApi = Get.find<PatientApi>();
-  // RxList<PatientModel> patientList = <PatientModel>[].obs;
+  final _patientApi = Get.find<PatientApi>();
   RxList<PatientModel> patientList = <PatientModel>[].obs;
-  // RxList<PatientModel> getPatientData = <PatientModel>[].obs;
   RxInt patientId = 0.obs;
   RxBool isLoading = false.obs;
 
   void choosePatient(int id) {
     patientId.value = id;
+    getPatientById(patientId.value);
   }
 
   Future<void> addNewPatient(PatientModel patient) async {
     patientList.clear();
     try {
-      var response = await patientApi.create(patient);
+      var response = await _patientApi.create(patient);
 
       if (response.statusCode == 201 && response.body != null) {
         patientId.value = (response.body!.id!);
@@ -31,7 +30,7 @@ class PatientController extends GetxController {
 
   Future<void> updatePatient(PatientModel patient) async {
     try {
-      var response = await patientApi.update(patient);
+      var response = await _patientApi.update(patient);
 
       if (response.statusCode == 201 && response.body != null) {
         patientId.value = (response.body!.id!);
@@ -49,7 +48,7 @@ class PatientController extends GetxController {
     } else {
       isLoading.value = true;
       try {
-        var response = await patientApi.getById(patientId.value);
+        var response = await _patientApi.getById(patientId.value);
 
         if (response.statusCode == 200 && response.body != null) {
           // patientId.value = (response.body!.id!);
@@ -66,10 +65,10 @@ class PatientController extends GetxController {
     isLoading.value = true;
     patientList.clear();
     try {
-      var response = await patientApi.getById(id);
+      var response = await _patientApi.getById(id);
 
       if (response.statusCode == 200 && response.body != null) {
-        patientId.value = (response.body!.id!);
+        // patientId.value = (response.body!.id!);
         patientList.add(response.body!);
       }
       return response.body!;
@@ -82,7 +81,7 @@ class PatientController extends GetxController {
     if (id != null) {
       isLoading.value = true;
       try {
-        var response = await patientApi.getById(id);
+        var response = await _patientApi.getById(id);
 
         if (response.statusCode == 200 && response.body != null) {
           // patientId.value = (response.body!.id!);
@@ -97,7 +96,7 @@ class PatientController extends GetxController {
       isLoading.value = true;
       var mobileNo = HFormatter.convertArabicToEnglishNumbers(mobile);
       try {
-        var response = await patientApi.getByMobile(mobileNo);
+        var response = await _patientApi.getByMobile(mobileNo);
 
         if (response.statusCode == 200 && response.body != null) {
           patientList.clear();
@@ -111,7 +110,7 @@ class PatientController extends GetxController {
     if (name != null) {
       isLoading.value = true;
       try {
-        var response = await patientApi.getByName(name);
+        var response = await _patientApi.getByName(name);
 
         if (response.statusCode == 200 && response.body != null) {
           patientList.clear();

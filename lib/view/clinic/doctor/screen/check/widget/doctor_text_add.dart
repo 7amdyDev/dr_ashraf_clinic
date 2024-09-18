@@ -12,6 +12,7 @@ class DoctorTextAddWidget extends StatelessWidget {
     this.textFontSize = 18,
     this.textEditingController,
     this.width = 200,
+    this.validator,
     this.maxLines = 1,
     this.onPressed,
   });
@@ -22,6 +23,8 @@ class DoctorTextAddWidget extends StatelessWidget {
   final double textFontSize;
   final int maxLines;
   final double? width;
+  final String? Function(String?)? validator;
+
   final TextEditingController? textEditingController;
   final VoidCallback? onPressed;
 
@@ -46,7 +49,8 @@ class DoctorTextAddWidget extends StatelessWidget {
               ),
             ),
           ),
-          TextField(
+          TextFormField(
+            validator: validator,
             style: TextStyle(
               fontSize: textFontSize,
             ),

@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:logging/logging.dart';
 
 class ClinicController extends GetxController {
-  var clinicApi = Get.find<ClinicApi>();
+  final _clinicApi = Get.find<ClinicApi>();
   RxBool isCollapsed = true.obs;
   RxList<OnlineReservModel> onlineReservData = <OnlineReservModel>[].obs;
   RxInt receptionPageIndex = 0.obs;
@@ -48,7 +48,7 @@ class ClinicController extends GetxController {
     var log = Logger('get Clinic Data');
 
     try {
-      var response = await clinicApi.getServices();
+      var response = await _clinicApi.getServices();
 
       if (response.statusCode == 200 && response.body != null) {
         servicesId.addAll(response.body!);
@@ -56,7 +56,7 @@ class ClinicController extends GetxController {
     } finally {}
 
     try {
-      var response = await clinicApi.getExpensesId();
+      var response = await _clinicApi.getExpensesId();
 
       if (response.statusCode == 200 && response.body != null) {
         expensesId.addAll(response.body!);
@@ -64,7 +64,7 @@ class ClinicController extends GetxController {
     } finally {}
 
     try {
-      var response = await clinicApi.getFee();
+      var response = await _clinicApi.getFee();
 
       if (response.statusCode == 200 && response.body != null) {
         log.fine(response.body);

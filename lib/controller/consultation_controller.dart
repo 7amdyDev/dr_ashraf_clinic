@@ -5,8 +5,8 @@ import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
 import 'package:get/get.dart';
 
 class ConsultationController extends GetxController {
-  var consultationApi = Get.find<ConsultationApi>();
-  var patientController = Get.find<PatientController>();
+  final _consultationApi = Get.find<ConsultationApi>();
+  final _patientController = Get.find<PatientController>();
   RxList<ConsultationModel> consultationList = <ConsultationModel>[].obs;
   RxList<SymptomsModel> symptomsList = <SymptomsModel>[].obs;
   RxList<DiagnosisModel> diagnosisList = <DiagnosisModel>[].obs;
@@ -27,7 +27,7 @@ class ConsultationController extends GetxController {
   }
 
   void getPatientId() {
-    ever(patientController.patientId, (value) {
+    ever(_patientController.patientId, (value) {
       patientId.value = value;
     });
   }
@@ -56,7 +56,7 @@ class ConsultationController extends GetxController {
     consultLoading.value = true;
     try {
       var response =
-          await consultationApi.getConsultationByAppointmentId(appointId);
+          await _consultationApi.getConsultationByAppointmentId(appointId);
 
       if (response.statusCode == 200 && response.body != null) {
         consultId.value = response.body!.id!;
@@ -69,7 +69,7 @@ class ConsultationController extends GetxController {
 
   Future<void> updateConsultation(ConsultationModel consult) async {
     try {
-      var response = await consultationApi.update(consult);
+      var response = await _consultationApi.update(consult);
 
       if (response.statusCode == 201 && response.body != null) {
         HelperFunctions.showSnackBar('Record Updated Successfully');
@@ -87,7 +87,7 @@ class ConsultationController extends GetxController {
     } else {
       consultLoading.value = true;
       try {
-        var response = await consultationApi.getConsultationById(id);
+        var response = await _consultationApi.getConsultationById(id);
 
         if (response.statusCode == 200 && response.body != null) {
           consultationList.add(response.body!);
@@ -105,7 +105,7 @@ class ConsultationController extends GetxController {
     consultationList.clear();
     try {
       var response =
-          await consultationApi.getConsultationByPatientId(patientId);
+          await _consultationApi.getConsultationByPatientId(patientId);
 
       if (response.statusCode == 200 && response.body != null) {
         consultationList.value = response.body!;
@@ -119,7 +119,7 @@ class ConsultationController extends GetxController {
     consultLoading.value = true;
     (previous) ? prvCheckSymptomsList.clear() : symptomsList.clear();
     try {
-      var response = await consultationApi.getSymptomsByConsultId(id);
+      var response = await _consultationApi.getSymptomsByConsultId(id);
 
       if (response.statusCode == 200 && response.body != null) {
         (previous)
@@ -135,7 +135,7 @@ class ConsultationController extends GetxController {
     consultLoading.value = true;
 
     try {
-      var response = await consultationApi.createSymptoms(symptoms);
+      var response = await _consultationApi.createSymptoms(symptoms);
       if (response.statusCode == 201) {
         getSymptomsList(consultId.value);
         HelperFunctions.showSnackBar('added');
@@ -149,7 +149,7 @@ class ConsultationController extends GetxController {
     consultLoading.value = true;
 
     try {
-      var response = await consultationApi.createDiagnosis(diagnosis);
+      var response = await _consultationApi.createDiagnosis(diagnosis);
       if (response.statusCode == 201) {
         getDiagnosisList(consultId.value);
         HelperFunctions.showSnackBar('added');
@@ -163,7 +163,7 @@ class ConsultationController extends GetxController {
     consultLoading.value = true;
 
     try {
-      var response = await consultationApi.createPrescription(medicine);
+      var response = await _consultationApi.createPrescription(medicine);
       if (response.statusCode == 201) {
         getPrescriptionList(consultId.value);
         HelperFunctions.showSnackBar('added');
@@ -177,7 +177,7 @@ class ConsultationController extends GetxController {
     consultLoading.value = true;
 
     try {
-      var response = await consultationApi.removeSymptoms(id);
+      var response = await _consultationApi.removeSymptoms(id);
       if (response.statusCode == 200) {
         getSymptomsList(consultId.value);
         HelperFunctions.showSnackBar('Deleted');
@@ -191,7 +191,7 @@ class ConsultationController extends GetxController {
     consultLoading.value = true;
 
     try {
-      var response = await consultationApi.removeDiagnosis(id);
+      var response = await _consultationApi.removeDiagnosis(id);
       if (response.statusCode == 200) {
         getDiagnosisList(consultId.value);
         HelperFunctions.showSnackBar('Deleted');
@@ -205,7 +205,7 @@ class ConsultationController extends GetxController {
     consultLoading.value = true;
 
     try {
-      var response = await consultationApi.removePrescription(id);
+      var response = await _consultationApi.removePrescription(id);
       if (response.statusCode == 200) {
         getPrescriptionList(consultId.value);
         HelperFunctions.showSnackBar('Deleted');
@@ -219,7 +219,7 @@ class ConsultationController extends GetxController {
     consultLoading.value = true;
     (previous) ? prvCheckDiagnosisList.clear() : diagnosisList.clear();
     try {
-      var response = await consultationApi.getDiagnosisByConsultId(id);
+      var response = await _consultationApi.getDiagnosisByConsultId(id);
 
       if (response.statusCode == 200 && response.body != null) {
         (previous)
@@ -235,7 +235,7 @@ class ConsultationController extends GetxController {
     consultLoading.value = true;
     (previous) ? prvCheckPrescriptionList.clear() : prescriptionList.clear();
     try {
-      var response = await consultationApi.getPrescripByConsultId(id);
+      var response = await _consultationApi.getPrescripByConsultId(id);
 
       if (response.statusCode == 200 && response.body != null) {
         (previous)

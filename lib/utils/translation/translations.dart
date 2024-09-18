@@ -107,6 +107,7 @@ class AppTranslation extends Translations {
           'check_finance_label': 'Check Finance',
           'upper_endoscopy_label': 'Upper Endoscopy',
           'lower_endoscopy_label': 'Lower Endoscopy',
+          'discount_label': 'Discount Value'
         },
         'ar_EG': {
           'app_name': 'عيادات الدكتور أشرف يحيي',
@@ -217,6 +218,7 @@ class AppTranslation extends Translations {
           'check_finance_label': 'حسابات الكشف',
           'upper_endoscopy_label': 'منظار علوي',
           'lower_endoscopy_label': 'منظار سفلي',
+          'discount_label': 'قيمة الخصم'
         },
       };
 }

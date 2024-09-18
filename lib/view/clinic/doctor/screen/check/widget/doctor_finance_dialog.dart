@@ -1,7 +1,8 @@
 import 'package:dr_ashraf_clinic/controller/finance_controller.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
-import 'package:dr_ashraf_clinic/view/clinic/reception/screen/finance/widget/patient_account_table.dart';
+import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/check_account_table.dart';
+import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/endoscopy_widget.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/page_label_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -32,13 +33,14 @@ class DoctorFinanceDialogWidget extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            PatientAccountTable(
-                //  appointId: appointId,
-                ),
+            CheckAccountTable(
+              appointId: appointId,
+            ),
             const SizedBox(height: HSizes.spaceBtwItems),
-            // PatientReceiptCashCard(
-            //   appointData: appointData,
-            // )
+            const Divider(),
+            EndoscopyWidget(
+              appointId: appointId,
+            )
           ],
         ),
       ),

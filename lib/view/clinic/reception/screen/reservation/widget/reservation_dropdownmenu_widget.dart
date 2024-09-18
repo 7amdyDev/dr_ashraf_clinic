@@ -7,8 +7,12 @@ import 'package:get/get.dart';
 class ServiceTypeDropDownMenu extends StatefulWidget {
   final Function(int) onSelected; // Callback for selection change
   final int serviceId;
+  final List<int> listRange;
   const ServiceTypeDropDownMenu(
-      {super.key, required this.onSelected, required this.serviceId});
+      {super.key,
+      required this.onSelected,
+      required this.serviceId,
+      required this.listRange});
 
   @override
   State<ServiceTypeDropDownMenu> createState() => _MyDropdownState();
@@ -21,28 +25,19 @@ class _MyDropdownState extends State<ServiceTypeDropDownMenu> {
   Widget build(BuildContext context) {
     int selectedValue = widget.serviceId;
     var clinicController = Get.put(ClinicController());
+    var list = clinicController.servicesId
+        .getRange(widget.listRange[0], widget.listRange[1]);
+
     return DropdownButtonFormField<int>(
       value: selectedValue, // Currently selected value
-      items: clinicController.servicesId
-          .map((service) {
-            return DropdownMenuItem<int>(
-              value: service.id,
-              child: TableDataCell(
-                text: HValidator.serviceIdValidation(service.id).tr,
-              ),
-            );
-          })
-          .take(2)
-          .toList(),
-      // [
-
-      //   DropdownMenuItem<int>(
-      //     value: 1,
-      //     child: TableDataCell(
-      //       text: 'متابعة',
-      //     ),
-      //   ),
-      // ],
+      items: list.map((service) {
+        return DropdownMenuItem<int>(
+          value: service.id,
+          child: TableDataCell(
+            text: HValidator.serviceIdValidation(service.id).tr,
+          ),
+        );
+      }).toList(),
       onChanged: (value) {
         setState(() {
           selectedValue = value!; // Update selected value

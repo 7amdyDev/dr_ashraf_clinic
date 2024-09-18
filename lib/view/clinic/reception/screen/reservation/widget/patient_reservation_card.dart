@@ -70,6 +70,7 @@ class PatientReservationCardWidget extends StatelessWidget {
                     label: 'service_type_label'.tr,
                     width: width / 6,
                     child: ServiceTypeDropDownMenu(
+                      listRange: const [0, 2],
                       serviceId: appointmentController.serviceId.value,
                       onSelected: (value) {
                         appointmentController.serviceId.value = value;

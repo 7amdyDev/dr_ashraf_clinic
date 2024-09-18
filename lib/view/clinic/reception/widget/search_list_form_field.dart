@@ -33,7 +33,7 @@ class _SearchListFormFieldState extends State<SearchListFormField> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(PatientController());
+    final controller = Get.find<PatientController>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
