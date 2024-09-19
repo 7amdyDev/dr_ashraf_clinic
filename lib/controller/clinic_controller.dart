@@ -11,11 +11,11 @@ class ClinicController extends GetxController {
   final _clinicApi = Get.find<ClinicApi>();
   RxBool isCollapsed = true.obs;
   RxList<OnlineReservModel> onlineReservData = <OnlineReservModel>[].obs;
-  RxInt receptionPageIndex = 0.obs;
-  RxInt doctorPageIndex = 0.obs;
+  RxInt pageIndex = 0.obs;
   RxList<ServicesId> servicesId = <ServicesId>[].obs;
   RxList<AccountsId> expensesId = <AccountsId>[].obs;
   RxList<Fee> feeList = <Fee>[].obs;
+  RxList<ClinicId> clinicBranches = <ClinicId>[].obs;
   RxInt clinicId = 1.obs;
   final database = FirebaseDatabase.instance;
 
@@ -46,7 +46,12 @@ class ClinicController extends GetxController {
 
   Future<void> getClinicData() async {
     var log = Logger('get Clinic Data');
-
+    try {
+      var response = await _clinicApi.getClinicBranches();
+      if (response.statusCode == 200 && response.body != null) {
+        clinicBranches.addAll(response.body!);
+      }
+    } finally {}
     try {
       var response = await _clinicApi.getServices();
 

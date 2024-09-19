@@ -12,15 +12,17 @@ class DiagnosisTableWidget extends StatelessWidget {
     super.key,
     required this.diagnosisList,
     this.previousCheck = false,
+    required this.width,
   });
 
   final bool previousCheck;
   final List<DiagnosisModel> diagnosisList;
   final consultationController = Get.find<ConsultationController>();
+  final double width;
   @override
   Widget build(BuildContext context) {
     return Obx(() => Container(
-          constraints: const BoxConstraints(maxWidth: HSizes.maxPageWidth / 4),
+          constraints: BoxConstraints(maxWidth: width),
           decoration: BoxDecoration(
               color: HColors.primaryBackground,
               boxShadow: const [

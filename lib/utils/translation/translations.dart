@@ -29,7 +29,7 @@ class AppTranslation extends Translations {
           'choose_user_label': 'User Name',
           'password_label': 'Password',
           'login_button': 'Login',
-          'appointment_label': 'Schedule',
+          'appointment_label': 'Schedule Table',
           'reserve_label': 'Reserve',
           'patient_label': 'Patient Profile',
           'patient_label2': 'Patient Profile',
@@ -38,7 +38,7 @@ class AppTranslation extends Translations {
           'finance_label': 'Finance',
           'patient_finance_label': 'Patient Finance',
           'patient_finance_label2': 'Patient Finance',
-          'clinic_expenses_label': 'Clinic Expenses',
+          'clinic_expenses_label': 'Expenses',
           'expenses_label': 'Expenses',
           'cash_label': 'Cash',
           'daily_revenue_label': 'Daily Income',
@@ -107,7 +107,8 @@ class AppTranslation extends Translations {
           'check_finance_label': 'Check Finance',
           'upper_endoscopy_label': 'Upper Endoscopy',
           'lower_endoscopy_label': 'Lower Endoscopy',
-          'discount_label': 'Discount Value'
+          'discount_label': 'Discount Value',
+          'clinic_branch_label': 'Choose Clinic'
         },
         'ar_EG': {
           'app_name': 'عيادات الدكتور أشرف يحيي',
@@ -139,7 +140,7 @@ class AppTranslation extends Translations {
           'choose_user_label': 'أسم المستخدم',
           'password_label': 'كلمة السر',
           'login_button': 'تسجيل الدخول',
-          'appointment_label': 'المواعيد',
+          'appointment_label': 'جدول المواعيد',
           'reserve_label': 'حجز موعد',
           'patient_label': 'ملفات المرضي',
           'patient_label2': 'ملف المريض',
@@ -148,7 +149,7 @@ class AppTranslation extends Translations {
           'finance_label': 'الحسابات',
           'patient_finance_label': 'حسابات المرضي',
           'patient_finance_label2': 'حسابات المريض',
-          'clinic_expenses_label': 'مصروفات العيادة',
+          'clinic_expenses_label': 'المصروفات',
           'expenses_label': 'المصروفات',
           'cash_label': 'النقدية',
           'daily_revenue_label': 'الدخل اليومي',
@@ -218,7 +219,8 @@ class AppTranslation extends Translations {
           'check_finance_label': 'حسابات الكشف',
           'upper_endoscopy_label': 'منظار علوي',
           'lower_endoscopy_label': 'منظار سفلي',
-          'discount_label': 'قيمة الخصم'
+          'discount_label': 'قيمة الخصم',
+          'clinic_branch_label': 'أختر عيادة'
         },
       };
 }

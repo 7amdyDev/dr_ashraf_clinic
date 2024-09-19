@@ -26,10 +26,11 @@ class PageTitleWidget extends StatelessWidget {
                     color: Colors.black38, offset: Offset(0, 2), blurRadius: 2)
               ],
               color: HColors.primary)
-          : GoogleFonts.elMessiri(
+          : const TextStyle(
+              fontFamily: 'ElMessiri',
               fontSize: 36,
               shadows: [
-                const BoxShadow(
+                BoxShadow(
                     color: Colors.black38, offset: Offset(0, 2), blurRadius: 2)
               ],
               fontWeight: FontWeight.w400,

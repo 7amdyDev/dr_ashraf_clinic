@@ -23,7 +23,10 @@ class FilledButtonWithIcon extends StatelessWidget {
           padding: const EdgeInsets.all(16), elevation: 5),
       label: Text('book_button'.tr,
           style: HelperFunctions.isLocalEnglish()
-              ? GoogleFonts.elMessiri(fontSize: 28)
+              ? const TextStyle(
+                  fontFamily: 'ElMessiri',
+                  fontSize: 28,
+                )
               : GoogleFonts.notoNaskhArabic(fontSize: 28)),
     );
   }

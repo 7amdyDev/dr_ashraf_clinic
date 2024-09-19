@@ -26,7 +26,10 @@ class HFilledButton extends StatelessWidget {
           elevation: 5),
       child: Text(text.tr,
           style: HelperFunctions.isLocalEnglish()
-              ? GoogleFonts.elMessiri(fontSize: fontSize)
+              ? TextStyle(
+                  fontFamily: 'ElMessiri',
+                  fontSize: fontSize,
+                )
               : GoogleFonts.notoNaskhArabic(fontSize: fontSize)),
     );
   }

@@ -7,17 +7,7 @@ import 'package:dr_ashraf_clinic/view/clinic/reception/screen/patient/patient_se
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/reservation/reservation_page.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/reception_schedule_page.dart';
 
-List receptionPagesList = [
-  ReceptionSchedulePage(),
-  ReservationPage(),
-  const NewPatientPage(),
-  const PatientSearchPage(),
-  DailyIncomePage(),
-  const PatientFinance(),
-  const ClinicExpensesPage(),
-];
-
-List doctorPagesList = [
+List pagesList = [
   ReceptionSchedulePage(),
   ReservationPage(),
   const NewPatientPage(),

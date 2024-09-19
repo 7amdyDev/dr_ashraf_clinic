@@ -53,7 +53,8 @@ class NavBarButton extends StatelessWidget {
                         : null,
                     fontSize: fontSize,
                     color: color)
-                : GoogleFonts.elMessiri(
+                : TextStyle(
+                    fontFamily: 'ElMessiri',
                     fontWeight: currentPage ? FontWeight.bold : null,
                     shadows: withShadow
                         ? [

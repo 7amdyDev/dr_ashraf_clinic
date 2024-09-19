@@ -1,8 +1,6 @@
-import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ChangeLangButton extends StatelessWidget {
   const ChangeLangButton({
@@ -20,14 +18,13 @@ class ChangeLangButton extends StatelessWidget {
       },
       child: FittedBox(
         fit: BoxFit.scaleDown,
-        child: Text(
-          HelperFunctions.isLocalEnglish() ? 'عربي' : 'English',
-          style: GoogleFonts.elMessiri(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: HColors.black,
-          ),
-        ),
+        child: Text(HelperFunctions.isLocalEnglish() ? 'عربي' : 'English',
+            style: const TextStyle(
+              fontFamily: 'ElMessiri',
+              fontSize: 20,
+              color: Colors.black,
+              fontWeight: FontWeight.w700,
+            )),
       ),
     );
   }

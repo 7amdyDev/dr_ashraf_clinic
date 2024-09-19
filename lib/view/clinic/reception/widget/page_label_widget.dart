@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class PageLabelWidget extends StatelessWidget {
   const PageLabelWidget({
@@ -12,12 +11,11 @@ class PageLabelWidget extends StatelessWidget {
   final double fontSize;
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text.tr,
-      style: GoogleFonts.elMessiri(
-        fontSize: fontSize,
-        fontWeight: FontWeight.w700,
-      ),
-    );
+    return Text(text.tr,
+        style: TextStyle(
+          fontFamily: 'ElMessiri',
+          fontSize: fontSize,
+          fontWeight: FontWeight.w700,
+        ));
   }
 }

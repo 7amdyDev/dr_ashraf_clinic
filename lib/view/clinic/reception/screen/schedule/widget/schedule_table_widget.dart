@@ -84,9 +84,9 @@ class _DataSource extends DataTableSource {
             _consultationController.getConsultIdByAppointId(item.appointmentId);
             _consultationController.getConsultationByPatientId(item.patientId);
             _consultationController.appointId.value = item.appointmentId;
-            _clinicController.doctorPageIndex.value = 7;
+            _clinicController.pageIndex.value = 7;
           } else {
-            _clinicController.receptionPageIndex.value = 5;
+            _clinicController.pageIndex.value = 5;
           }
         },
       ),

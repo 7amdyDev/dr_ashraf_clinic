@@ -39,20 +39,10 @@ class DoctorPage extends StatelessWidget {
                       Flexible(
                         child: Row(
                           children: [
-                            Obx(
-                              () => HDoctorNavigationDrawer(
-                                  isCollapsed: controller.isCollapsed.value),
-                            ),
+                            const HDoctorNavigationDrawer(),
                             Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  (!controller.isCollapsed.value)
-                                      ? controller.updateCollapsed(true)
-                                      : null;
-                                },
-                                child: Obx(() => doctorPagesList[
-                                    controller.doctorPageIndex.value]),
-                              ),
+                              child: Obx(
+                                  () => pagesList[controller.pageIndex.value]),
                             )
                           ],
                         ),

@@ -9,10 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PreviousCheckTable extends StatefulWidget {
-  const PreviousCheckTable({super.key, required this.searchResult});
+  const PreviousCheckTable(
+      {super.key, required this.searchResult, required this.width});
 
   final List<ConsultationModel> searchResult;
-
+  final double width;
   @override
   State<PreviousCheckTable> createState() => _PreviousCheckTableState();
 }
@@ -30,7 +31,7 @@ class _PreviousCheckTableState extends State<PreviousCheckTable> {
 
     return widget.searchResult.isNotEmpty
         ? SizedBox(
-            width: MediaQuery.sizeOf(context).width / 3.5,
+            width: widget.width,
             child: PaginatedDataTable(
               headingRowHeight: 48,
               horizontalMargin: 12,

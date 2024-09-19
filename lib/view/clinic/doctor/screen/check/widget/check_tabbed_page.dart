@@ -16,8 +16,9 @@ class CheckTabbedPage extends StatelessWidget {
             appBar: AppBar(
               toolbarHeight: 0,
               automaticallyImplyLeading: false,
-              bottom: const TabBar(
-                tabs: [
+              bottom: TabBar(
+                labelColor: Colors.red[600],
+                tabs: const [
                   Tab(
                     child: PageLabelWidget(
                       fontSize: 24,

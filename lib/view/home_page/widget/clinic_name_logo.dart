@@ -38,10 +38,11 @@ class ClinicNameLogo extends StatelessWidget {
                       ],
                       fontSize: 32,
                       color: HColors.primary)
-                  : GoogleFonts.elMessiri(
-                      fontWeight: FontWeight.bold,
+                  : const TextStyle(
+                      fontFamily: 'ElMessiri',
+                      fontWeight: FontWeight.w700,
                       shadows: [
-                        const Shadow(
+                        Shadow(
                           color: Colors.black38,
                           blurRadius: 4.0,
                           offset: Offset(0.0, 2.0),

@@ -1,4 +1,5 @@
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
+import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -119,9 +120,9 @@ class HelperFunctions {
   }
 
   static double clinicPagesWidth() {
-    double width = HelperFunctions.screenWidth() < 1024
-        ? HelperFunctions.screenWidth() - 100
-        : 1024;
+    double width = HelperFunctions.screenWidth() < HSizes.maxPageWidth
+        ? HelperFunctions.screenWidth() - 200
+        : HSizes.maxPageWidth - 200;
     return width;
   }
 

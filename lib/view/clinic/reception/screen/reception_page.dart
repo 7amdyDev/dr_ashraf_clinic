@@ -50,8 +50,8 @@ class ReceptionPage extends StatelessWidget {
                                       ? controller.updateCollapsed(true)
                                       : null;
                                 },
-                                child: Obx(() => receptionPagesList[
-                                    controller.receptionPageIndex.value]),
+                                child: Obx(() =>
+                                    pagesList[controller.pageIndex.value]),
                               ),
                             )
                           ],

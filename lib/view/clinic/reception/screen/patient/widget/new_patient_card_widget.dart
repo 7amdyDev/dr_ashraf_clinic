@@ -278,8 +278,7 @@ class _NewPatientCardWidgetState extends State<NewPatientCardWidget> {
                                   : () {
                                       controller.patientId.value =
                                           int.parse(id.text);
-                                      clinicController
-                                          .receptionPageIndex.value = 1;
+                                      clinicController.pageIndex.value = 1;
                                     }),
                           HFilledButton(
                               text: 'new_patient_label',

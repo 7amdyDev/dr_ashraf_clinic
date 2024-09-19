@@ -12,16 +12,18 @@ class SymptomsTableWidget extends StatelessWidget {
     super.key,
     required this.symptomsList,
     this.previousCheck = false,
+    required this.width,
   });
 
   final List<SymptomsModel> symptomsList;
   final bool previousCheck;
   final consultationController = Get.find<ConsultationController>();
+  final double width;
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => Container(
-          constraints: const BoxConstraints(maxWidth: HSizes.maxPageWidth / 4),
+          constraints: BoxConstraints(maxWidth: width),
           decoration: BoxDecoration(
               color: HColors.primaryBackground,
               boxShadow: const [
@@ -49,7 +51,9 @@ class SymptomsTableWidget extends StatelessWidget {
                     'symptoms_label'.tr,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                        fontSize: 24, fontWeight: FontWeight.bold),
+                        fontFamily: 'ElMessiri',
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold),
                   )),
               ConstrainedBox(
                 constraints: BoxConstraints(
