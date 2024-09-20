@@ -6,7 +6,6 @@ import 'package:dr_ashraf_clinic/view/home_page/widget/nav_bar.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/rectangle_image_shadow.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -44,11 +43,12 @@ class HomePage extends StatelessWidget {
                                   softWrap: true,
                                   textAlign: TextAlign.center,
                                   'doctor_details'.tr,
-                                  style: GoogleFonts.tajawal(
+                                  style: TextStyle(
+                                      fontFamily: 'Tajawal',
                                       fontSize: maxPageWidth * 0.03,
                                       color: HColors.textTitle,
-                                      shadows: [
-                                        const BoxShadow(
+                                      shadows: const [
+                                        BoxShadow(
                                             color: Colors.black38,
                                             blurRadius: 2.0,
                                             offset: Offset(0, 2))
@@ -62,15 +62,16 @@ class HomePage extends StatelessWidget {
                                   softWrap: true,
                                   'doctor_details2'.tr,
                                   style: HelperFunctions.isLocalEnglish()
-                                      ? GoogleFonts.outfit(
-                                          textStyle: const TextStyle(height: 2),
+                                      ? TextStyle(
+                                          height: 2,
+                                          fontFamily: 'Oswald',
                                           fontWeight: FontWeight.w500,
                                           color: HColors.black,
                                           fontSize: maxPageWidth * 0.02,
                                         )
-                                      : GoogleFonts.tajawal(
-                                          textStyle:
-                                              const TextStyle(height: 1.5),
+                                      : TextStyle(
+                                          height: 1.5,
+                                          fontFamily: 'Tajawal',
                                           fontSize: maxPageWidth * 0.02,
                                           color: HColors.black,
                                           fontWeight: FontWeight.bold),

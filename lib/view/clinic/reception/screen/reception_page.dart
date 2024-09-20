@@ -17,6 +17,7 @@ class ReceptionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    controller.getOnlineReservationData();
     double maxPageWidth = HSizes.maxPageWidth;
     return Obx(() => authController.user.value != null
         ? Scaffold(
@@ -39,20 +40,10 @@ class ReceptionPage extends StatelessWidget {
                       Flexible(
                         child: Row(
                           children: [
-                            Obx(
-                              () => HNavigationDrawer(
-                                  isCollapsed: controller.isCollapsed.value),
-                            ),
+                            HNavigationDrawer(),
                             Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  (!controller.isCollapsed.value)
-                                      ? controller.updateCollapsed(true)
-                                      : null;
-                                },
-                                child: Obx(() =>
-                                    pagesList[controller.pageIndex.value]),
-                              ),
+                              child: Obx(
+                                  () => pagesList[controller.pageIndex.value]),
                             )
                           ],
                         ),

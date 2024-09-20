@@ -7,7 +7,6 @@ import 'package:dr_ashraf_clinic/view/clinic/reception/widget/page_label_widget.
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/patient_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ReservationPage extends StatelessWidget {
   ReservationPage({
@@ -48,7 +47,8 @@ class ReservationPage extends StatelessWidget {
                               children: [
                                 Text(
                                   'schedule_table_label'.tr,
-                                  style: GoogleFonts.cairo(
+                                  style: const TextStyle(
+                                    fontFamily: 'NotoNaskh',
                                     fontSize: 22,
                                     fontWeight: FontWeight.w600,
                                   ),

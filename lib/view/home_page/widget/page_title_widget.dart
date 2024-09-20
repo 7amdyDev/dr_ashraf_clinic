@@ -2,7 +2,6 @@ import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class PageTitleWidget extends StatelessWidget {
   const PageTitleWidget({
@@ -18,11 +17,12 @@ class PageTitleWidget extends StatelessWidget {
     return Text(
       text.tr,
       style: isEnglish
-          ? GoogleFonts.outfit(
+          ? const TextStyle(
+              fontFamily: 'Oswald',
               fontSize: 32,
               fontWeight: FontWeight.w400,
               shadows: [
-                const BoxShadow(
+                BoxShadow(
                     color: Colors.black38, offset: Offset(0, 2), blurRadius: 2)
               ],
               color: HColors.primary)

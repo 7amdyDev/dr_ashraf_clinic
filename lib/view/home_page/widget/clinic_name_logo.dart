@@ -1,7 +1,6 @@
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ClinicNameLogo extends StatelessWidget {
   const ClinicNameLogo({
@@ -27,10 +26,11 @@ class ClinicNameLogo extends StatelessWidget {
             Text(
               'app_name'.tr,
               style: Get.locale == const Locale('en', 'US')
-                  ? GoogleFonts.outfit(
+                  ? const TextStyle(
+                      fontFamily: 'Oswald',
                       fontWeight: FontWeight.bold,
                       shadows: [
-                        const Shadow(
+                        Shadow(
                           color: Colors.black38,
                           blurRadius: 4.0,
                           offset: Offset(0.0, 2.0),

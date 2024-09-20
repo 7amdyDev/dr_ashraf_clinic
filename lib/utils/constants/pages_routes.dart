@@ -21,6 +21,6 @@ final routes = [
   GetPage(name: '/patientFinance', page: () => const PatientFinance()),
   GetPage(name: '/clinicExpenses', page: () => const ClinicExpensesPage()),
   GetPage(name: '/reserve', page: () => ReservationPage()),
-  GetPage(name: '/doctor', page: () => const DoctorPage()),
+  GetPage(name: '/doctor', page: () => DoctorPage()),
   GetPage(name: '/contact_us', page: () => const ContactUsPage()),
 ];

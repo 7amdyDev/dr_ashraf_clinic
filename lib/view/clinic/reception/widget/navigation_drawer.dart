@@ -3,23 +3,21 @@ import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
+import 'package:dr_ashraf_clinic/view/clinic/reception/widget/clinic_branch_name.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/navigation_drawer_item.dart';
-import 'package:dr_ashraf_clinic/view/home_page/widget/drop_down_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HNavigationDrawer extends StatelessWidget {
-  HNavigationDrawer({super.key, required this.isCollapsed});
-  final bool isCollapsed;
+  HNavigationDrawer({
+    super.key,
+  });
   final authController = Get.find<AuthController>();
   final controller = Get.find<ClinicController>();
   @override
   Widget build(BuildContext context) {
     final size = HelperFunctions.screenSize();
     double maxPageWidth = HSizes.maxPageWidth;
-    var clinicBranch = controller.clinicBranches
-        .firstWhere((clinic) => clinic.id == clinicController.clinicId.value)
-        .branch;
     double drawerWidth = size.width < maxPageWidth ? size.width * 0.20 : 250;
     return SingleChildScrollView(
       child: SizedBox(
@@ -34,25 +32,7 @@ class HNavigationDrawer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    clinicBranch,
-                    softWrap: true,
-                    style: const TextStyle(
-                        shadows: [
-                          BoxShadow(
-                              color: Colors.black26,
-                              offset: Offset(0, 3),
-                              blurRadius: 2)
-                        ],
-                        fontSize: 32,
-                        color: HColors.primary,
-                        fontFamily: 'Lemonada',
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
+                ClinicBranchName(),
                 const Divider(),
                 const SizedBox(
                   height: HSizes.spaceBtwItems,

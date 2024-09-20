@@ -9,7 +9,6 @@ import 'package:dr_ashraf_clinic/view/clinic/reception/screen/reservation/widget
 import 'package:dr_ashraf_clinic/view/home_page/widget/filled_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ViewPatientCardWidget extends StatefulWidget {
   const ViewPatientCardWidget({
@@ -66,7 +65,8 @@ class _ViewPatientCardWidgetState extends State<ViewPatientCardWidget> {
               children: [
                 Text(
                   'personal_info_label'.tr,
-                  style: GoogleFonts.cairo(
+                  style: const TextStyle(
+                    fontFamily: 'NotoNaskh',
                     fontSize: 22,
                     fontWeight: FontWeight.w600,
                   ),
@@ -145,7 +145,8 @@ class _ViewPatientCardWidgetState extends State<ViewPatientCardWidget> {
                 ),
                 Text(
                   'medical_info_label'.tr,
-                  style: GoogleFonts.cairo(
+                  style: const TextStyle(
+                    fontFamily: 'NotoNaskh',
                     fontSize: 22,
                     fontWeight: FontWeight.w600,
                   ),

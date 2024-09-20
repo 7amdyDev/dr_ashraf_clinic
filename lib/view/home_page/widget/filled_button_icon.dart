@@ -2,7 +2,6 @@ import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/book_now_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class FilledButtonWithIcon extends StatelessWidget {
   const FilledButtonWithIcon({
@@ -27,7 +26,10 @@ class FilledButtonWithIcon extends StatelessWidget {
                   fontFamily: 'ElMessiri',
                   fontSize: 28,
                 )
-              : GoogleFonts.notoNaskhArabic(fontSize: 28)),
+              : const TextStyle(
+                  fontFamily: 'NotoNaskh',
+                  fontSize: 28,
+                )),
     );
   }
 }

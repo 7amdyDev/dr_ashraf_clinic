@@ -1,6 +1,5 @@
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class DoctorTextAddWidget extends StatelessWidget {
   const DoctorTextAddWidget({
@@ -42,7 +41,8 @@ class DoctorTextAddWidget extends StatelessWidget {
               fit: BoxFit.scaleDown,
               child: Text(
                 label,
-                style: GoogleFonts.notoNaskhArabic(
+                style: TextStyle(
+                  fontFamily: 'NotoNaskh',
                   fontSize: labelFontSize,
                   fontWeight: FontWeight.w600,
                 ),

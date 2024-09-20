@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class TableColumnLabel extends StatelessWidget {
   const TableColumnLabel({
@@ -22,7 +21,8 @@ class TableColumnLabel extends StatelessWidget {
         child: Text(
           textAlign: TextAlign.center,
           text.tr,
-          style: GoogleFonts.notoNaskhArabic(
+          style: TextStyle(
+            fontFamily: 'NotoNaskh',
             fontWeight: FontWeight.bold,
             fontSize: isEnglish ? enFontSize : arFontSize,
           ),

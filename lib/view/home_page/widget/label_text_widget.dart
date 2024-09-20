@@ -1,7 +1,6 @@
 import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class LabelTextWidget extends StatelessWidget {
   const LabelTextWidget({
@@ -18,14 +17,15 @@ class LabelTextWidget extends StatelessWidget {
     return Text(
       text.tr,
       style: isEnglish
-          ? GoogleFonts.merriweather(
+          ? const TextStyle(
+              fontFamily: 'Lato',
               fontSize: 22,
               fontWeight: FontWeight.bold,
             )
-          : GoogleFonts.notoNaskhArabic(
+          : const TextStyle(
+              fontFamily: 'NotoNaskh',
               fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
+              fontWeight: FontWeight.bold),
     );
   }
 }

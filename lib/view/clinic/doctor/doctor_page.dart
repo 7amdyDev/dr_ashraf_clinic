@@ -11,13 +11,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DoctorPage extends StatelessWidget {
-  const DoctorPage({super.key});
-
+  DoctorPage({super.key});
+  final controller = Get.find<ClinicController>();
+  final authController = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ClinicController());
+    controller.getOnlineReservationData();
     double maxPageWidth = HSizes.maxPageWidth;
-    var authController = Get.put(AuthController());
     return Obx(() => authController.user.value != null
         ? Scaffold(
             backgroundColor: HColors.secondary,

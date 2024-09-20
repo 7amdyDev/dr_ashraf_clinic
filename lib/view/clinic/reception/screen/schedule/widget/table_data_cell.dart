@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class TableDataCell extends StatelessWidget {
   const TableDataCell({
@@ -17,8 +16,9 @@ class TableDataCell extends StatelessWidget {
       child: RichText(
         text: TextSpan(
           text: text,
-          style: GoogleFonts.cairo(
-            fontSize: 16,
+          style: const TextStyle(
+            fontFamily: 'NotoNaskh',
+            fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),

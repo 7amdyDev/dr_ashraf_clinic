@@ -3,6 +3,7 @@ import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
+import 'package:dr_ashraf_clinic/view/clinic/reception/widget/clinic_branch_name.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/navigation_drawer_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,7 +18,6 @@ class HDoctorNavigationDrawer extends StatelessWidget {
     final authcontroller = Get.find<AuthController>();
     final size = HelperFunctions.screenSize();
     double maxPageWidth = HSizes.maxPageWidth;
-
     double drawerWidth = size.width < maxPageWidth ? size.width * 0.20 : 250;
     return SingleChildScrollView(
       child: SizedBox(
@@ -32,7 +32,8 @@ class HDoctorNavigationDrawer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                DrawerHeader(child: Text(controller.clinicId.string)),
+                ClinicBranchName(),
+                const Divider(),
                 const SizedBox(
                   height: HSizes.spaceBtwItems,
                 ),

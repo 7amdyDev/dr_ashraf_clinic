@@ -1,7 +1,6 @@
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class NavBarButton extends StatelessWidget {
   const NavBarButton({
@@ -40,7 +39,8 @@ class NavBarButton extends StatelessWidget {
           child: Text(
             text.tr,
             style: Get.locale == const Locale('en', 'US')
-                ? GoogleFonts.outfit(
+                ? TextStyle(
+                    fontFamily: 'Oswald',
                     fontWeight: currentPage ? FontWeight.bold : null,
                     shadows: withShadow
                         ? [

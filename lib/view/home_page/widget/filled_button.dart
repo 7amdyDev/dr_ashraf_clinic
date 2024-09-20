@@ -2,7 +2,6 @@ import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class HFilledButton extends StatelessWidget {
   const HFilledButton({
@@ -30,7 +29,10 @@ class HFilledButton extends StatelessWidget {
                   fontFamily: 'ElMessiri',
                   fontSize: fontSize,
                 )
-              : GoogleFonts.notoNaskhArabic(fontSize: fontSize)),
+              : TextStyle(
+                  fontFamily: 'NotoNaskh',
+                  fontSize: fontSize,
+                )),
     );
   }
 }

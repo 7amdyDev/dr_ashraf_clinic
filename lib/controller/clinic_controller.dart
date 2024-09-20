@@ -5,7 +5,6 @@ import 'package:dr_ashraf_clinic/utils/constants/api_constants.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logging/logging.dart';
 
 class ClinicController extends GetxController {
   final _clinicApi = Get.find<ClinicApi>();
@@ -23,7 +22,7 @@ class ClinicController extends GetxController {
   void onInit() {
     super.onInit();
     getClinicData();
-    getOnlineReservationData();
+    //  getOnlineReservationData();
   }
 
   void getOnlineReservationData() {
@@ -44,8 +43,18 @@ class ClinicController extends GetxController {
     });
   }
 
+  String getClinicBranchName() {
+    if (clinicBranches.isNotEmpty) {
+      return clinicBranches
+          .firstWhere((clinic) => clinic.id == clinicId.value)
+          .branch
+          .tr;
+    } else {
+      return 'Clinics';
+    }
+  }
+
   Future<void> getClinicData() async {
-    var log = Logger('get Clinic Data');
     try {
       var response = await _clinicApi.getClinicBranches();
       if (response.statusCode == 200 && response.body != null) {
@@ -72,7 +81,6 @@ class ClinicController extends GetxController {
       var response = await _clinicApi.getFee();
 
       if (response.statusCode == 200 && response.body != null) {
-        log.fine(response.body);
         feeList.addAll(response.body!);
       }
     } finally {}

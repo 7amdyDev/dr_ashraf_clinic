@@ -108,7 +108,11 @@ class AppTranslation extends Translations {
           'upper_endoscopy_label': 'Upper Endoscopy',
           'lower_endoscopy_label': 'Lower Endoscopy',
           'discount_label': 'Discount Value',
-          'clinic_branch_label': 'Choose Clinic'
+          'clinic_branch_label': 'Choose Clinic',
+          'عيادة سموحة': 'Smouha Clinic',
+          'عيادة العجمي': 'Agamy Clinic',
+          'check_label': 'Check',
+          'consult_label': 'Consult',
         },
         'ar_EG': {
           'app_name': 'عيادات الدكتور أشرف يحيي',
@@ -220,7 +224,9 @@ class AppTranslation extends Translations {
           'upper_endoscopy_label': 'منظار علوي',
           'lower_endoscopy_label': 'منظار سفلي',
           'discount_label': 'قيمة الخصم',
-          'clinic_branch_label': 'أختر عيادة'
+          'clinic_branch_label': 'أختر عيادة',
+          'عيادة سموحة': 'عيادة سموحة',
+          'عيادة العجمي': 'عيادة العجمي'
         },
       };
 }

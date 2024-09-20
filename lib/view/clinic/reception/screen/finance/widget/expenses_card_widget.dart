@@ -9,7 +9,6 @@ import 'package:dr_ashraf_clinic/view/clinic/reception/screen/reservation/widget
 import 'package:dr_ashraf_clinic/view/home_page/widget/filled_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ExpensesCardWidget extends StatelessWidget {
   const ExpensesCardWidget({
@@ -33,7 +32,8 @@ class ExpensesCardWidget extends StatelessWidget {
             children: [
               Text(
                 'add_expense_label'.tr,
-                style: GoogleFonts.cairo(
+                style: const TextStyle(
+                  fontFamily: 'NotoNaskh',
                   fontSize: 22,
                   fontWeight: FontWeight.w600,
                 ),
