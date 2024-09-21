@@ -1,3 +1,4 @@
+import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
 import 'package:flutter/material.dart';
 
 class TableDataCell extends StatelessWidget {
@@ -10,15 +11,16 @@ class TableDataCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool english = HelperFunctions.isLocalEnglish();
     return Center(
         child: FittedBox(
       fit: BoxFit.scaleDown,
       child: RichText(
         text: TextSpan(
           text: text,
-          style: const TextStyle(
+          style: TextStyle(
             fontFamily: 'NotoNaskh',
-            fontSize: 18,
+            fontSize: english ? 16 : 18,
             fontWeight: FontWeight.bold,
           ),
         ),

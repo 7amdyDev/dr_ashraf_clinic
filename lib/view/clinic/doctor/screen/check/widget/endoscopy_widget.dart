@@ -1,5 +1,6 @@
 import 'package:dr_ashraf_clinic/controller/finance_controller.dart';
 import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
+import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/utils/formatters/formatter.dart';
 import 'package:dr_ashraf_clinic/utils/validator/validation.dart';
 import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/doctor_text_add.dart';
@@ -18,7 +19,6 @@ class EndoscopyWidget extends StatelessWidget {
     TextEditingController amountTextEditingController = TextEditingController();
     int serviceId = 3;
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         SizedBox(
           width: 200,
@@ -28,6 +28,9 @@ class EndoscopyWidget extends StatelessWidget {
                 serviceId = value;
               },
               serviceId: serviceId),
+        ),
+        const SizedBox(
+          width: HSizes.spaceBtwItems,
         ),
         Form(
           autovalidateMode: AutovalidateMode.always,

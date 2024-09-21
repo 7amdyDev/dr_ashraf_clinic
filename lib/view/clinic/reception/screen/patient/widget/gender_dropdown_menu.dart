@@ -17,6 +17,11 @@ class _MyDropdownState extends State<GenderDropdownMenu> {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
+      style: const TextStyle(
+        fontFamily: 'NotoNaskh',
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+      ),
       value: _selectedValue, // Currently selected value
       items: [
         DropdownMenuItem<String>(

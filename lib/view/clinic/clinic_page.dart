@@ -14,7 +14,7 @@ class ClinicPage extends StatelessWidget {
     final size = HelperFunctions.screenSize();
     double maxPageWidth = HSizes.maxPageWidth;
     return Scaffold(
-        backgroundColor: HColors.secondary,
+        backgroundColor: HColors.primaryBackground,
         body: Center(
             heightFactor: 1,
             child: Padding(

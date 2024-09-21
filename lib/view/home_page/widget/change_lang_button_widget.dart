@@ -9,6 +9,8 @@ class ChangeLangButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.sizeOf(context).width;
+
     return TextButton(
       onPressed: () {
         var newLocale = HelperFunctions.isLocalEnglish()
@@ -19,9 +21,9 @@ class ChangeLangButton extends StatelessWidget {
       child: FittedBox(
         fit: BoxFit.scaleDown,
         child: Text(HelperFunctions.isLocalEnglish() ? 'عربي' : 'English',
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: 'ElMessiri',
-              fontSize: 20,
+              fontSize: width > 700 ? 20 : 10,
               color: Colors.black,
               fontWeight: FontWeight.w700,
             )),

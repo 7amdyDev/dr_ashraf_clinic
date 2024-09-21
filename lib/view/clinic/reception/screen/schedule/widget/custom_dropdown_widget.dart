@@ -20,6 +20,11 @@ class _CustomDropDownWidgetState extends State<CustomDropDownWidget> {
   @override
   Widget build(BuildContext context) {
     return DropdownButton<int>(
+        style: const TextStyle(
+          fontFamily: 'NotoNaskh',
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
         value: widget.statusId,
         focusColor: Colors.transparent,
         items: [

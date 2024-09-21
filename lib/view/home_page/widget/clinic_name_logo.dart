@@ -9,12 +9,13 @@ class ClinicNameLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.sizeOf(context).width;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Image.asset(
-          width: 70,
-          height: 70,
+          width: width > 800 ? 70 : width * .1,
+          height: width > 800 ? 70 : width * .1,
           'assets/images/logo.png',
         ),
         const SizedBox(
@@ -26,29 +27,29 @@ class ClinicNameLogo extends StatelessWidget {
             Text(
               'app_name'.tr,
               style: Get.locale == const Locale('en', 'US')
-                  ? const TextStyle(
+                  ? TextStyle(
                       fontFamily: 'Oswald',
                       fontWeight: FontWeight.bold,
-                      shadows: [
+                      shadows: const [
                         Shadow(
                           color: Colors.black38,
                           blurRadius: 4.0,
                           offset: Offset(0.0, 2.0),
                         ),
                       ],
-                      fontSize: 32,
+                      fontSize: width > 800 ? 32 : width * .03,
                       color: HColors.primary)
-                  : const TextStyle(
+                  : TextStyle(
                       fontFamily: 'ElMessiri',
                       fontWeight: FontWeight.w700,
-                      shadows: [
+                      shadows: const [
                         Shadow(
                           color: Colors.black38,
                           blurRadius: 4.0,
                           offset: Offset(0.0, 2.0),
                         ),
                       ],
-                      fontSize: 32,
+                      fontSize: width > 800 ? 32 : width * .03,
                       color: HColors.primary),
             ),
           ]),

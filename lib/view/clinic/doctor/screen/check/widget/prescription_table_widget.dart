@@ -49,7 +49,9 @@ class PrescriptionTableWidget extends StatelessWidget {
                     'prescription_label'.tr,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                        fontSize: 24, fontWeight: FontWeight.bold),
+                        fontFamily: 'ElMessiri',
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold),
                   )),
               ConstrainedBox(
                 constraints: BoxConstraints(

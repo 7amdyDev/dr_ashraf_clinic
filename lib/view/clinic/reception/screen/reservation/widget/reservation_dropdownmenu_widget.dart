@@ -29,6 +29,11 @@ class _MyDropdownState extends State<ServiceTypeDropDownMenu> {
         .getRange(widget.listRange[0], widget.listRange[1]);
 
     return DropdownButtonFormField<int>(
+      style: const TextStyle(
+        fontFamily: 'NotoNaskh',
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+      ),
       value: selectedValue, // Currently selected value
       items: list.map((service) {
         return DropdownMenuItem<int>(
