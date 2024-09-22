@@ -11,6 +11,7 @@ import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/symptoms
 import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/symptoms_table_widget.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/filled_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -82,7 +83,7 @@ class NewCheckPage extends StatelessWidget {
                       },
                     ),
                     HFilledButton(
-                        text: 'Finance',
+                        text: 'finance_label',
                         onPressed: () {
                           Get.dialog(DoctorFinanceDialogWidget(
                             controller: financeController,
@@ -107,17 +108,36 @@ class NewCheckPage extends StatelessWidget {
 
   Future<void> printDoc() async {
     const pageFormat = PdfPageFormat.a5;
+    // Load an image from assets
+    final ByteData bytes = await rootBundle.load('assets/images/logo_name.png');
+    final Uint8List imageData = bytes.buffer.asUint8List();
 
+    final image = pw.MemoryImage(imageData);
     final doc = pw.Document();
     doc.addPage(pw.Page(
         pageFormat: pageFormat,
         build: (pw.Context context) {
           return pw.Padding(
               padding: const pw.EdgeInsets.all(HSizes.defaultSpace),
-              child: pw.Column(
-                  children: consultationController.prescriptionList.map((f) {
-                return pw.Text(f.medicine);
-              }).toList()));
+              child: pw.Column(children: [
+                pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.start,
+                    children: [
+                      pw.Image(
+                        image,
+                        width: 70,
+                        height: 70,
+                      ),
+                      pw.SizedBox(
+                        width: 32,
+                      ),
+                    ]),
+                pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    children: consultationController.prescriptionList.map((f) {
+                      return pw.Text(f.medicine);
+                    }).toList())
+              ]));
         }));
 
     await Printing.layoutPdf(

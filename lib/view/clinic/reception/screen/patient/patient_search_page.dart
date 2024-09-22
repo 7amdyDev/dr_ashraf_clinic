@@ -1,14 +1,17 @@
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
+import 'package:dr_ashraf_clinic/view/clinic/doctor/widget/doctor_tabbed_page.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/patient/widget/patient_tabbed_widget.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/page_label_widget.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/search_list_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class PatientSearchPage extends StatelessWidget {
   const PatientSearchPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var route = Get.currentRoute;
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -42,8 +45,10 @@ class PatientSearchPage extends StatelessWidget {
             const Spacer(),
           ],
         ),
-        const Expanded(
-          child: PatientTabbedPage(),
+        Expanded(
+          child: route == '/reception'
+              ? const PatientTabbedPage()
+              : const DoctorTabbedPage(),
         ),
       ],
     );

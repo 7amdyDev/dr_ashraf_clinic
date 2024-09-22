@@ -19,6 +19,7 @@ class EndoscopyWidget extends StatelessWidget {
     TextEditingController amountTextEditingController = TextEditingController();
     int serviceId = 3;
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
           width: 200,

@@ -30,7 +30,7 @@ class HomePage extends StatelessWidget {
                       height: HSizes.spaceBtwSections * 2,
                     ),
                     LayoutBuilder(builder: (context, constraint) {
-                      if (constraint.maxWidth > 600) {
+                      if (constraint.maxWidth > 450) {
                         return Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: _buildChildren(maxPageWidth, size),
