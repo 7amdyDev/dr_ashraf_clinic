@@ -6,6 +6,8 @@ class ExpenseApi extends GetConnect {
   void onInit() {
     super.onInit();
     httpClient.baseUrl = 'https://clinicnode.up.railway.app';
+    // httpClient.baseUrl = 'http://localhost:8080';
+
     httpClient.defaultContentType = 'application/json; charset=UTF-8';
   }
 

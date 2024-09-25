@@ -1,10 +1,9 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class ConsultationModel {
   int? id;
   int appointId;
   String dateTime;
   int patientId;
-  String? bloodPressure;
-  String? temperature;
   String? note;
   int serviceId;
   ConsultationModel(
@@ -12,8 +11,6 @@ class ConsultationModel {
       required this.appointId,
       required this.dateTime,
       required this.patientId,
-      required this.bloodPressure,
-      required this.temperature,
       required this.note,
       required this.serviceId});
 
@@ -23,8 +20,6 @@ class ConsultationModel {
       'appointment_id': appointId,
       'date': dateTime,
       'patient_id': patientId,
-      'blood_pressure': bloodPressure,
-      'temperature': temperature,
       'note': note,
       'service_id': serviceId,
     };
@@ -36,8 +31,6 @@ class ConsultationModel {
       appointId: json['appointment_id'],
       dateTime: json['date'],
       patientId: json['patient_id'],
-      bloodPressure: json['blood_pressure'],
-      temperature: json['temperature'],
       note: json['note'],
       serviceId: json['service_id'],
     );
@@ -53,8 +46,6 @@ class ConsultationModel {
     int? appointId,
     String? dateTime,
     int? patientId,
-    String? bloodPressure,
-    String? temperature,
     String? note,
     int? serviceId,
   }) {
@@ -63,8 +54,6 @@ class ConsultationModel {
       appointId: appointId ?? this.appointId,
       dateTime: dateTime ?? this.dateTime,
       patientId: patientId ?? this.patientId,
-      bloodPressure: bloodPressure ?? this.bloodPressure,
-      temperature: temperature ?? this.temperature,
       note: note ?? this.note,
       serviceId: serviceId ?? this.serviceId,
     );
@@ -166,5 +155,29 @@ class PrescriptionModel {
   static List<PrescriptionModel> listFromJson(dynamic json) {
     return List<PrescriptionModel>.from(
         json.map((medicine) => PrescriptionModel.fromJson(medicine)));
+  }
+}
+
+class MedicineModel {
+  String? key;
+  String name;
+  MedicineModel({
+    required this.name,
+    this.key,
+  });
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+    };
+  }
+
+  factory MedicineModel.fromJson(dynamic map) {
+    return MedicineModel(
+      name: map['name'],
+    );
+  }
+  static List<MedicineModel> listFromJson(dynamic json) {
+    return List<MedicineModel>.from(
+        json.map((medicine) => MedicineModel.fromJson(medicine)));
   }
 }

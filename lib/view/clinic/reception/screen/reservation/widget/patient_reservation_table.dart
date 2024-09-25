@@ -1,4 +1,5 @@
 import 'package:dr_ashraf_clinic/controller/appointment_controller.dart';
+import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/controller/finance_controller.dart';
 import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
 import 'package:dr_ashraf_clinic/model/appointment_model.dart';
@@ -47,6 +48,7 @@ class _PatientReservationTableState extends State<PatientReservationTable> {
                     DataColumn(label: TableColumnLabel(text: 'date_label')),
                     DataColumn(
                         label: TableColumnLabel(text: 'service_type_label')),
+                    DataColumn(label: TableColumnLabel(text: 'clinic_button')),
                     DataColumn(label: TableColumnLabel(text: 'status_label')),
                   ],
                   source: _DataSource(
@@ -91,8 +93,9 @@ class _PatientReservationTableState extends State<PatientReservationTable> {
 
 class _DataSource extends DataTableSource {
   final List<AppointmentModel> data;
-  var controller = Get.put(PatientController());
-  var financeController = Get.put(FinanceController());
+  var controller = Get.find<PatientController>();
+  var clinicController = Get.find<ClinicController>();
+  var financeController = Get.find<FinanceController>();
   final Function(int) onSelected;
   final int? appointId;
   _DataSource(this.onSelected, {required this.appointId, required this.data});
@@ -128,6 +131,9 @@ class _DataSource extends DataTableSource {
           DataCell(TableDataCell(text: HFormatter.formatStringDate(item.date))),
           DataCell(TableDataCell(
               text: HValidator.serviceIdValidation(item.serviceId).tr)),
+          DataCell(TableDataCell(
+              text: clinicController.getClinicBranchName(
+                  clinicBranchId: item.clinicId))),
           DataCell(TableDataCell(
               text: HValidator.statusIdValidation(item.statusId).tr)),
         ]);

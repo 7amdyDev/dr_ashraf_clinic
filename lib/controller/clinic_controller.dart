@@ -1,5 +1,7 @@
+import 'package:dr_ashraf_clinic/controller/medicines.dart';
 import 'package:dr_ashraf_clinic/db/clinic_api.dart';
 import 'package:dr_ashraf_clinic/model/clinic_models.dart';
+import 'package:dr_ashraf_clinic/model/consultation_model.dart';
 import 'package:dr_ashraf_clinic/model/online_reserv_model.dart';
 import 'package:dr_ashraf_clinic/utils/constants/api_constants.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -8,7 +10,6 @@ import 'package:get/get.dart';
 
 class ClinicController extends GetxController {
   final _clinicApi = Get.find<ClinicApi>();
-  RxBool isCollapsed = true.obs;
   RxList<OnlineReservModel> onlineReservData = <OnlineReservModel>[].obs;
   RxInt pageIndex = 0.obs;
   RxList<ServicesId> servicesId = <ServicesId>[].obs;
@@ -16,6 +17,7 @@ class ClinicController extends GetxController {
   RxList<Fee> feeList = <Fee>[].obs;
   RxList<ClinicId> clinicBranches = <ClinicId>[].obs;
   RxInt clinicId = 1.obs;
+  RxList<MedicineModel> dbMedicineSearch = <MedicineModel>[].obs;
   final database = FirebaseDatabase.instance;
 
   @override
@@ -43,8 +45,37 @@ class ClinicController extends GetxController {
     });
   }
 
-  String getClinicBranchName() {
+  void searchDatabase(String query) async {
+    if (query.isEmpty) {
+      dbMedicineSearch.clear();
+      return;
+    }
+    database.databaseURL = dBUrl;
+    final DatabaseReference dbRef = database.ref().child('Medicines');
+
+    final snapshot = await dbRef.once();
+    final data = snapshot.snapshot.value as Map<dynamic, dynamic>?;
+
+    if (data != null) {
+      dbMedicineSearch.clear();
+      data.forEach((key, value) {
+        if (value['name'].toLowerCase().contains(query)) {
+          dbMedicineSearch.add(MedicineModel(
+            name: value["name"],
+          ));
+        }
+      });
+    }
+  }
+
+  String getClinicBranchName({int? clinicBranchId}) {
     if (clinicBranches.isNotEmpty) {
+      if (clinicBranchId != null) {
+        return clinicBranches
+            .firstWhere((clinic) => clinic.id == clinicBranchId)
+            .branch
+            .tr;
+      }
       return clinicBranches
           .firstWhere((clinic) => clinic.id == clinicId.value)
           .branch
@@ -86,10 +117,6 @@ class ClinicController extends GetxController {
     } finally {}
   }
 
-  void updateCollapsed(bool collapsed) {
-    isCollapsed.value = collapsed;
-  }
-
   void createOnlineReserv(OnlineReservModel model) {
     database.databaseURL = dBUrl;
     final DatabaseReference reference = database.ref().child('Appointment');
@@ -121,6 +148,20 @@ class ClinicController extends GetxController {
     }).catchError((error) {
       //debugPrint('Error adding user: $error');
     });
+  }
+
+  void createMedicine() {
+    database.databaseURL = dBUrl;
+    final DatabaseReference reference = database.ref().child('Medicines');
+
+    // Create a new reference for a new appointment
+
+    for (var name in medicineList) {
+      final newAppointRef = reference.push();
+      newAppointRef.set({
+        'name': name['name'],
+      });
+    }
   }
 
   void deleteOnlineReserv(String appointId) {

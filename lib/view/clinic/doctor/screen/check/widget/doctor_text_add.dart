@@ -14,6 +14,7 @@ class DoctorTextAddWidget extends StatelessWidget {
     this.validator,
     this.maxLines = 1,
     this.onPressed,
+    this.onChanged,
   });
   final String label;
   final String? value;
@@ -26,6 +27,7 @@ class DoctorTextAddWidget extends StatelessWidget {
 
   final TextEditingController? textEditingController;
   final VoidCallback? onPressed;
+  final Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +53,7 @@ class DoctorTextAddWidget extends StatelessWidget {
           ),
           TextFormField(
             validator: validator,
+            onChanged: onChanged,
             style: TextStyle(
               fontSize: textFontSize,
             ),
