@@ -174,6 +174,7 @@ class MedicineModel {
   factory MedicineModel.fromJson(dynamic map) {
     return MedicineModel(
       name: map['name'],
+      key: map['key'],
     );
   }
   static List<MedicineModel> listFromJson(dynamic json) {

@@ -111,6 +111,17 @@ class HDoctorNavigationDrawer extends StatelessWidget {
                   },
                 ),
                 const Spacer(
+                  flex: 1,
+                ),
+                NavigationDrawerItem(
+                  imagePath: 'assets/icons/setting.png',
+                  title: 'settings_label',
+                  pageIndex: 8,
+                  onPressed: () {
+                    controller.pageIndex.value = 8;
+                  },
+                ),
+                const Spacer(
                   flex: 3,
                 ),
                 NavigationDrawerItem(

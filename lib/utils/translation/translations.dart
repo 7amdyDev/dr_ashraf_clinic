@@ -113,6 +113,10 @@ class AppTranslation extends Translations {
           'عيادة العجمي': 'Agamy Clinic',
           'check_label': 'Check',
           'consult_label': 'Consult',
+          'settings_label': 'Settings',
+          'search_label': 'Search',
+          'add_label': 'Add',
+          'medicines_label': 'Medicines'
         },
         'ar_EG': {
           'app_name': 'عيادات الدكتور أشرف يحيي',
@@ -226,7 +230,11 @@ class AppTranslation extends Translations {
           'discount_label': 'قيمة الخصم',
           'clinic_branch_label': 'أختر عيادة',
           'عيادة سموحة': 'عيادة سموحة',
-          'عيادة العجمي': 'عيادة العجمي'
+          'عيادة العجمي': 'عيادة العجمي',
+          'settings_label': 'الإعدادات',
+          'search_label': 'بحث',
+          'add_label': 'إضافة',
+          'medicines_label': 'الأدوية'
         },
       };
 }

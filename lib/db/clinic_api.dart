@@ -1,13 +1,12 @@
 import 'package:dr_ashraf_clinic/model/clinic_models.dart';
+import 'package:dr_ashraf_clinic/utils/constants/api_constants.dart';
 import 'package:get/get.dart';
 
 class ClinicApi extends GetConnect {
   @override
   void onInit() {
     super.onInit();
-    httpClient.baseUrl = 'https://clinicnode.up.railway.app';
-    //httpClient.baseUrl = 'http://localhost:8080';
-
+    httpClient.baseUrl = apiUrl;
     httpClient.defaultContentType = 'application/json; charset=UTF-8';
   }
 

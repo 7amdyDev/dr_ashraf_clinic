@@ -82,7 +82,7 @@ class _PrescriptionDataInputState extends State<PrescriptionDataInput> {
       setState(() {
         _searchQuery = query.toLowerCase();
       });
-      clinicController.searchDatabase(_searchQuery);
+      clinicController.searchMedicineDatabase(_searchQuery);
     });
   }
 

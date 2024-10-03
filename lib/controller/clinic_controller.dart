@@ -1,9 +1,9 @@
-import 'package:dr_ashraf_clinic/controller/medicines.dart';
 import 'package:dr_ashraf_clinic/db/clinic_api.dart';
 import 'package:dr_ashraf_clinic/model/clinic_models.dart';
 import 'package:dr_ashraf_clinic/model/consultation_model.dart';
 import 'package:dr_ashraf_clinic/model/online_reserv_model.dart';
 import 'package:dr_ashraf_clinic/utils/constants/api_constants.dart';
+import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -45,7 +45,59 @@ class ClinicController extends GetxController {
     });
   }
 
-  void searchDatabase(String query) async {
+  void addMedicineToDB(String name) {
+    if (name.isEmpty) {
+      return;
+    }
+    _addMedicineRecordToDB(
+      'Medicines',
+      {'name': name},
+    ).then((onValue) {
+      dbMedicineSearch.clear();
+      dbMedicineSearch.add(MedicineModel.fromJson(onValue));
+    });
+  }
+
+  Future<Map<String, dynamic>> _addMedicineRecordToDB(
+      String path, Map<String, dynamic> data) async {
+    try {
+      // Push a new record to the specified path
+      DatabaseReference ref = database.ref(path).push();
+      await ref.set(data);
+      HelperFunctions.showSnackBar('Record Added Successfully');
+      // Return the added item along with its unique key
+      return {
+        'key': ref.key,
+        ...data,
+      };
+    } catch (e) {
+      // Handle any errors
+      debugPrint("Error adding record: $e");
+      return {};
+    }
+  }
+
+  // Future<Map<String, dynamic>?> getMedicineRecordByKey(
+  //     String path, String key) async {
+  //   try {
+  //     // Reference the specific record using the path and key
+  //     DatabaseReference ref = database.ref('$path/$key');
+  //     DataSnapshot snapshot = await ref.get();
+
+  //     if (snapshot.exists) {
+  //       // Return the data as a map
+  //       return snapshot.value as Map<String, dynamic>;
+  //     } else {
+  //       debugPrint("No data available for the specified key.");
+  //       return null; // Key does not exist
+  //     }
+  //   } catch (e) {
+  //     debugPrint("Error retrieving record: $e");
+  //     return null; // Handle the error
+  //   }
+  // }
+
+  void searchMedicineDatabase(String query) async {
     if (query.isEmpty) {
       dbMedicineSearch.clear();
       return;
@@ -62,10 +114,22 @@ class ClinicController extends GetxController {
         if (value['name'].toLowerCase().contains(query)) {
           dbMedicineSearch.add(MedicineModel(
             name: value["name"],
+            key: key,
           ));
         }
       });
     }
+  }
+
+  void deleteMedcineFromDB(String key) {
+    database.databaseURL = dBUrl;
+
+    final DatabaseReference reference = database.ref().child('Medicines/$key');
+    reference.remove().then((_) {
+      HelperFunctions.showSnackBar('Record Deleted Successfully');
+    }).catchError((error) {
+      //  debugPrint('Error removing user: $error');
+    });
   }
 
   String getClinicBranchName({int? clinicBranchId}) {
@@ -148,20 +212,6 @@ class ClinicController extends GetxController {
     }).catchError((error) {
       //debugPrint('Error adding user: $error');
     });
-  }
-
-  void createMedicine() {
-    database.databaseURL = dBUrl;
-    final DatabaseReference reference = database.ref().child('Medicines');
-
-    // Create a new reference for a new appointment
-
-    for (var name in medicineList) {
-      final newAppointRef = reference.push();
-      newAppointRef.set({
-        'name': name['name'],
-      });
-    }
   }
 
   void deleteOnlineReserv(String appointId) {
