@@ -23,6 +23,9 @@ class ExpenseController extends GetxController {
   }
 
   Future<void> getExpensesByDate(DateTime date) async {
+    (expensesLoading) {
+      return;
+    };
     expensesLoading.value = true;
     try {
       var response =
@@ -36,6 +39,9 @@ class ExpenseController extends GetxController {
   }
 
   Future<void> getTotalDailyExpenses() async {
+    (expensesLoading) {
+      return;
+    };
     expensesLoading.value = true;
     try {
       var response = await _expenseApi

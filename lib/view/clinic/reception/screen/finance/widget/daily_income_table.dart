@@ -58,23 +58,11 @@ class _DataSource extends DataTableSource {
     final item = data[index];
     return DataRow(cells: [
       DataCell(TableDataCell(text: item.patientId.toString())),
-      DataCell(FutureBuilder(
-          future: controller.getPatientById(item.patientId),
-          builder: (context, snapshot) {
-            if (snapshot.data != null) {
-              return TableDataCell(text: snapshot.data!.name);
-            } else {
-              return const CircularProgressIndicator();
-            }
-          })),
+      DataCell(TableDataCell(text: item.name!)),
       DataCell(TableDataCell(text: HFormatter.formatStringDate(item.date))),
       DataCell(TableDataCell(
           text: HValidator.serviceIdValidation(item.serviceId).tr)),
       DataCell(TableDataCell(text: item.debit.toString())),
-
-      // const DataCell(Center(
-      //     child:
-      //         FittedBox(fit: BoxFit.scaleDown, child: CustomDropDownWidget()))),
     ]);
   }
 

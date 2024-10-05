@@ -33,7 +33,8 @@ class _MedicineSearchTableState extends State<MedicineSearchTable> {
                   columnSpacing: 12,
                   columns: const [
                     DataColumn(label: TableColumnLabel(text: '#')),
-                    DataColumn(label: TableColumnLabel(text: 'medicine_label')),
+                    DataColumn(
+                        label: TableColumnLabel(text: 'medicine_name_label')),
                     DataColumn(label: TableColumnLabel(text: ' ')),
                   ],
                   source: _DataSource(

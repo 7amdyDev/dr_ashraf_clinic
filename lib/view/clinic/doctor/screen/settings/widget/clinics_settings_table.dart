@@ -24,8 +24,8 @@ class _ClinicsSettingsTableState extends State<ClinicsSettingsTable> {
   Widget build(BuildContext context) {
     var width = MediaQuery.sizeOf(context).width;
     TextEditingController feeTextController = TextEditingController();
-
-    final List<Fee> searchResult = clinicController.feeList;
+    final feeKey = GlobalKey<FormState>();
+    final List<Fee> searchResult = clinicController.filteredFeeList;
     return Obx(() => SingleChildScrollView(
           child: Column(
             children: [
@@ -38,7 +38,8 @@ class _ClinicsSettingsTableState extends State<ClinicsSettingsTable> {
                   columnSpacing: 12,
                   columns: const [
                     DataColumn(label: TableColumnLabel(text: '#')),
-                    DataColumn(label: TableColumnLabel(text: 'clinic_label')),
+                    DataColumn(
+                        label: TableColumnLabel(text: 'branch_name_label')),
                     DataColumn(
                         label: TableColumnLabel(text: 'service_type_label')),
                     DataColumn(label: TableColumnLabel(text: 'value_label')),
@@ -69,32 +70,36 @@ class _ClinicsSettingsTableState extends State<ClinicsSettingsTable> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            // DataTextWidget(
-                            //   label: 'Clinic',
-                            //   value: clinicController.getClinicBranchName(
-                            //       clinicBranchId: record!.clinicId),
-                            // ),
-                            // DataTextWidget(
-                            //   label: 'service_type_label'.tr,
-                            //   value: HValidator.serviceIdValidation(
-                            //           record!.serviceId)
-                            //       .tr,
-                            // ),
-                            DataTextWidget(
-                              label: 'value_label'.tr,
-                              textEditingController: feeTextController,
+                            Form(
+                              key: feeKey,
+                              autovalidateMode: AutovalidateMode.always,
+                              child: DataTextWidget(
+                                label: 'value_label'.tr,
+                                textEditingController: feeTextController,
+                                validator: HValidator.validateNumber,
+                              ),
                             ),
                             HFilledButton(
                                 fontSize: 22,
                                 onPressed: () {
-                                  debugPrint('updated');
+                                  if (record != null &&
+                                      feeKey.currentState!.validate()) {
+                                    var fee = record!.copyWith(
+                                        fee: int.tryParse(
+                                            feeTextController.text));
+                                    clinicController.updateFeeList(fee);
+                                    feeTextController.clear();
+                                  }
                                 },
                                 text: 'update_button')
                           ],
                         ),
                       )),
                     )
-                  : Container()
+                  : Container(),
+              const SizedBox(
+                height: HSizes.spaceBtwSections,
+              ),
             ],
           ),
         ));

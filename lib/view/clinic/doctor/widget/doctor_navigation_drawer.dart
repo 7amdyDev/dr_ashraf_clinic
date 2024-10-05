@@ -1,4 +1,3 @@
-import 'package:dr_ashraf_clinic/controller/auth_controller.dart';
 import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
@@ -15,128 +14,131 @@ class HDoctorNavigationDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<ClinicController>();
-    final authcontroller = Get.find<AuthController>();
     final size = HelperFunctions.screenSize();
     double maxPageWidth = HSizes.maxPageWidth;
     double drawerWidth = size.width < maxPageWidth ? size.width * 0.20 : 250;
-    return SingleChildScrollView(
-      child: SizedBox(
-        width: drawerWidth,
-        height: size.height * 0.9,
-        child: Card(
-          color: HColors.primaryBackground,
-          elevation: 5,
-          child: Drawer(
-            backgroundColor: HColors.primaryBackground,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                ClinicBranchName(),
-                const Divider(),
-                const SizedBox(
-                  height: HSizes.spaceBtwItems,
+    return SizedBox(
+      width: drawerWidth,
+      height: size.height * 0.9,
+      child: Card(
+        color: HColors.primaryBackground,
+        elevation: 5,
+        child: Drawer(
+          backgroundColor: HColors.primaryBackground,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              ClinicBranchName(),
+              const Divider(),
+              const SizedBox(
+                height: HSizes.spaceBtwItems,
+              ),
+              Expanded(
+                child: ListView(
+                  children: [
+                    NavigationDrawerItem(
+                        imagePath: 'assets/icons/calender2.png',
+                        title: 'appointment_label',
+                        pageIndex: 0,
+                        onPressed: () {
+                          controller.pageIndex.value = 0;
+                        }),
+                    const SizedBox(
+                      height: HSizes.spaceBtwItems,
+                    ),
+                    NavigationDrawerItem(
+                      imagePath: 'assets/icons/reserve2.png',
+                      title: 'reserve_label',
+                      pageIndex: 1,
+                      onPressed: () {
+                        controller.pageIndex.value = 1;
+                      },
+                    ),
+                    const SizedBox(
+                      height: HSizes.spaceBtwItems,
+                    ),
+                    NavigationDrawerItem(
+                      imagePath: 'assets/icons/new_patient.png',
+                      title: 'new_patient_label',
+                      pageIndex: 2,
+                      onPressed: () {
+                        controller.pageIndex.value = 2;
+                      },
+                    ),
+                    const SizedBox(
+                      height: HSizes.spaceBtwItems,
+                    ),
+                    NavigationDrawerItem(
+                      imagePath: 'assets/icons/patient_search2.png',
+                      title: 'search_patient_label',
+                      pageIndex: 3,
+                      onPressed: () {
+                        controller.pageIndex.value = 3;
+                      },
+                    ),
+                    const SizedBox(
+                      height: HSizes.spaceBtwItems,
+                    ),
+                    NavigationDrawerItem(
+                      imagePath: 'assets/icons/daily_income.png',
+                      title: 'daily_revenue_label',
+                      pageIndex: 4,
+                      onPressed: () {
+                        controller.pageIndex.value = 4;
+                      },
+                    ),
+                    const SizedBox(
+                      height: HSizes.spaceBtwItems,
+                    ),
+                    NavigationDrawerItem(
+                      imagePath: 'assets/icons/patient_finance.png',
+                      title: 'patient_finance_label',
+                      pageIndex: 5,
+                      onPressed: () {
+                        controller.pageIndex.value = 5;
+                      },
+                    ),
+                    const SizedBox(
+                      height: HSizes.spaceBtwItems,
+                    ),
+                    NavigationDrawerItem(
+                      imagePath: 'assets/icons/finance.png',
+                      title: 'clinic_expenses_label',
+                      pageIndex: 6,
+                      onPressed: () {
+                        controller.pageIndex.value = 6;
+                      },
+                    ),
+                    const SizedBox(
+                      height: HSizes.spaceBtwItems,
+                    ),
+                    NavigationDrawerItem(
+                      imagePath: 'assets/icons/setting.png',
+                      title: 'settings_label',
+                      pageIndex: 8,
+                      onPressed: () {
+                        controller.pageIndex.value = 8;
+                      },
+                    ),
+                    // const Spacer(
+                    //   flex: 3,
+                    // ),
+                    // NavigationDrawerItem(
+                    //   imagePath: 'assets/icons/logout.png',
+                    //   title: 'logout_label',
+                    //   pageIndex: 10,
+                    //   onPressed: () {
+                    //     authcontroller.signOut();
+                    //   },
+                    // ),
+                    const SizedBox(
+                      height: HSizes.spaceBtwItems,
+                    ),
+                  ],
                 ),
-                NavigationDrawerItem(
-                    imagePath: 'assets/icons/calender2.png',
-                    title: 'appointment_label',
-                    pageIndex: 0,
-                    onPressed: () {
-                      controller.pageIndex.value = 0;
-                    }),
-                const Spacer(
-                  flex: 1,
-                ),
-                NavigationDrawerItem(
-                  imagePath: 'assets/icons/reserve2.png',
-                  title: 'reserve_label',
-                  pageIndex: 1,
-                  onPressed: () {
-                    controller.pageIndex.value = 1;
-                  },
-                ),
-                const Spacer(
-                  flex: 1,
-                ),
-                NavigationDrawerItem(
-                  imagePath: 'assets/icons/new_patient.png',
-                  title: 'new_patient_label',
-                  pageIndex: 2,
-                  onPressed: () {
-                    controller.pageIndex.value = 2;
-                  },
-                ),
-                const Spacer(
-                  flex: 1,
-                ),
-                NavigationDrawerItem(
-                  imagePath: 'assets/icons/patient_search2.png',
-                  title: 'search_patient_label',
-                  pageIndex: 3,
-                  onPressed: () {
-                    controller.pageIndex.value = 3;
-                  },
-                ),
-                const Spacer(
-                  flex: 1,
-                ),
-                NavigationDrawerItem(
-                  imagePath: 'assets/icons/daily_income.png',
-                  title: 'daily_revenue_label',
-                  pageIndex: 4,
-                  onPressed: () {
-                    controller.pageIndex.value = 4;
-                  },
-                ),
-                const Spacer(
-                  flex: 1,
-                ),
-                NavigationDrawerItem(
-                  imagePath: 'assets/icons/patient_finance.png',
-                  title: 'patient_finance_label',
-                  pageIndex: 5,
-                  onPressed: () {
-                    controller.pageIndex.value = 5;
-                  },
-                ),
-                const Spacer(
-                  flex: 1,
-                ),
-                NavigationDrawerItem(
-                  imagePath: 'assets/icons/finance.png',
-                  title: 'clinic_expenses_label',
-                  pageIndex: 6,
-                  onPressed: () {
-                    controller.pageIndex.value = 6;
-                  },
-                ),
-                const Spacer(
-                  flex: 1,
-                ),
-                NavigationDrawerItem(
-                  imagePath: 'assets/icons/setting.png',
-                  title: 'settings_label',
-                  pageIndex: 8,
-                  onPressed: () {
-                    controller.pageIndex.value = 8;
-                  },
-                ),
-                const Spacer(
-                  flex: 3,
-                ),
-                NavigationDrawerItem(
-                  imagePath: 'assets/icons/logout.png',
-                  title: 'logout_label',
-                  pageIndex: 10,
-                  onPressed: () {
-                    authcontroller.signOut();
-                  },
-                ),
-                const SizedBox(
-                  height: HSizes.spaceBtwItems,
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

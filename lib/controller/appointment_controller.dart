@@ -71,6 +71,10 @@ class AppointmentController extends GetxController {
   }
 
   Future<void> getAppointsByDate({DateTime? date}) async {
+    (appointmentsLoading) {
+      return;
+    };
+
     appointListByDate.clear();
     if (date == null) {
       appointmentsLoading.value = true;
@@ -124,6 +128,9 @@ class AppointmentController extends GetxController {
   }
 
   Future<void> getPatientAppointment(int id) async {
+    (appointmentsLoading) {
+      return;
+    };
     patientAppointlst.clear();
     appointmentsLoading.value = true;
     try {

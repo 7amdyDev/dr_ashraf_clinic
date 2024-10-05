@@ -7,6 +7,7 @@ class AssetAccountsModel {
   final int serviceId;
   final int fee;
   final int clinicId;
+  final String? name;
   int discount;
   int debit;
 
@@ -20,6 +21,7 @@ class AssetAccountsModel {
     required this.fee,
     required this.clinicId,
     this.discount = 0,
+    this.name,
     required this.debit,
   });
 
@@ -75,7 +77,8 @@ class AssetAccountsModel {
         fee: json['fee'],
         discount: json['discount'],
         debit: json['debit'],
-        clinicId: json['clinic_id']);
+        clinicId: json['clinic_id'],
+        name: json['name']);
   }
 
   static List<AssetAccountsModel> listFromJson(dynamic json) {

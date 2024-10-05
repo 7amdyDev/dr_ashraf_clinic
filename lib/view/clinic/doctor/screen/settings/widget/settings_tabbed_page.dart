@@ -27,7 +27,7 @@ class SettingsTabbedPage extends StatelessWidget {
               ),
               Tab(
                 child: PageLabelWidget(
-                  text: 'Clinic',
+                  text: 'service_fees_label',
                   fontSize: 22,
                 ),
               ),
@@ -37,7 +37,7 @@ class SettingsTabbedPage extends StatelessWidget {
         body: TabBarView(
           children: [
             MedicineSettingsWidget(),
-            ClinicSettingsWidget(),
+            const ClinicSettingsWidget(),
           ],
         ),
       ),

@@ -116,7 +116,10 @@ class AppTranslation extends Translations {
           'settings_label': 'Settings',
           'search_label': 'Search',
           'add_label': 'Add',
-          'medicines_label': 'Medicines'
+          'medicines_label': 'Medicines',
+          'medicine_name_label': 'Medicine Name',
+          'branch_name_label': 'Branch Name',
+          'service_fees_label': 'Fees of Services',
         },
         'ar_EG': {
           'app_name': 'عيادات الدكتور أشرف يحيي',
@@ -234,7 +237,10 @@ class AppTranslation extends Translations {
           'settings_label': 'الإعدادات',
           'search_label': 'بحث',
           'add_label': 'إضافة',
-          'medicines_label': 'الأدوية'
+          'medicines_label': 'الأدوية',
+          'medicine_name_label': 'أسم الدواء',
+          'branch_name_label': 'أسم الفرع',
+          'service_fees_label': 'رسوم الخدمات',
         },
       };
 }

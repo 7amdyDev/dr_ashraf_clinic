@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class AccountsId {
   final int id;
   final String accountName;
@@ -118,5 +119,19 @@ class Fee {
 
   static List<Fee> listFromJson(dynamic json) {
     return List<Fee>.from(json.map((fee) => Fee.fromJson(fee)));
+  }
+
+  Fee copyWith({
+    int? id,
+    int? fee,
+    int? serviceId,
+    int? clinicId,
+  }) {
+    return Fee(
+      id: id ?? this.id,
+      fee: fee ?? this.fee,
+      serviceId: serviceId ?? this.serviceId,
+      clinicId: clinicId ?? this.clinicId,
+    );
   }
 }

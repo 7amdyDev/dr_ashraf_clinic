@@ -15,6 +15,7 @@ class ClinicController extends GetxController {
   RxList<ServicesId> servicesId = <ServicesId>[].obs;
   RxList<AccountsId> expensesId = <AccountsId>[].obs;
   RxList<Fee> feeList = <Fee>[].obs;
+  RxList<Fee> filteredFeeList = <Fee>[].obs;
   RxList<ClinicId> clinicBranches = <ClinicId>[].obs;
   RxInt clinicId = 1.obs;
   RxList<MedicineModel> dbMedicineSearch = <MedicineModel>[].obs;
@@ -24,7 +25,7 @@ class ClinicController extends GetxController {
   void onInit() {
     super.onInit();
     getClinicData();
-    //  getOnlineReservationData();
+    feeChanged();
   }
 
   void getOnlineReservationData() {
@@ -77,25 +78,23 @@ class ClinicController extends GetxController {
     }
   }
 
-  // Future<Map<String, dynamic>?> getMedicineRecordByKey(
-  //     String path, String key) async {
-  //   try {
-  //     // Reference the specific record using the path and key
-  //     DatabaseReference ref = database.ref('$path/$key');
-  //     DataSnapshot snapshot = await ref.get();
+  Future<void> updateFeeList(Fee fee) async {
+    try {
+      var response = await _clinicApi.updateFee(fee);
+      if (response.statusCode == 201 && response.body != null) {
+        HelperFunctions.showSnackBar('Record Updated Successfully');
+        getServiceFees();
+      }
+    } finally {}
+  }
 
-  //     if (snapshot.exists) {
-  //       // Return the data as a map
-  //       return snapshot.value as Map<String, dynamic>;
-  //     } else {
-  //       debugPrint("No data available for the specified key.");
-  //       return null; // Key does not exist
-  //     }
-  //   } catch (e) {
-  //     debugPrint("Error retrieving record: $e");
-  //     return null; // Handle the error
-  //   }
-  // }
+  void feeChanged() {
+    ever(feeList, (value) {
+      filteredFeeList.value = feeList
+          .where((item) => item.serviceId != 3 && item.serviceId != 4)
+          .toList();
+    });
+  }
 
   void searchMedicineDatabase(String query) async {
     if (query.isEmpty) {
@@ -150,12 +149,32 @@ class ClinicController extends GetxController {
   }
 
   Future<void> getClinicData() async {
+    getClinicBranches();
+
+    getServicesList();
+
+    getExpensesList();
+
+    getServiceFees();
+  }
+
+  Future<void> getClinicBranches() async {
+    if (clinicBranches.isNotEmpty) {
+      clinicBranches.clear();
+    }
     try {
       var response = await _clinicApi.getClinicBranches();
       if (response.statusCode == 200 && response.body != null) {
         clinicBranches.addAll(response.body!);
       }
     } finally {}
+  }
+
+  Future<void> getServicesList() async {
+    if (servicesId.isNotEmpty) {
+      servicesId.clear();
+    }
+
     try {
       var response = await _clinicApi.getServices();
 
@@ -163,7 +182,12 @@ class ClinicController extends GetxController {
         servicesId.addAll(response.body!);
       }
     } finally {}
+  }
 
+  Future<void> getExpensesList() async {
+    if (expensesId.isNotEmpty) {
+      expensesId.clear();
+    }
     try {
       var response = await _clinicApi.getExpensesId();
 
@@ -171,7 +195,12 @@ class ClinicController extends GetxController {
         expensesId.addAll(response.body!);
       }
     } finally {}
+  }
 
+  Future<void> getServiceFees() async {
+    if (feeList.isNotEmpty) {
+      feeList.clear();
+    }
     try {
       var response = await _clinicApi.getFee();
 
