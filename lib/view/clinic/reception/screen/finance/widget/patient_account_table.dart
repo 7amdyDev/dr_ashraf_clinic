@@ -8,6 +8,7 @@ import 'package:dr_ashraf_clinic/utils/validator/validation.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/finance/widget/cash_reciept_dialog.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/table_column_label.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/table_data_cell.dart';
+import 'package:dr_ashraf_clinic/view/home_page/widget/drop_down_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -40,6 +41,7 @@ class PatientAccountTable extends StatelessWidget {
                   DataColumn(label: TableColumnLabel(text: 'date_label')),
                   DataColumn(
                       label: TableColumnLabel(text: 'service_type_label')),
+                  DataColumn(label: TableColumnLabel(text: 'clinic_button')),
                   DataColumn(label: TableColumnLabel(text: 'value_label')),
                   DataColumn(
                       label: TableColumnLabel(text: 'patient_paid_label')),
@@ -105,6 +107,9 @@ class _DataSource extends DataTableSource {
       DataCell(TableDataCell(text: HFormatter.formatStringDate(item.date))),
       DataCell(TableDataCell(
           text: HValidator.serviceIdValidation(item.serviceId).tr)),
+      DataCell(TableDataCell(
+          text: clinicController.getClinicBranchName(
+              clinicBranchId: item.clinicId))),
       DataCell(TableDataCell(text: item.fee.toString())),
       DataCell(TableDataCell(text: item.paid.toString())),
       DataCell(TableDataCell(text: item.unPaid.toString())),

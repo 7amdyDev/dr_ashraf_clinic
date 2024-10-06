@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/db/expense_api.dart';
 import 'package:dr_ashraf_clinic/model/expense_model.dart';
@@ -13,13 +15,28 @@ class ExpenseController extends GetxController {
   final _clinicController = Get.find<ClinicController>();
   @override
   void onInit() {
-    getExpensesList();
+    startPeriodicUpdate();
     super.onInit();
   }
 
   Future<void> getExpensesList() async {
     await getExpensesByDate(DateUtils.dateOnly(DateTime.now()));
     await getTotalDailyExpenses();
+  }
+
+  void startPeriodicUpdate() {
+    // Set the duration for the periodic execution
+    const duration = Duration(seconds: 2);
+
+    // Create a Timer that runs the function periodically
+    Timer.periodic(duration, (Timer timer) {
+      // You can add your periodic task logic here.
+      getExpensesList();
+      // Uncomment the following line to stop the timer after a certain condition is met
+      // if (someCondition) {
+      //   timer.cancel();
+      // }
+    });
   }
 
   Future<void> getExpensesByDate(DateTime date) async {

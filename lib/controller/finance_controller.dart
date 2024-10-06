@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/controller/expense_controller.dart';
 import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
@@ -50,7 +52,7 @@ class FinanceController extends GetxController {
 
   @override
   void onInit() {
-    getFinanceList();
+    startPeriodicUpdate();
     getCash();
     patientChanged();
     super.onInit();
@@ -61,7 +63,25 @@ class FinanceController extends GetxController {
     await getDailyIncomeList();
   }
 
+  void startPeriodicUpdate() {
+    // Set the duration for the periodic execution
+    const duration = Duration(seconds: 2);
+
+    // Create a Timer that runs the function periodically
+    Timer.periodic(duration, (Timer timer) {
+      // You can add your periodic task logic here.
+      getFinanceList();
+      // Uncomment the following line to stop the timer after a certain condition is met
+      // if (someCondition) {
+      //   timer.cancel();
+      // }
+    });
+  }
+
   Future<void> getDailyIncomeList() async {
+    if (finaceLoading.value) {
+      return;
+    }
     finaceLoading.value = true;
     try {
       var response =
@@ -78,7 +98,6 @@ class FinanceController extends GetxController {
 
 // reception page schedueled table
   Future<void> getAppointsFinanceByDate({DateTime? date}) async {
-    appointmentFinanceByDatelst.clear();
     if (date == null) {
       finaceLoading.value = true;
       try {
@@ -86,6 +105,7 @@ class FinanceController extends GetxController {
             _clinicController.clinicId.value,
             HFormatter.formatDate(DateTime.now(), reversed: true));
         if (response.statusCode == 200 && response.body != null) {
+          appointmentFinanceByDatelst.clear();
           appointmentFinanceByDatelst.addAll(response.body!);
         }
       } finally {
@@ -99,6 +119,7 @@ class FinanceController extends GetxController {
             HFormatter.formatDate(date, reversed: true));
 
         if (response.statusCode == 200 && response.body != null) {
+          appointmentFinanceByDatelst.clear();
           appointmentFinanceByDatelst.addAll(response.body!);
         }
       } finally {
@@ -333,6 +354,9 @@ class FinanceController extends GetxController {
   }
 
   Future<void> getTotalDailyIncome() async {
+    if (finaceLoading.value) {
+      return;
+    }
     finaceLoading.value = true;
     try {
       var response =

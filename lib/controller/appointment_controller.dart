@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/controller/finance_controller.dart';
 import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
@@ -23,9 +25,27 @@ class AppointmentController extends GetxController {
   @override
   void onInit() {
     appointListByDate.clear();
-    getAppointsByDate();
-    _financeController.getAppointsFinanceByDate();
+    startPeriodicUpdate();
+
     super.onInit();
+  }
+
+  void startPeriodicUpdate() {
+    // Set the duration for the periodic execution
+    const duration = Duration(seconds: 2);
+
+    // Create a Timer that runs the function periodically
+    Timer.periodic(duration, (Timer timer) {
+      // You can add your periodic task logic here.
+      getAppointsByDate().then((_) {
+        _financeController.getAppointsFinanceByDate();
+      });
+
+      // Uncomment the following line to stop the timer after a certain condition is met
+      // if (someCondition) {
+      //   timer.cancel();
+      // }
+    });
   }
 
   Future<void> addAppointment(AppointmentModel appointment) async {
@@ -75,13 +95,13 @@ class AppointmentController extends GetxController {
       return;
     };
 
-    appointListByDate.clear();
     if (date == null) {
       appointmentsLoading.value = true;
       try {
         var response =
             await _appointmentApi.getByDate(DateUtils.dateOnly(DateTime.now()));
         if (response.statusCode == 200 && response.body != null) {
+          appointListByDate.clear();
           appointListByDate.addAll(response.body!);
         }
       } finally {
@@ -93,6 +113,7 @@ class AppointmentController extends GetxController {
         var response = await _appointmentApi.getByDate(date);
 
         if (response.statusCode == 200 && response.body != null) {
+          appointListByDate.clear();
           appointListByDate.addAll(response.body!);
         }
       } finally {
@@ -106,12 +127,12 @@ class AppointmentController extends GetxController {
   // }
 
   Future<AppointmentModel> getAppointmentById(int appId) async {
-    patientAppointlst.clear();
     appointmentsLoading.value = true;
     try {
       var response = await _appointmentApi.getById(appId);
 
       if (response.statusCode == 200 && response.body != null) {
+        patientAppointlst.clear();
         patientAppointlst.add(response.body!);
       }
       return patientAppointlst

@@ -29,7 +29,10 @@ class HDoctorNavigationDrawer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              ClinicBranchName(),
+              Container(
+                color: HColors.primaryBackground,
+                child: ClinicBranchName(),
+              ),
               const Divider(),
               const SizedBox(
                 height: HSizes.spaceBtwItems,
