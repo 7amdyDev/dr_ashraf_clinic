@@ -19,6 +19,7 @@ class ClinicController extends GetxController {
   RxList<ClinicId> clinicBranches = <ClinicId>[].obs;
   RxInt clinicId = 1.obs;
   RxList<MedicineModel> dbMedicineSearch = <MedicineModel>[].obs;
+  RxList<String> dosageSuggestion = <String>[].obs;
   final database = FirebaseDatabase.instance;
 
   @override
@@ -29,6 +30,7 @@ class ClinicController extends GetxController {
   }
 
   void getOnlineReservationData() {
+    getDosageSuggestionList();
     database.databaseURL = dBUrl;
     final DatabaseReference reference = database.ref().child('Appointment');
     reference.onValue.listen((DatabaseEvent event) {
@@ -107,15 +109,40 @@ class ClinicController extends GetxController {
     final snapshot = await dbRef.once();
     final data = snapshot.snapshot.value as Map<dynamic, dynamic>?;
 
-    if (data != null) {
+    if (data != null && query.length >= 2) {
       dbMedicineSearch.clear();
       data.forEach((key, value) {
-        if (value['name'].toLowerCase().contains(query)) {
+        if (value['name'].toLowerCase().startsWith(query)) {
           dbMedicineSearch.add(MedicineModel(
             name: value["name"],
             key: key,
           ));
         }
+      });
+    }
+  }
+
+  void getDosageSuggestionList() async {
+    database.databaseURL = dBUrl;
+    final DatabaseReference dbRef = database.ref().child('Dosage');
+    final snapshot = await dbRef.once();
+    final data = snapshot.snapshot.value as Map<dynamic, dynamic>?;
+    if (data != null) {
+      dosageSuggestion.clear();
+      data.forEach(
+        (key, value) {
+          dosageSuggestion.add(value);
+        },
+      );
+    }
+  }
+
+  void saveDosageToDB(String item) async {
+    database.databaseURL = dBUrl;
+    final DatabaseReference dbRef = database.ref().child('Dosage');
+    if (!dosageSuggestion.contains(item)) {
+      await dbRef.push().set(item).then((_) {
+        dosageSuggestion.add(item);
       });
     }
   }

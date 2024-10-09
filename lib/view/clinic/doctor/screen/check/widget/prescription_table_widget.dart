@@ -3,7 +3,6 @@ import 'package:dr_ashraf_clinic/model/consultation_model.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
-import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/table_data_cell.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -64,32 +63,45 @@ class PrescriptionTableWidget extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: prescriptionList.length,
                   itemBuilder: (context, int index) {
-                    return SizedBox(
-                      height: 40,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: HSizes.defaultSpace),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            !previousCheck
-                                ? InkWell(
-                                    child: const Icon(
-                                      Icons.delete_forever,
-                                      color: Colors.red,
-                                    ),
-                                    onTap: () {
-                                      consultationController.deletePrescription(
-                                          prescriptionList[index].id!);
-                                    },
-                                  )
-                                : Container(),
-                            Expanded(
-                              child: TableDataCell(
-                                  text: prescriptionList[index].medicine),
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: HSizes.defaultSpace),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          !previousCheck
+                              ? InkWell(
+                                  child: const Icon(
+                                    Icons.delete_forever,
+                                    color: Colors.red,
+                                  ),
+                                  onTap: () {
+                                    consultationController.deletePrescription(
+                                        prescriptionList[index].id!);
+                                  },
+                                )
+                              : Container(),
+                          Expanded(
+                            child: ListTile(
+                              title: Text(
+                                prescriptionList[index].medicine,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    fontFamily: 'NotoNaskh',
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14),
+                              ),
+                              subtitle: Text(
+                                prescriptionList[index].notes ?? '',
+                                //  textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    fontFamily: 'NotoNaskh',
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14),
+                              ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     );
                   },

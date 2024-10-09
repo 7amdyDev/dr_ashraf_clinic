@@ -27,6 +27,8 @@ class _PrescriptionDataInputState extends State<PrescriptionDataInput> {
   String _searchQuery = '';
   Timer? _debounce;
   TextEditingController prescriptionEditingController = TextEditingController();
+  TextEditingController notesController = TextEditingController();
+  bool show = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,36 +48,125 @@ class _PrescriptionDataInputState extends State<PrescriptionDataInput> {
       child: Column(
         children: [
           LabelTextWidget(text: 'prescription_label'.tr),
+          DoctorTextAddWidget(
+            textFontSize: 16,
+            onChanged: _onSearchChanged,
+            textEditingController: prescriptionEditingController,
+            label: 'medicine_label'.tr,
+            onPressed: () {
+              if (prescriptionEditingController.text.isNotEmpty) {
+                PrescriptionModel record = PrescriptionModel(
+                  consultationId: consultationController.consultId.value,
+                  medicine: prescriptionEditingController.text,
+                  notes: notesController.text,
+                );
+                clinicController.saveDosageToDB(notesController.text);
+                consultationController.addPrescription(record);
+                prescriptionEditingController.clear();
+                notesController.clear();
+
+                setState(() {
+                  show = false;
+                });
+              }
+            },
+          ),
           Stack(
-            alignment: Alignment.bottomCenter,
+            alignment: Alignment.center,
             children: [
-              DoctorTextAddWidget(
-                textFontSize: 16,
-                onChanged: _onSearchChanged,
-                textEditingController: prescriptionEditingController,
-                label: 'medicine_label'.tr,
-                onPressed: () {
-                  if (prescriptionEditingController.text.isNotEmpty) {
-                    PrescriptionModel record = PrescriptionModel(
-                        consultationId: consultationController.consultId.value,
-                        medicine: prescriptionEditingController.text);
-                    consultationController.addPrescription(record);
-                    prescriptionEditingController.clear();
-                  }
-                },
+              SizedBox(
+                height: 100,
+                child: _buildResultsList(),
               ),
+              show
+                  ? Autocomplete<String>(
+                      optionsBuilder: (TextEditingValue fruitTextEditingValue) {
+                        // if user is input nothing
+                        if (fruitTextEditingValue.text == '') {
+                          return const Iterable<String>.empty();
+                        }
+
+                        // if user is input something the build
+                        // suggestion based on the user input
+                        return clinicController.dosageSuggestion
+                            .where((String option) {
+                          return option.contains(
+                              fruitTextEditingValue.text.toLowerCase());
+                        });
+                      },
+                      fieldViewBuilder: (context, textEditingController,
+                          focusNode, onFieldSubmitted) {
+                        return SizedBox(
+                          width: 200,
+                          child: TextField(
+                            decoration: InputDecoration(
+                                labelText: 'dosage_label'.tr,
+                                labelStyle: const TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: 'NotoNaskh',
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            onChanged: (value) => notesController.text = value,
+                            onEditingComplete: onFieldSubmitted,
+                            focusNode: focusNode,
+                            controller: textEditingController,
+                          ),
+                        );
+                      },
+                      optionsViewBuilder: (context, onSelected, options) {
+                        return Align(
+                          alignment: Alignment.topRight,
+                          child: SizedBox(
+                            width: 200,
+                            child: Card(
+                              elevation: 4.0,
+                              child: ListView(
+                                children: options.map((String option) {
+                                  return ListTile(
+                                    title: Center(
+                                      child: Text(
+                                        option,
+                                        style: const TextStyle(
+                                          fontFamily: 'NotoNaskh',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      // Handle the selection of an option
+                                      onSelected(option);
+                                      notesController.text = option;
+                                    },
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      // when user click on the suggested
+                      // item this function calls
+                      // onSelected: (String value) {
+                      //   debugPrint('You just selected $value');
+                      //   notesController.text = value;
+                      // },
+                    )
+                  : const SizedBox(
+                      height: 105,
+                    ),
             ],
           ),
-          SizedBox(
-            height: 100,
-            child: _buildResultsList(),
-          )
         ],
       ),
     );
   }
 
   void _onSearchChanged(String query) {
+    setState(() {
+      show = false;
+    });
+
     if (_debounce?.isActive ?? false) _debounce!.cancel();
 
     _debounce = Timer(const Duration(milliseconds: 300), () {
@@ -92,19 +183,19 @@ class _PrescriptionDataInputState extends State<PrescriptionDataInput> {
       () => ListView.builder(
         itemCount: result.length,
         itemBuilder: (context, index) {
-          return Card(
-            elevation: 4,
-            child: ListTile(
-              title: Text(
-                result[index].name,
-                textAlign: TextAlign.center,
-              ),
-              onTap: () {
-                prescriptionEditingController.text = result[index].name;
-                clinicController.dbMedicineSearch.clear();
-                _searchQuery = '';
-              },
+          return ListTile(
+            title: Text(
+              result[index].name,
+              textAlign: TextAlign.center,
             ),
+            onTap: () {
+              prescriptionEditingController.text = result[index].name;
+              clinicController.dbMedicineSearch.clear();
+              _searchQuery = '';
+              setState(() {
+                show = true;
+              });
+            },
           );
         },
       ),

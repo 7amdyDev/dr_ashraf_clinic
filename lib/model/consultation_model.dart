@@ -130,11 +130,17 @@ class PrescriptionModel {
   int? id;
   int consultationId;
   String medicine;
+  String? quantity;
+  String? unit;
+  String? notes;
 
   PrescriptionModel({
     this.id,
     required this.consultationId,
     required this.medicine,
+    this.quantity,
+    this.unit,
+    this.notes,
   });
 
   Map<String, dynamic> toMap() {
@@ -142,6 +148,9 @@ class PrescriptionModel {
       'id': id,
       'consultation_id': consultationId,
       'medicine': medicine,
+      'quantity': quantity,
+      'unit': unit,
+      'notes': notes,
     };
   }
 
@@ -150,6 +159,9 @@ class PrescriptionModel {
       id: map['id'],
       consultationId: map['consultation_id'],
       medicine: map['medicine'],
+      quantity: map['quantity'],
+      unit: map['unit'],
+      notes: map['notes'],
     );
   }
   static List<PrescriptionModel> listFromJson(dynamic json) {

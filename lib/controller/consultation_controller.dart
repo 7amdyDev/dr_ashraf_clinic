@@ -29,6 +29,7 @@ class ConsultationController extends GetxController {
   void getPatientId() {
     ever(_patientController.patientId, (value) {
       patientId.value = value;
+      getConsultationByPatientId(value);
     });
   }
 

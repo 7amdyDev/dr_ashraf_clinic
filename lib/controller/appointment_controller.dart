@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/controller/finance_controller.dart';
 import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
@@ -21,12 +20,12 @@ class AppointmentController extends GetxController {
   RxInt serviceId = 1.obs;
   RxBool paid = false.obs;
   RxBool appointmentsLoading = false.obs;
+  bool scheduleByDate = false;
 
   @override
   void onInit() {
     appointListByDate.clear();
     startPeriodicUpdate();
-
     super.onInit();
   }
 
@@ -42,9 +41,9 @@ class AppointmentController extends GetxController {
       });
 
       // Uncomment the following line to stop the timer after a certain condition is met
-      // if (someCondition) {
-      //   timer.cancel();
-      // }
+      if (scheduleByDate) {
+        timer.cancel();
+      }
     });
   }
 
@@ -97,6 +96,8 @@ class AppointmentController extends GetxController {
 
     if (date == null) {
       appointmentsLoading.value = true;
+      scheduleByDate = false;
+      // startPeriodicUpdate();
       try {
         var response =
             await _appointmentApi.getByDate(DateUtils.dateOnly(DateTime.now()));
@@ -109,6 +110,7 @@ class AppointmentController extends GetxController {
       }
     } else {
       appointmentsLoading.value = true;
+      scheduleByDate = true;
       try {
         var response = await _appointmentApi.getByDate(date);
 
@@ -152,12 +154,13 @@ class AppointmentController extends GetxController {
     (appointmentsLoading) {
       return;
     };
-    patientAppointlst.clear();
+
     appointmentsLoading.value = true;
     try {
       var response = await _appointmentApi.getByPatientId(id);
 
       if (response.statusCode == 200 && response.body != null) {
+        patientAppointlst.clear();
         patientAppointlst.addAll(response.body!);
       }
     } finally {

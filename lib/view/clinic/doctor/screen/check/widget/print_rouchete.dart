@@ -6,11 +6,12 @@ import 'package:printing/printing.dart';
 
 Future<void> printRouchete(List<PrescriptionModel> list) async {
   var pageFormat = PdfPageFormat.a5;
-  final font = await PdfGoogleFonts.nunitoRegular();
+  final font = await PdfGoogleFonts.notoNaskhArabicMedium();
 
   final doc = pw.Document();
   // Split content if necessary
-  String content = list.map((name) => name.medicine).join('\n');
+  String content =
+      list.map((name) => '${name.medicine}   ${name.notes!}').join('\n');
 
   await Printing.layoutPdf(
       format: pageFormat,
@@ -25,10 +26,12 @@ Future<void> printRouchete(List<PrescriptionModel> list) async {
             ),
             pageFormat: pageFormat,
             build: (pw.Context context) => pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              crossAxisAlignment: pw.CrossAxisAlignment.end,
               children: [
                 // pw.SizedBox(height: 7 * (72 / 2.54)),
                 pw.Text(page,
+                    textDirection: pw.TextDirection.rtl,
+                    textAlign: pw.TextAlign.end,
                     style: pw.TextStyle(
                       fontSize: 14,
                       font: font,

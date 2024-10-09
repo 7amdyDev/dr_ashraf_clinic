@@ -14,6 +14,7 @@ class DataTextWidget extends StatelessWidget {
     this.validator,
     this.formKey,
     this.maxLines = 1,
+    this.autoFill,
   });
   final String label;
   final String? value;
@@ -26,6 +27,7 @@ class DataTextWidget extends StatelessWidget {
   final TextEditingController? textEditingController;
   final String? Function(String?)? validator;
   final GlobalKey? formKey;
+  final List<String>? autoFill;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -50,6 +52,7 @@ class DataTextWidget extends StatelessWidget {
           ),
           child == null
               ? TextFormField(
+                  autofillHints: autoFill,
                   style: TextStyle(
                     fontSize: textFontSize,
                   ),
