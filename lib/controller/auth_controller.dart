@@ -1,3 +1,4 @@
+import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/view/home_page/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -5,10 +6,12 @@ import 'package:get/get.dart';
 class AuthController extends GetxController {
   final _auth = FirebaseAuth.instance;
   Rx<User?> user = Rx<User?>(null);
-
+  final _clinicController = Get.find<ClinicController>();
   Future<void> signInWithEmailAndPassword(String email, String password) async {
-    if (email == 'Reception') {
-      email = 'reception@drashrafyehia.web.app';
+    if (email == 'Smouha') {
+      email = 'smouha@drashrafyehia.web.app';
+    } else if (email == 'Agamy') {
+      email = 'agamy@drashrafyehia.web.app';
     } else if (email == 'Doctor') {
       email = 'doctor@drashrafyehia.web.app';
     }
@@ -19,7 +22,11 @@ class AuthController extends GetxController {
         password: password,
       );
       user.value = userCredential.user;
-      if (userCredential.user?.email == 'reception@drashrafyehia.web.app') {
+      if (userCredential.user?.email == 'smouha@drashrafyehia.web.app') {
+        _clinicController.clinicId.value = 1;
+        Get.toNamed('/reception');
+      } else if (userCredential.user?.email == 'agamy@drashrafyehia.web.app') {
+        _clinicController.clinicId.value = 2;
         Get.toNamed('/reception');
       } else if (userCredential.user?.email == 'doctor@drashrafyehia.web.app') {
         Get.toNamed('/doctor');

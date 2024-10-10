@@ -19,7 +19,6 @@ class PatientAccountTable extends StatelessWidget {
   final financeController = Get.find<FinanceController>();
   @override
   Widget build(BuildContext context) {
-    financeController.onPatientAccountListUpdated();
     final List<AppointmentFinance> searchResult =
         financeController.totalAppointmentAccountslst;
 

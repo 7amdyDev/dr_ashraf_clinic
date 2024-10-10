@@ -130,16 +130,14 @@ class PrescriptionModel {
   int? id;
   int consultationId;
   String medicine;
-  String? quantity;
-  String? unit;
+  String? dosage;
   String? notes;
 
   PrescriptionModel({
     this.id,
     required this.consultationId,
     required this.medicine,
-    this.quantity,
-    this.unit,
+    this.dosage,
     this.notes,
   });
 
@@ -148,8 +146,7 @@ class PrescriptionModel {
       'id': id,
       'consultation_id': consultationId,
       'medicine': medicine,
-      'quantity': quantity,
-      'unit': unit,
+      'dosage': dosage,
       'notes': notes,
     };
   }
@@ -159,8 +156,7 @@ class PrescriptionModel {
       id: map['id'],
       consultationId: map['consultation_id'],
       medicine: map['medicine'],
-      quantity: map['quantity'],
-      unit: map['unit'],
+      dosage: map['dosage'],
       notes: map['notes'],
     );
   }

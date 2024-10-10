@@ -20,13 +20,14 @@ class NewCheckPage extends StatelessWidget {
   final financeController = Get.find<FinanceController>();
   @override
   Widget build(BuildContext context) {
-    var screenWidth = HelperFunctions.clinicPagesWidth();
-
+    //  var screenWidth = HelperFunctions.clinicPagesWidth();
+    var width = HelperFunctions.clinicPagesWidth() / 4.5;
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
         Expanded(
           child: SingleChildScrollView(
+            primary: true,
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -38,13 +39,13 @@ class NewCheckPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     SymptomsDataInput(
-                      width: screenWidth / 3.5,
+                      width: width,
                     ),
                     DiagnosisDataInput(
-                      width: screenWidth / 3.5,
+                      width: width,
                     ),
                     PrescriptionDataInput(
-                      width: screenWidth / 3.5,
+                      width: width,
                     ),
                   ],
                 ),
@@ -56,13 +57,13 @@ class NewCheckPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     SymptomsTableWidget(
-                        width: screenWidth / 3.5,
+                        width: width,
                         symptomsList: consultationController.symptomsList),
                     DiagnosisTableWidget(
-                        width: screenWidth / 3.5,
+                        width: width,
                         diagnosisList: consultationController.diagnosisList),
                     PrescriptionTableWidget(
-                      width: screenWidth / 3.5,
+                      width: width,
                       prescriptionList: consultationController.prescriptionList,
                     ),
                   ],

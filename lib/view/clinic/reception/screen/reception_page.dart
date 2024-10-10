@@ -1,14 +1,15 @@
+import 'package:dr_ashraf_clinic/view/home_page/widget/copyrights_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:dr_ashraf_clinic/controller/auth_controller.dart';
 import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/model/pages_list.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
-import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
+import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
 import 'package:dr_ashraf_clinic/view/clinic/clinic_page.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/navigation_drawer.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/change_lang_button_widget.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/clinic_name_logo.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class ReceptionPage extends StatelessWidget {
   ReceptionPage({super.key});
@@ -18,7 +19,6 @@ class ReceptionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     controller.getOnlineReservationData();
-    double maxPageWidth = HSizes.maxPageWidth;
     return Obx(() => authController.user.value != null
         ? Scaffold(
             backgroundColor: HColors.secondary,
@@ -27,7 +27,8 @@ class ReceptionPage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Container(
-                  constraints: BoxConstraints(maxWidth: maxPageWidth),
+                  constraints: BoxConstraints(
+                      maxWidth: HelperFunctions.clinicPagesWidth()),
                   child: Column(
                     children: [
                       const Row(
@@ -47,7 +48,8 @@ class ReceptionPage extends StatelessWidget {
                             )
                           ],
                         ),
-                      )
+                      ),
+                      const CopyrightsWidget(),
                     ],
                   ),
                 ),

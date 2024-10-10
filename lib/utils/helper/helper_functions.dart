@@ -97,7 +97,7 @@ class HelperFunctions {
   }
 
   static double screenWidth() {
-    return MediaQuery.of(Get.context!).size.width;
+    return MediaQuery.sizeOf(Get.context!).width;
   }
 
   static String getFormattedDate(DateTime date,
@@ -120,9 +120,10 @@ class HelperFunctions {
   }
 
   static double clinicPagesWidth() {
-    double width = HelperFunctions.screenWidth() < HSizes.maxPageWidth
-        ? HelperFunctions.screenWidth() - 200
-        : HSizes.maxPageWidth - 200;
+    double width = HelperFunctions.screenWidth() <
+            HSizes.maxPageWidth - (HelperFunctions.screenWidth() * 0.2)
+        ? HelperFunctions.screenWidth()
+        : HSizes.maxPageWidth - 250;
     return width;
   }
 

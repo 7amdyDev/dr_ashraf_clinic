@@ -59,6 +59,7 @@ class PatientTabbedPage extends StatelessWidget {
                         children: [
                           patientController.patientId.value != 0
                               ? SingleChildScrollView(
+                                  primary: true,
                                   child: ViewPatientCardWidget(
                                       patientRecord: snapshot.data!),
                                 )
@@ -75,7 +76,7 @@ class PatientTabbedPage extends StatelessWidget {
                                 )
                               : const Center(),
                           patientController.patientId.value != 0
-                              ? const PatientFinance(
+                              ? PatientFinance(
                                   show: false,
                                 )
                               : const Center(),

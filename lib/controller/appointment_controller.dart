@@ -29,22 +29,29 @@ class AppointmentController extends GetxController {
     super.onInit();
   }
 
-  void startPeriodicUpdate() {
+  Future<void> startPeriodicUpdate() async {
     // Set the duration for the periodic execution
     const duration = Duration(seconds: 2);
 
     // Create a Timer that runs the function periodically
-    Timer.periodic(duration, (Timer timer) {
+    final timer = Timer.periodic(duration, (timer) {
       // You can add your periodic task logic here.
-      getAppointsByDate().then((_) {
-        _financeController.getAppointsFinanceByDate();
-      });
+      if (!scheduleByDate) {
+        getAppointsByDate().then((_) {
+          _financeController.getAppointsFinanceByDate();
+        });
+      }
 
       // Uncomment the following line to stop the timer after a certain condition is met
       if (scheduleByDate) {
         timer.cancel();
+        debugPrint('Timer Cancel');
       }
     });
+    while (timer.isActive) {
+      // waiting for the same time duration to check if timer is still active after it
+      await Future.delayed(const Duration(seconds: 2));
+    }
   }
 
   Future<void> addAppointment(AppointmentModel appointment) async {
@@ -96,8 +103,6 @@ class AppointmentController extends GetxController {
 
     if (date == null) {
       appointmentsLoading.value = true;
-      scheduleByDate = false;
-      // startPeriodicUpdate();
       try {
         var response =
             await _appointmentApi.getByDate(DateUtils.dateOnly(DateTime.now()));
@@ -110,7 +115,14 @@ class AppointmentController extends GetxController {
       }
     } else {
       appointmentsLoading.value = true;
+
       scheduleByDate = true;
+
+      // Check if the choosen date is today date to start to start the timer
+      if (date == DateUtils.dateOnly(DateTime.now())) {
+        scheduleByDate = false;
+        startPeriodicUpdate();
+      }
       try {
         var response = await _appointmentApi.getByDate(date);
 

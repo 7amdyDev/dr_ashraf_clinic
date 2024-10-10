@@ -113,6 +113,7 @@ class FinanceController extends GetxController {
       }
     } else {
       finaceLoading.value = true;
+
       try {
         var response = await _assetApi.getAppointmentFinanceByDate(
             _clinicController.clinicId.value,
@@ -211,7 +212,9 @@ class FinanceController extends GetxController {
           var response = await _assetApi.update(
             item.copyWith(
                 patientId: item.patientId,
-                debit: discount == 0 ? item.discount : item.debit - discount,
+                debit: discount == 0
+                    ? item.discount + item.debit
+                    : item.debit - discount,
                 serviceId: serviceId,
                 date: HFormatter.formatDate(DateTime.now(), reversed: true),
                 id: item.id,

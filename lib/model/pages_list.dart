@@ -14,7 +14,7 @@ List pagesList = [
   const NewPatientPage(),
   const PatientSearchPage(),
   DailyIncomePage(),
-  const PatientFinance(),
+  PatientFinance(),
   const ClinicExpensesPage(),
   CheckPage(),
   const SettingsPage(),

@@ -19,6 +19,7 @@ class NewPatientPage extends StatelessWidget {
         ),
         Expanded(
           child: SingleChildScrollView(
+            primary: true,
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [

@@ -14,6 +14,7 @@ class MedicineSettingsWidget extends StatelessWidget {
     TextEditingController searchText = TextEditingController();
     TextEditingController addText = TextEditingController();
     return SingleChildScrollView(
+      primary: true,
       child: Column(
         children: [
           const SizedBox(

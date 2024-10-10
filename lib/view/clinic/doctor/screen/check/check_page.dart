@@ -26,26 +26,28 @@ class CheckPage extends StatelessWidget {
           height: HSizes.spaceBtwSections,
         ),
         Expanded(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              FutureBuilder(
-                  future: patientController
-                      .getPatientById(patientController.patientId.value),
-                  builder: (context, snapshot) {
-                    if (snapshot.data != null) {
-                      return PatientInfoTable(patientModel: snapshot.data!);
-                    } else {
-                      return const SizedBox();
-                    }
-                  }),
-              const SizedBox(
-                height: HSizes.spaceBtwItems,
-              ),
-              SizedBox(
-                  height: MediaQuery.sizeOf(context).height * 0.73,
-                  child: const CheckTabbedPage()),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                FutureBuilder(
+                    future: patientController
+                        .getPatientById(patientController.patientId.value),
+                    builder: (context, snapshot) {
+                      if (snapshot.data != null) {
+                        return PatientInfoTable(patientModel: snapshot.data!);
+                      } else {
+                        return const SizedBox();
+                      }
+                    }),
+                const SizedBox(
+                  height: HSizes.spaceBtwItems,
+                ),
+                SizedBox(
+                    height: MediaQuery.sizeOf(context).height * 0.8,
+                    child: const CheckTabbedPage()),
+              ],
+            ),
           ),
         ),
       ],

@@ -35,16 +35,19 @@ class CashRecieptDialogWidget extends StatelessWidget {
       content: SizedBox(
         width: 800,
         // height: 600,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CashReceiptTable(searchResult: controller.appointmentCashReciept),
-            const SizedBox(height: HSizes.spaceBtwItems),
-            PatientReceiptCashCard(
-              appointData: appointData,
-              serviceId: serviceId,
-            )
-          ],
+        child: SingleChildScrollView(
+          primary: true,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CashReceiptTable(searchResult: controller.appointmentCashReciept),
+              const SizedBox(height: HSizes.spaceBtwItems),
+              PatientReceiptCashCard(
+                appointData: appointData,
+                serviceId: serviceId,
+              )
+            ],
+          ),
         ),
       ),
       actionsAlignment: MainAxisAlignment.center,

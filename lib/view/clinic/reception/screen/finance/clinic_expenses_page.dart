@@ -25,6 +25,7 @@ class ClinicExpensesPage extends StatelessWidget {
         DailyFinanceCardWidget(),
         const Expanded(
           child: SingleChildScrollView(
+            primary: true,
             child: SizedBox(
               width: double.infinity,
               child: Column(
@@ -41,6 +42,9 @@ class ClinicExpensesPage extends StatelessWidget {
                   ),
                   ExpensesTable(),
                   ExpensesCardWidget(),
+                  SizedBox(
+                    height: HSizes.spaceBtwSections,
+                  )
                 ],
               ),
             ),

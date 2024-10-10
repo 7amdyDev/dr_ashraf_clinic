@@ -7,6 +7,7 @@ class ClinicSettingsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SingleChildScrollView(
+      primary: true,
       child: Column(
         children: [
           SizedBox(

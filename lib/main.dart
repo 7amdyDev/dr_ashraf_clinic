@@ -14,4 +14,6 @@ void main() async {
     debugPrint('${record.level.name}: ${record.time}: ${record.message}');
   });
   runApp(const App());
+  // runApp(
+  //     DevicePreview(enabled: !kReleaseMode, builder: (context) => const App()));
 }

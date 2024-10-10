@@ -54,7 +54,9 @@ class PrescriptionTableWidget extends StatelessWidget {
                   )),
               ConstrainedBox(
                 constraints: BoxConstraints(
-                    maxHeight: HelperFunctions.screenHeight() / 4,
+                    maxHeight: previousCheck
+                        ? HelperFunctions.screenHeight() * 0.7
+                        : HelperFunctions.screenHeight() / 4,
                     minHeight: 40),
                 child: ListView.separated(
                   separatorBuilder: (context, int index) => const Divider(
@@ -83,16 +85,19 @@ class PrescriptionTableWidget extends StatelessWidget {
                               : Container(),
                           Expanded(
                             child: ListTile(
-                              title: Text(
-                                prescriptionList[index].medicine,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                    fontFamily: 'NotoNaskh',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14),
+                              title: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  prescriptionList[index].medicine,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                      fontFamily: 'NotoNaskh',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
+                                ),
                               ),
                               subtitle: Text(
-                                prescriptionList[index].notes ?? '',
+                                prescriptionList[index].dosage ?? '',
                                 //  textAlign: TextAlign.center,
                                 style: const TextStyle(
                                     fontFamily: 'NotoNaskh',

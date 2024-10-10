@@ -88,14 +88,16 @@ class _CheckAccountTableState extends State<CheckAccountTable> {
                         validator: HValidator.validateNumber,
                         textEditingController: discountEditingController,
                         onPressed: () {
+                          int amount = int.tryParse(
+                              HFormatter.convertArabicToEnglishNumbers(
+                                  discountEditingController.text))!;
                           if (valueKey.currentState!.validate() &&
-                              discountEditingController.text.isNotEmpty) {
+                              discountEditingController.text.isNotEmpty &&
+                              int.tryParse(record!.fee)! >= amount) {
                             financeController.updatePatientCashReceipt(
                                 record!.appointmentId,
                                 record!.serviceId,
-                                int.tryParse(
-                                    HFormatter.convertArabicToEnglishNumbers(
-                                        discountEditingController.text))!);
+                                amount);
 
                             discountEditingController.clear();
                           }

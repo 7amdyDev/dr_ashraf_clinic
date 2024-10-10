@@ -38,9 +38,18 @@ class _PreviousCheckTableState extends State<PreviousCheckTable> {
               headingRowColor: const WidgetStatePropertyAll(HColors.accent),
               columnSpacing: 12,
               columns: const [
-                DataColumn(label: TableColumnLabel(text: '#')),
-                DataColumn(label: TableColumnLabel(text: 'date_label')),
-                DataColumn(label: TableColumnLabel(text: 'service_type_label')),
+                DataColumn(
+                    label: TableColumnLabel(
+                  text: '#',
+                )),
+                DataColumn(
+                    label: TableColumnLabel(
+                  text: 'date_label',
+                )),
+                DataColumn(
+                    label: TableColumnLabel(
+                  text: 'service_type_label',
+                )),
               ],
               source: _DataSource(
                   data: filteredConsultation, consultId: consultId, (value) {

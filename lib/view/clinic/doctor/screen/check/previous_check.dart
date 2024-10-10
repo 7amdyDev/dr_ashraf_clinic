@@ -15,8 +15,8 @@ class PreviousCheck extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     consultationController.clearPrvConsultAllData();
-    var screenWidth = HelperFunctions.clinicPagesWidth();
 
+    var width = HelperFunctions.clinicPagesWidth() / 4.5;
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -25,6 +25,7 @@ class PreviousCheck extends StatelessWidget {
         ),
         Expanded(
           child: SingleChildScrollView(
+            primary: true,
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -33,12 +34,12 @@ class PreviousCheck extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     PreviousCheckTable(
-                        width: screenWidth / 3.5,
+                        width: width + 50,
                         searchResult: consultationController.consultationList),
                     Column(
                       children: [
                         SymptomsTableWidget(
-                          width: screenWidth / 3.5,
+                          width: width,
                           symptomsList:
                               consultationController.prvCheckSymptomsList,
                           previousCheck: true,
@@ -47,7 +48,7 @@ class PreviousCheck extends StatelessWidget {
                           height: HSizes.spaceBtwItems,
                         ),
                         DiagnosisTableWidget(
-                          width: screenWidth / 3.5,
+                          width: width,
                           diagnosisList:
                               consultationController.prvCheckDiagnosisList,
                           previousCheck: true,
@@ -55,7 +56,7 @@ class PreviousCheck extends StatelessWidget {
                       ],
                     ),
                     PrescriptionTableWidget(
-                      width: screenWidth / 3.5,
+                      width: width,
                       prescriptionList:
                           consultationController.prvCheckPrescriptionList,
                       previousCheck: true,

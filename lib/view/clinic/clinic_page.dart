@@ -22,6 +22,7 @@ class ClinicPage extends StatelessWidget {
               child: Container(
                 constraints: BoxConstraints(maxWidth: maxPageWidth),
                 child: SingleChildScrollView(
+                  primary: true,
                   child: Column(
                     children: [
                       const HNavBar(),

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:dr_ashraf_clinic/controller/consultation_controller.dart';
 import 'package:dr_ashraf_clinic/model/consultation_model.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
+import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
 import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/doctor_text_add.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/drop_down_menu.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/label_text_widget.dart';
@@ -27,7 +28,7 @@ class _PrescriptionDataInputState extends State<PrescriptionDataInput> {
   String _searchQuery = '';
   Timer? _debounce;
   TextEditingController prescriptionEditingController = TextEditingController();
-  TextEditingController notesController = TextEditingController();
+  TextEditingController dosageController = TextEditingController();
   bool show = false;
   @override
   Widget build(BuildContext context) {
@@ -58,12 +59,12 @@ class _PrescriptionDataInputState extends State<PrescriptionDataInput> {
                 PrescriptionModel record = PrescriptionModel(
                   consultationId: consultationController.consultId.value,
                   medicine: prescriptionEditingController.text,
-                  notes: notesController.text,
+                  dosage: dosageController.text,
                 );
-                clinicController.saveDosageToDB(notesController.text);
+                clinicController.saveDosageToDB(dosageController.text);
                 consultationController.addPrescription(record);
                 prescriptionEditingController.clear();
-                notesController.clear();
+                dosageController.clear();
 
                 setState(() {
                   show = false;
@@ -106,7 +107,7 @@ class _PrescriptionDataInputState extends State<PrescriptionDataInput> {
                                   fontFamily: 'NotoNaskh',
                                   fontWeight: FontWeight.bold,
                                 )),
-                            onChanged: (value) => notesController.text = value,
+                            onChanged: (value) => dosageController.text = value,
                             onEditingComplete: onFieldSubmitted,
                             focusNode: focusNode,
                             controller: textEditingController,
@@ -115,7 +116,9 @@ class _PrescriptionDataInputState extends State<PrescriptionDataInput> {
                       },
                       optionsViewBuilder: (context, onSelected, options) {
                         return Align(
-                          alignment: Alignment.topRight,
+                          alignment: HelperFunctions.isLocalEnglish()
+                              ? Alignment.topLeft
+                              : Alignment.topRight,
                           child: SizedBox(
                             width: 200,
                             child: Card(
@@ -136,7 +139,7 @@ class _PrescriptionDataInputState extends State<PrescriptionDataInput> {
                                     onTap: () {
                                       // Handle the selection of an option
                                       onSelected(option);
-                                      notesController.text = option;
+                                      dosageController.text = option;
                                     },
                                   );
                                 }).toList(),

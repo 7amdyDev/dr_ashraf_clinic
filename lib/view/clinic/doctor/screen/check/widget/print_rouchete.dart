@@ -11,7 +11,7 @@ Future<void> printRouchete(List<PrescriptionModel> list) async {
   final doc = pw.Document();
   // Split content if necessary
   String content =
-      list.map((name) => '${name.medicine}   ${name.notes!}').join('\n');
+      list.map((name) => '${name.medicine} \n ${name.dosage!}').join('\n');
 
   await Printing.layoutPdf(
       format: pageFormat,
@@ -33,7 +33,7 @@ Future<void> printRouchete(List<PrescriptionModel> list) async {
                     textDirection: pw.TextDirection.rtl,
                     textAlign: pw.TextAlign.end,
                     style: pw.TextStyle(
-                      fontSize: 14,
+                      fontSize: 12,
                       font: font,
                       lineSpacing: 4,
                     )),
@@ -49,13 +49,13 @@ List<String> splitContent(String content, PdfPageFormat format) {
   // Split the content into pages based on the available height
   final List<String> pages = [];
 
-  final double availableHeight = format.height - 440; // Adjust for margins
+  final double availableHeight = format.height - 470; // Adjust for margins
   double currentHeight = 0.0;
   // Initialize the first page
   pages.add('');
   for (var paragraph in content.split('\n')) {
     final paragraphHeight =
-        measureTextHeight(paragraph, 14); // Adjust font size if needed
+        measureTextHeight(paragraph, 12); // Adjust font size if needed
     if (currentHeight + paragraphHeight > availableHeight) {
       pages.add(''); // Add a new page
       currentHeight = 0.0;
