@@ -1,5 +1,5 @@
 class HSizes {
-  static const double maxPageWidth = 1440;
+  static const double maxPageWidth = 1920;
 
   // Padding and margin sizes
   static const double xs = 4.0;

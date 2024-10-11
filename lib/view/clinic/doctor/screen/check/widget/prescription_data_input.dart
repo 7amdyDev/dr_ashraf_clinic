@@ -97,22 +97,41 @@ class _PrescriptionDataInputState extends State<PrescriptionDataInput> {
                       },
                       fieldViewBuilder: (context, textEditingController,
                           focusNode, onFieldSubmitted) {
-                        return SizedBox(
-                          width: 200,
-                          child: TextField(
-                            decoration: InputDecoration(
-                                labelText: 'dosage_label'.tr,
-                                labelStyle: const TextStyle(
-                                  fontSize: 18,
-                                  fontFamily: 'NotoNaskh',
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            onChanged: (value) => dosageController.text = value,
-                            onEditingComplete: onFieldSubmitted,
-                            focusNode: focusNode,
-                            controller: textEditingController,
-                          ),
-                        );
+                        return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: Text(
+                                    'dosage_label'.tr,
+                                    style: const TextStyle(
+                                      fontFamily: 'NotoNaskh',
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 200,
+                                child: TextField(
+                                  decoration: const InputDecoration(
+                                      labelStyle: TextStyle(
+                                    fontSize: 18,
+                                    fontFamily: 'NotoNaskh',
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                                  onChanged: (value) =>
+                                      dosageController.text = value,
+                                  onEditingComplete: onFieldSubmitted,
+                                  focusNode: focusNode,
+                                  controller: textEditingController,
+                                ),
+                              )
+                            ]);
                       },
                       optionsViewBuilder: (context, onSelected, options) {
                         return Align(

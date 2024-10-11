@@ -76,3 +76,21 @@ class HTexts {
   static const String homeAppbarTitle = "Good day for shopping";
   static const String homeAppbarSubTitle = "Taimoor Sikander";
 }
+
+
+
+//  double screenWidth = MediaQuery.of(context).size.width;
+//     double baseFontSize = 16; // Base font size in pixels
+
+//     // Determine the scale factor based on screen width
+//     double scaleFactor;
+//     if (screenWidth < 600) {
+//       scaleFactor = 1.0; // Small screens
+//     } else if (screenWidth < 1200) {
+//       scaleFactor = 1.1; // Medium screens
+//     } else {
+//       scaleFactor = 1.2; // Large screens
+//     }
+
+//     // Calculate the final font size
+//     double finalFontSize = baseFontSize * scaleFactor;

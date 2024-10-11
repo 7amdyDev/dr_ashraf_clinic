@@ -17,10 +17,9 @@ class HNavigationDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = HelperFunctions.screenSize();
-    double maxPageWidth = HSizes.maxPageWidth;
-    double drawerWidth = size.width < maxPageWidth ? size.width * 0.20 : 250;
+
     return SizedBox(
-      width: drawerWidth,
+      width: HelperFunctions.drawerWidth(),
       height: size.height * 0.9,
       child: Card(
         color: HColors.primaryBackground,

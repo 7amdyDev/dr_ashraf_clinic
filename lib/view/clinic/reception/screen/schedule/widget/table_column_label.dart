@@ -18,13 +18,15 @@ class TableColumnLabel extends StatelessWidget {
     return Expanded(
       child: FittedBox(
         fit: BoxFit.scaleDown,
-        child: Text(
+        child: RichText(
           textAlign: TextAlign.center,
-          text.tr,
-          style: TextStyle(
-            fontFamily: 'NotoNaskh',
-            fontWeight: FontWeight.bold,
-            fontSize: isEnglish ? enFontSize : arFontSize,
+          text: TextSpan(
+            text: text.tr,
+            style: TextStyle(
+              fontFamily: 'NotoNaskh',
+              fontWeight: FontWeight.bold,
+              fontSize: isEnglish ? enFontSize : arFontSize,
+            ),
           ),
         ),
       ),

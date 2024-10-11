@@ -206,7 +206,7 @@ class AppointmentFinance {
       appointmentId: json['appointment_id'],
       patientId: json['patient_id'],
       fee: json['fee'],
-      paid: json['paid'] ?? 0,
+      paid: json['paid'] ?? '0',
       unPaid: json['unpaid'],
       date: json['date'],
       serviceId: json['service_id'],

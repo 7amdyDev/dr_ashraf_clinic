@@ -123,8 +123,15 @@ class HelperFunctions {
     double width = HelperFunctions.screenWidth() <
             HSizes.maxPageWidth - (HelperFunctions.screenWidth() * 0.2)
         ? HelperFunctions.screenWidth()
-        : HSizes.maxPageWidth - 250;
+        : HSizes.maxPageWidth - 450;
     return width;
+  }
+
+  static double drawerWidth() {
+    double drawerWidth = clinicPagesWidth() < HSizes.maxPageWidth
+        ? clinicPagesWidth() * 0.20
+        : 400;
+    return drawerWidth;
   }
 
   static showSnackBar(String message) {
