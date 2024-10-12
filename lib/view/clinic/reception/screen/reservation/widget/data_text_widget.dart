@@ -7,6 +7,7 @@ class DataTextWidget extends StatelessWidget {
     this.child,
     this.value,
     this.enable = true,
+    this.obscureText = false,
     this.labelFontSize = 18,
     this.textFontSize = 18,
     this.textEditingController,
@@ -20,6 +21,7 @@ class DataTextWidget extends StatelessWidget {
   final String? value;
   final Widget? child;
   final bool enable;
+  final bool obscureText;
   final double labelFontSize;
   final double textFontSize;
   final int maxLines;
@@ -31,7 +33,7 @@ class DataTextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 105,
+      //  height: 105,
       width: width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,6 +63,7 @@ class DataTextWidget extends StatelessWidget {
                   maxLines: maxLines,
                   controller: textEditingController,
                   validator: validator,
+                  obscureText: obscureText,
                 )
               : child!,
         ],

@@ -121,6 +121,11 @@ class AppTranslation extends Translations {
           'branch_name_label': 'Branch Name',
           'service_fees_label': 'Fees of Services',
           'dosage_label': 'Dosage',
+          'change_password': 'Change Password',
+          'current_password': 'Current Password',
+          'new_password': 'New Password',
+          'confirm_password': 'Confirm New Password',
+          'change_button': 'Change',
         },
         'ar_EG': {
           'app_name': 'عيادات الدكتور أشرف يحيي',
@@ -243,6 +248,11 @@ class AppTranslation extends Translations {
           'branch_name_label': 'أسم الفرع',
           'service_fees_label': 'رسوم الخدمات',
           'dosage_label': 'الجرعة',
+          'change_password': 'تغيير كلمة المرور',
+          'current_password': 'كلمة المرور الحالية',
+          'new_password': 'كلمة المرور الجديدة',
+          'confirm_password': 'تأكيد كلمة المرور',
+          'change_button': 'تغيير',
         },
       };
 }

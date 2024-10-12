@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = HelperFunctions.screenSize();
-    double maxPageWidth = HSizes.maxPageWidth;
+    double maxPageWidth = HelperFunctions.clinicPagesWidth();
     return Scaffold(
         backgroundColor: HColors.primaryBackground,
         body: Center(

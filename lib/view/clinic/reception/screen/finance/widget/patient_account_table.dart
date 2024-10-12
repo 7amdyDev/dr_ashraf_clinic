@@ -15,13 +15,12 @@ import 'package:get/get.dart';
 class PatientAccountTable extends StatelessWidget {
   PatientAccountTable({
     super.key,
+    required this.patientAccountList,
   });
+  final List<AppointmentFinance> patientAccountList;
   final financeController = Get.find<FinanceController>();
   @override
   Widget build(BuildContext context) {
-    final List<AppointmentFinance> searchResult =
-        financeController.totalAppointmentAccountslst;
-
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -47,11 +46,11 @@ class PatientAccountTable extends StatelessWidget {
                   DataColumn(
                       label: TableColumnLabel(text: 'patient_unpaid_label')),
                 ],
-                source: _DataSource(data: searchResult),
-                rowsPerPage: searchResult.isEmpty
+                source: _DataSource(data: patientAccountList),
+                rowsPerPage: patientAccountList.isEmpty
                     ? 1
-                    : searchResult.length < 8
-                        ? searchResult.length
+                    : patientAccountList.length < 8
+                        ? patientAccountList.length
                         : 8,
                 showEmptyRows: false,
               ),

@@ -100,6 +100,9 @@ class _NewPatientCardWidgetState extends State<NewPatientCardWidget> {
                           ),
                         ],
                       ),
+                      const SizedBox(
+                        height: HSizes.spaceBtwItems,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [

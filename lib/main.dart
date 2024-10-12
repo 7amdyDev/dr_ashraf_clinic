@@ -1,8 +1,6 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:dr_ashraf_clinic/app.dart';
 import 'package:dr_ashraf_clinic/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 
@@ -16,7 +14,4 @@ void main() async {
     debugPrint('${record.level.name}: ${record.time}: ${record.message}');
   });
   runApp(const App());
-  // runApp(
-  //   DevicePreview(enabled: !kReleaseMode, builder: (context) => const App()),
-  // );
 }

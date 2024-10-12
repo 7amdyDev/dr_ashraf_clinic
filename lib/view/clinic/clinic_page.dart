@@ -11,8 +11,7 @@ class ClinicPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = HelperFunctions.screenSize();
-    double maxPageWidth = HSizes.maxPageWidth;
+    double maxPageWidth = HelperFunctions.clinicPagesWidth();
     return Scaffold(
         backgroundColor: HColors.primaryBackground,
         body: Center(
@@ -30,8 +29,8 @@ class ClinicPage extends StatelessWidget {
                         height: HSizes.spaceBtwSections * 2,
                       ),
                       RectangleImage(
-                          width: size.width / 3,
-                          height: size.width / 3.5,
+                          width: maxPageWidth / 3,
+                          height: maxPageWidth / 3.5,
                           shadow: false,
                           imagePath: 'assets/images/Personal.png'),
                       const SizedBox(

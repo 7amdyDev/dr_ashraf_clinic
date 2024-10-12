@@ -1,4 +1,5 @@
 import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
+import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
 import 'package:dr_ashraf_clinic/view/home_page/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -55,5 +56,36 @@ class AuthController extends GetxController {
     } catch (e) {
       // Handle sign-out errors
     }
+  }
+
+  Future<bool> changePassword(
+      String currentPassword, String newPassword) async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user == null) {
+      return false;
+    }
+
+    // Create a credential using the current password
+    final credential = EmailAuthProvider.credential(
+      email: user.email!,
+      password: currentPassword,
+    );
+
+    try {
+      // Reauthenticate the user
+      await user.reauthenticateWithCredential(credential);
+      // If reauthentication is successful, update the password
+      await user.updatePassword(newPassword);
+      HelperFunctions.showSnackBar("Password updated successfully");
+      return true;
+    } on FirebaseAuthException catch (e) {
+      // Handle errors
+      if (e.code == 'wrong-password') {
+      } else {
+        HelperFunctions.showSnackBar("Error updating password: ${e.message}");
+      }
+    }
+    return false;
   }
 }

@@ -63,6 +63,9 @@ class PatientReservationCardWidget extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(
+                height: HSizes.spaceBtwItems,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -97,6 +100,9 @@ class PatientReservationCardWidget extends StatelessWidget {
                           padding: EdgeInsets.all(8.0),
                           child: TableCheckBoxWidget()))
                 ],
+              ),
+              const SizedBox(
+                height: HSizes.spaceBtwSections,
               ),
               HFilledButton(
                   text: 'save_button',

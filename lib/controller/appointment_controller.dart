@@ -63,10 +63,10 @@ class AppointmentController extends GetxController {
         HelperFunctions.showSnackBar('The Appointment Added Successfully');
         getPatientAppointment(appointment.patientId);
         addAppointmentFinance(response.body!);
-        _financeController.onPatientAccountListUpdated();
       }
     } finally {
       appointmentsLoading.value = false;
+      _financeController.onPatientAccountListUpdated();
     }
   }
 
@@ -91,9 +91,12 @@ class AppointmentController extends GetxController {
         // patientId.value = (response.body!.id!);
         getPatientAppointment(_patientController.patientId.value);
         _financeController.getAppointsFinanceByDate();
+
         HelperFunctions.showSnackBar('Appointment Deleted Successfully');
       }
-    } finally {}
+    } finally {
+      _financeController.onPatientAccountListUpdated();
+    }
   }
 
   Future<void> getAppointsByDate({DateTime? date}) async {

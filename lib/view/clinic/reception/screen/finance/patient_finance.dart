@@ -13,7 +13,7 @@ class PatientFinance extends StatelessWidget {
   final financeController = Get.find<FinanceController>();
   @override
   Widget build(BuildContext context) {
-    // financeController.onPatientAccountListUpdated();
+    financeController.onPatientAccountListUpdated();
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -49,7 +49,10 @@ class PatientFinance extends StatelessWidget {
                     text: 'patient_accounts_label',
                     fontSize: 28,
                   ),
-                  PatientAccountTable(),
+                  PatientAccountTable(
+                    patientAccountList:
+                        financeController.totalAppointmentAccountslst,
+                  ),
                   const SizedBox(
                     height: HSizes.spaceBtwSections,
                   )

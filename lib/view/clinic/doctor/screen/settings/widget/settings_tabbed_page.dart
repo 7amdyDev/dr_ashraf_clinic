@@ -1,6 +1,7 @@
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/settings/widget/clinic_settings_widget.dart';
 import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/settings/widget/medicine_settings_widget.dart';
+import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/settings/widget/user_change_password.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/page_label_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,7 @@ class SettingsTabbedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         backgroundColor: HColors.secondary,
         appBar: AppBar(
@@ -31,6 +32,12 @@ class SettingsTabbedPage extends StatelessWidget {
                   fontSize: 22,
                 ),
               ),
+              Tab(
+                child: PageLabelWidget(
+                  text: 'change_password',
+                  fontSize: 22,
+                ),
+              ),
             ],
           ),
         ),
@@ -38,6 +45,7 @@ class SettingsTabbedPage extends StatelessWidget {
           children: [
             MedicineSettingsWidget(),
             const ClinicSettingsWidget(),
+            const UserChangePassword()
           ],
         ),
       ),
