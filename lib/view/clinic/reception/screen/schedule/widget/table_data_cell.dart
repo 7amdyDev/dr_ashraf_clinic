@@ -13,18 +13,20 @@ class TableDataCell extends StatelessWidget {
   Widget build(BuildContext context) {
     bool english = HelperFunctions.isLocalEnglish();
     return Center(
-        child: FittedBox(
-      fit: BoxFit.scaleDown,
-      child: RichText(
-        text: TextSpan(
-          text: text,
-          style: TextStyle(
-            fontFamily: 'NotoNaskh',
-            fontSize: english ? 16 : 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-    ));
+        child: text.isNotEmpty
+            ? FittedBox(
+                fit: BoxFit.scaleDown,
+                child: RichText(
+                  text: TextSpan(
+                    text: text,
+                    style: TextStyle(
+                      fontFamily: 'NotoNaskh',
+                      fontSize: english ? 16 : 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              )
+            : Container());
   }
 }

@@ -173,6 +173,7 @@ class AppointmentFinance {
   final int clinicId;
   final String name;
   final String mobile;
+  final String? referral;
   AppointmentFinance({
     required this.appointmentId,
     required this.patientId,
@@ -184,6 +185,7 @@ class AppointmentFinance {
     required this.clinicId,
     required this.name,
     required this.mobile,
+    this.referral,
   });
 
   Map<String, dynamic> toJson() {
@@ -198,22 +200,23 @@ class AppointmentFinance {
       'clinic_id': clinicId,
       'name': name,
       'mobile': mobile,
+      'referral': referral,
     };
   }
 
   factory AppointmentFinance.fromJson(Map<String, dynamic> json) {
     return AppointmentFinance(
-      appointmentId: json['appointment_id'],
-      patientId: json['patient_id'],
-      fee: json['fee'],
-      paid: json['paid'] ?? '0',
-      unPaid: json['unpaid'],
-      date: json['date'],
-      serviceId: json['service_id'],
-      clinicId: json['clinic_id'],
-      name: json['name'],
-      mobile: json['mobile'],
-    );
+        appointmentId: json['appointment_id'],
+        patientId: json['patient_id'],
+        fee: json['fee'],
+        paid: json['paid'] ?? '0',
+        unPaid: json['unpaid'],
+        date: json['date'],
+        serviceId: json['service_id'],
+        clinicId: json['clinic_id'],
+        name: json['name'],
+        mobile: json['mobile'],
+        referral: json['referral'] ?? ' ');
   }
 
   static List<AppointmentFinance> listFromJson(dynamic json) {

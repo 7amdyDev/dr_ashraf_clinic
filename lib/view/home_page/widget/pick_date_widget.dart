@@ -34,7 +34,7 @@ class PickDateWidget extends StatelessWidget {
             //     val.weekday == 5 ? false : true,
             currentDate: DateTime.now(),
             initialDate: DateTime.now(),
-            firstDate: DateTime.now(),
+            firstDate: DateTime.now().subtract(const Duration(days: 3)),
             lastDate: DateTime.now().add(const Duration(days: 40)),
             builder: (context, child) {
               return Theme(

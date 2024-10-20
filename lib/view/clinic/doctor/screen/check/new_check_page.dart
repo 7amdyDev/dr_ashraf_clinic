@@ -77,15 +77,9 @@ class NewCheckPage extends StatelessWidget {
                     HFilledButton(
                       text: 'Print Rx',
                       onPressed: () {
-                        String diagnose = '';
-                        if (consultationController.diagnosisList.isNotEmpty) {
-                          diagnose = consultationController
-                              .diagnosisList.first.description;
-                        }
-
                         printRouchete(
                           consultationController.prescriptionList,
-                          diagnose,
+                          consultationController.diagnosisList,
                         );
                       },
                     ),

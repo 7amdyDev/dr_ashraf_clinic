@@ -26,21 +26,26 @@ class PatientReservationCardWidget extends StatelessWidget {
   final _clinicController = Get.find<ClinicController>();
 
   final TextEditingController dateController;
+
   final int? id;
   final String? name;
   final String? mobile;
+
   @override
   Widget build(BuildContext context) {
     double width = HelperFunctions.clinicPagesWidth();
     final dateKey = GlobalKey<FormState>();
     AppointmentModel appointment;
+    TextEditingController referralController = TextEditingController();
+
     return Card(
       child: Padding(
           padding: const EdgeInsets.all(HSizes.defaultSpace),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   DataTextWidget(
                     label: 'id_no_label'.tr,
@@ -67,7 +72,7 @@ class PatientReservationCardWidget extends StatelessWidget {
                 height: HSizes.spaceBtwItems,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   DataTextWidget(
                     label: 'service_type_label'.tr,
@@ -102,24 +107,38 @@ class PatientReservationCardWidget extends StatelessWidget {
                 ],
               ),
               const SizedBox(
+                height: HSizes.spaceBtwItems,
+              ),
+              DataTextWidget(
+                label: 'referral_label'.tr,
+                width: width / 6,
+                textFontSize: 16,
+                textEditingController: referralController,
+              ),
+              const SizedBox(
                 height: HSizes.spaceBtwSections,
               ),
-              HFilledButton(
-                  text: 'save_button',
-                  fontSize: 22,
-                  onPressed: () {
-                    appointment = AppointmentModel(
+              Align(
+                alignment: Alignment.center,
+                child: HFilledButton(
+                    text: 'save_button',
+                    fontSize: 22,
+                    onPressed: () {
+                      appointment = AppointmentModel(
                         statusId: 0,
                         patientId: id!,
                         clinicId: _clinicController.clinicId.value,
                         serviceId: appointmentController.serviceId.value,
-                        date:
-                            HFormatter.reverseFormatDate(dateController.text));
-                    if (dateKey.currentState!.validate()) {
-                      appointmentController.addAppointment(appointment);
-                      appointmentController.getPatientAppointment(id!);
-                    }
-                  })
+                        date: HFormatter.reverseFormatDate(dateController.text),
+                        referral: referralController.text,
+                      );
+                      if (dateKey.currentState!.validate()) {
+                        appointmentController.addAppointment(appointment);
+                        appointmentController.getPatientAppointment(id!);
+                        dateController.clear();
+                      }
+                    }),
+              )
             ],
           )),
     );

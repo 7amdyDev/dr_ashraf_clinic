@@ -120,7 +120,7 @@ class HelperFunctions {
   }
 
   static double clinicPagesWidth() {
-    double width = HelperFunctions.screenWidth() <
+    double width = HelperFunctions.screenWidth() <=
             HSizes.maxPageWidth - (HelperFunctions.screenWidth() * 0.2)
         ? HelperFunctions.screenWidth()
         : HSizes.maxPageWidth - 450;
@@ -128,9 +128,9 @@ class HelperFunctions {
   }
 
   static double drawerWidth() {
-    double drawerWidth = clinicPagesWidth() < HSizes.maxPageWidth
+    double drawerWidth = clinicPagesWidth() <= HSizes.maxPageWidth
         ? clinicPagesWidth() * 0.20
-        : 400;
+        : 450;
     return drawerWidth;
   }
 

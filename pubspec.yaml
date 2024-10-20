@@ -46,7 +46,7 @@ dependencies:
   logging: ^1.2.0
   printing: ^5.13.1
   pdf: ^3.11.1
-  #http: any
+  http: any
 
 dev_dependencies:
   flutter_test:

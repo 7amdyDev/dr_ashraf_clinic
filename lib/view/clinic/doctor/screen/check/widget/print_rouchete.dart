@@ -4,16 +4,16 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
-Future<void> printRouchete(
-    List<PrescriptionModel> list, String diagnose) async {
+Future<void> printRouchete(List<PrescriptionModel> prescriptions,
+    List<DiagnosisModel> diagnoses) async {
   var pageFormat = PdfPageFormat.a5;
   final font = await PdfGoogleFonts.notoNaskhArabicMedium();
+  String diagnose = diagnoses.map((element) => element.description).join('\n');
 
   final doc = pw.Document();
   // Split content if necessary
-  String content = '$diagnose\n';
-  content = content +
-      list.map((name) => '${name.medicine} \n ${name.dosage!}').join('\n');
+  String content =
+      '$diagnose\n${prescriptions.map((name) => '${name.medicine} \n ${name.dosage!}').join('\n')}';
 
   await Printing.layoutPdf(
       format: pageFormat,

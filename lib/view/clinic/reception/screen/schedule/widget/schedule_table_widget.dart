@@ -41,6 +41,7 @@ class HScheduleDataTable extends StatelessWidget {
                   DataColumn(
                       label: TableColumnLabel(text: 'service_type_label')),
                   DataColumn(label: TableColumnLabel(text: 'telephone_label')),
+                  DataColumn(label: TableColumnLabel(text: 'referral_label')),
                   DataColumn(label: TableColumnLabel(text: 'finance_label')),
                   DataColumn(label: TableColumnLabel(text: 'status_label')),
                 ],
@@ -94,36 +95,28 @@ class _DataSource extends DataTableSource {
       DataCell(TableDataCell(
           text: HValidator.serviceIdValidation(item.serviceId).tr)),
       DataCell(TableDataCell(text: item.mobile)),
+      DataCell(TableDataCell(text: item.referral ?? ' ')),
       DataCell(
           TableDataCell(text: item.unPaid == '0' ? 'Paid'.tr : item.unPaid)),
-      HFormatter.formatStringDate(item.date) ==
-              HFormatter.formatDate(
-                DateTime.now(),
-              )
-          ? DataCell(
-              Center(
-                child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: CustomDropDownWidget(
-                      statusId: _appointmentController
-                          .getAppointmentStatus(item.appointmentId),
-                      onSelected: (value) {
-                        var appointment =
-                            _appointmentController.appointListByDate.firstWhere(
-                                (record) => record.id == item.appointmentId);
-                        var updatedItem = appointment.copyWith(
-                            statusId: value,
-                            date: HFormatter.formatStringDate(item.date,
-                                reversed: true));
-                        _appointmentController.updateAppointment(updatedItem);
-                      },
-                    )),
-              ),
-            )
-          : DataCell(TableDataCell(
-              text: HValidator.statusIdValidation(_appointmentController
-                      .getAppointmentStatus(item.appointmentId))
-                  .tr)),
+      DataCell(
+        Center(
+          child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: CustomDropDownWidget(
+                statusId: _appointmentController
+                    .getAppointmentStatus(item.appointmentId),
+                onSelected: (value) {
+                  var appointment = _appointmentController.appointListByDate
+                      .firstWhere((record) => record.id == item.appointmentId);
+                  var updatedItem = appointment.copyWith(
+                      statusId: value,
+                      date: HFormatter.formatStringDate(item.date,
+                          reversed: true));
+                  _appointmentController.updateAppointment(updatedItem);
+                },
+              )),
+        ),
+      )
     ]);
   }
 

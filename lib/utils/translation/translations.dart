@@ -126,6 +126,7 @@ class AppTranslation extends Translations {
           'new_password': 'New Password',
           'confirm_password': 'Confirm New Password',
           'change_button': 'Change',
+          'referral_label': 'Referral By',
         },
         'ar_EG': {
           'app_name': 'عيادات الدكتور أشرف يحيي',
@@ -253,6 +254,7 @@ class AppTranslation extends Translations {
           'new_password': 'كلمة المرور الجديدة',
           'confirm_password': 'تأكيد كلمة المرور',
           'change_button': 'تغيير',
+          'referral_label': 'الإحالة',
         },
       };
 }

@@ -39,6 +39,7 @@ class PatientAccountTable extends StatelessWidget {
                   DataColumn(label: TableColumnLabel(text: 'date_label')),
                   DataColumn(
                       label: TableColumnLabel(text: 'service_type_label')),
+                  DataColumn(label: TableColumnLabel(text: 'referral_label')),
                   DataColumn(label: TableColumnLabel(text: 'clinic_button')),
                   DataColumn(label: TableColumnLabel(text: 'value_label')),
                   DataColumn(
@@ -105,6 +106,8 @@ class _DataSource extends DataTableSource {
       DataCell(TableDataCell(text: HFormatter.formatStringDate(item.date))),
       DataCell(TableDataCell(
           text: HValidator.serviceIdValidation(item.serviceId).tr)),
+      DataCell(TableDataCell(text: item.referral ?? ' ')),
+
       DataCell(TableDataCell(
           text: clinicController.getClinicBranchName(
               clinicBranchId: item.clinicId))),

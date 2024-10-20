@@ -6,6 +6,7 @@ class AppointmentModel {
   final int clinicId;
   final String date;
   final String? notes;
+  final String? referral;
 
   AppointmentModel({
     this.id,
@@ -15,6 +16,7 @@ class AppointmentModel {
     required this.statusId,
     required this.clinicId,
     this.notes,
+    this.referral,
   });
   AppointmentModel copyWith({
     int? id,
@@ -25,6 +27,7 @@ class AppointmentModel {
     String? date,
     String? mobile,
     String? notes,
+    String? referral,
   }) {
     return AppointmentModel(
       id: id ?? this.id,
@@ -34,6 +37,7 @@ class AppointmentModel {
       statusId: statusId ?? this.statusId,
       clinicId: clinicId ?? this.clinicId,
       notes: notes ?? this.notes,
+      referral: referral ?? this.referral,
     );
   }
 
@@ -46,18 +50,19 @@ class AppointmentModel {
       'statusId': statusId,
       'clinic_id': clinicId,
       'notes': notes,
+      'referral': referral,
     };
   }
 
   factory AppointmentModel.fromJson(dynamic json) => AppointmentModel(
-        id: json["id"],
-        patientId: json["patient_id"],
-        serviceId: json["service_id"],
-        date: json["date"],
-        statusId: json["statusId"],
-        clinicId: json["clinic_id"],
-        notes: json["notes"],
-      );
+      id: json["id"],
+      patientId: json["patient_id"],
+      serviceId: json["service_id"],
+      date: json["date"],
+      statusId: json["statusId"],
+      clinicId: json["clinic_id"],
+      notes: json["notes"],
+      referral: json["referral"]);
 
   static List<AppointmentModel> listFromJson(dynamic json) {
     return List<AppointmentModel>.from(
