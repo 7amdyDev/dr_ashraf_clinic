@@ -68,7 +68,7 @@ class HFormatter {
 
   static String reverseFormatDate(String date) {
     DateTime dateTime = DateFormat("dd-MM-yyyy").parse(date);
-    DateFormat outputFormat = DateFormat('yyyy/MM/dd');
+    DateFormat outputFormat = DateFormat('yyyy-MM-dd');
     String formattedDate = outputFormat.format(dateTime);
     return formattedDate;
   }

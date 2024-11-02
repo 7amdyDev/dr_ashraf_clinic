@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
@@ -154,5 +156,25 @@ class HelperFunctions {
       isDismissible: true,
       forwardAnimationCurve: Curves.easeOutBack,
     );
+  }
+
+  static List<Color> generateBarColors(int count) {
+    final List<Color> colors = [];
+    final Random random = Random();
+    for (int i = 0; i < count; i++) {
+      // Generate a distinct hue
+      double hue = (i * (360 / count)) % 360; // Evenly spaced hues
+      double saturation =
+          0.7 + random.nextDouble() * 0.3; // Saturation between 0.7 and 1.0
+      double lightness =
+          0.5 + random.nextDouble() * 0.3; // Lightness between 0.5 and 0.8
+
+      // Convert HSL to RGB
+      Color color =
+          HSLColor.fromAHSL(1.0, hue, saturation, lightness).toColor();
+      colors.add(color);
+    }
+
+    return colors;
   }
 }

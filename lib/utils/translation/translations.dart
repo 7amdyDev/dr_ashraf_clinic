@@ -127,6 +127,17 @@ class AppTranslation extends Translations {
           'confirm_password': 'Confirm New Password',
           'change_button': 'Change',
           'referral_label': 'Referral By',
+          'reports_label': 'Reports',
+          'income_expense_label': 'Income & Expense Overview',
+          'last_7_days_label': 'Last 7 Days',
+          'last_15_days_label': 'Last 15 Days',
+          'monthly_label': 'Monthly',
+          'yearly_label': 'Yearly',
+          'income_report_label': 'Income Report',
+          'expense_report_label': 'Expense Report',
+          'from_label': 'From',
+          'to_label': 'To',
+          'number_of_patient_label': 'Number of Patients'
         },
         'ar_EG': {
           'app_name': 'عيادات الدكتور أشرف يحيي',
@@ -255,6 +266,17 @@ class AppTranslation extends Translations {
           'confirm_password': 'تأكيد كلمة المرور',
           'change_button': 'تغيير',
           'referral_label': 'الإحالة',
+          'reports_label': 'التقارير',
+          'income_expense_label': 'إجمالي الدخل والمصروفات',
+          'last_7_days_label': 'آخر ٧ أيام',
+          'last_15_days_label': 'آخر ١٥ يوم',
+          'monthly_label': 'شهري',
+          'yearly_label': 'سنوي',
+          'income_report_label': 'تقرير الدخل',
+          'expense_report_label': 'تقرير المصروفات',
+          'from_label': 'من',
+          'to_label': 'إلي',
+          'number_of_patient_label': 'عدد المرضي'
         },
       };
 }

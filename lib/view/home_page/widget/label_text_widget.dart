@@ -6,9 +6,13 @@ class LabelTextWidget extends StatelessWidget {
   const LabelTextWidget({
     super.key,
     required this.text,
+    this.fontSizeEn = 22,
+    this.fontSizeAr = 24,
   });
 
   final String text;
+  final double fontSizeEn;
+  final double fontSizeAr;
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +21,14 @@ class LabelTextWidget extends StatelessWidget {
     return Text(
       text.tr,
       style: isEnglish
-          ? const TextStyle(
+          ? TextStyle(
               fontFamily: 'Lato',
-              fontSize: 22,
+              fontSize: fontSizeEn,
               fontWeight: FontWeight.bold,
             )
-          : const TextStyle(
+          : TextStyle(
               fontFamily: 'NotoNaskh',
-              fontSize: 24,
+              fontSize: fontSizeAr,
               fontWeight: FontWeight.bold),
     );
   }

@@ -9,10 +9,14 @@ class PickDateWidget extends StatelessWidget {
     this.textFontSize = 18,
     required this.dateController,
     this.validator,
+    this.firstDate,
+    this.lastDate,
   });
 
   final double width;
   final double textFontSize;
+  final DateTime? firstDate;
+  final DateTime? lastDate;
   final TextEditingController dateController;
   final String? Function(String?)? validator;
 
@@ -34,8 +38,9 @@ class PickDateWidget extends StatelessWidget {
             //     val.weekday == 5 ? false : true,
             currentDate: DateTime.now(),
             initialDate: DateTime.now(),
-            firstDate: DateTime.now().subtract(const Duration(days: 3)),
-            lastDate: DateTime.now().add(const Duration(days: 40)),
+            firstDate:
+                firstDate ?? DateTime.now().subtract(const Duration(days: 3)),
+            lastDate: lastDate ?? DateTime.now().add(const Duration(days: 40)),
             builder: (context, child) {
               return Theme(
                 data: ThemeData.dark().copyWith(
