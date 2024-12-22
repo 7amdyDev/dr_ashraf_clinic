@@ -21,21 +21,30 @@ class ReportsTabbedPage extends StatelessWidget {
                 labelColor: Colors.red[600],
                 tabs: const [
                   Tab(
-                    child: PageLabelWidget(
-                      fontSize: 24,
-                      text: 'income_expense_label',
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: PageLabelWidget(
+                        fontSize: 22,
+                        text: 'income_expense_label',
+                      ),
                     ),
                   ),
                   Tab(
-                    child: PageLabelWidget(
-                      fontSize: 24,
-                      text: 'income_report_label',
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: PageLabelWidget(
+                        fontSize: 22,
+                        text: 'income_report_label',
+                      ),
                     ),
                   ),
                   Tab(
-                    child: PageLabelWidget(
-                      fontSize: 24,
-                      text: 'expense_report_label',
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: PageLabelWidget(
+                        fontSize: 22,
+                        text: 'expense_report_label',
+                      ),
                     ),
                   ),
                 ],
