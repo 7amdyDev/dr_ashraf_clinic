@@ -16,7 +16,7 @@ class HTextFormFieldTheme {
         .copyWith(fontSize: HSizes.fontSizeSm, color: HColors.black),
     errorStyle: const TextStyle().copyWith(fontStyle: FontStyle.normal),
     floatingLabelStyle:
-        const TextStyle().copyWith(color: HColors.black.withOpacity(0.8)),
+        const TextStyle().copyWith(color: HColors.black.withValues(alpha: 0.8)),
     border: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(HSizes.inputFieldRadius),
       borderSide: const BorderSide(width: 1, color: HColors.grey),
@@ -49,7 +49,7 @@ class HTextFormFieldTheme {
     hintStyle: const TextStyle()
         .copyWith(fontSize: HSizes.fontSizeSm, color: HColors.white),
     floatingLabelStyle:
-        const TextStyle().copyWith(color: HColors.white.withOpacity(0.8)),
+        const TextStyle().copyWith(color: HColors.white.withValues(alpha: 0.8)),
     border: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(HSizes.inputFieldRadius),
       borderSide: const BorderSide(width: 1, color: HColors.darkGrey),

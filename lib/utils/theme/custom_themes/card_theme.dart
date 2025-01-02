@@ -8,6 +8,6 @@ final myCardTheme = CardTheme(
     borderRadius: BorderRadius.circular(15.0),
   ),
   margin: const EdgeInsets.all(10.0),
-  shadowColor: Colors.grey.withOpacity(0.5),
+  shadowColor: Colors.grey.withValues(alpha: 0.5),
   surfaceTintColor: HColors.lightGrey,
 );
