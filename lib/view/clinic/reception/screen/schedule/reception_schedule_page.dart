@@ -39,7 +39,7 @@ class ReceptionSchedulePage extends StatelessWidget {
                   appointmentController.getAppointsByDate().then((_) {
                     financeController.getAppointsFinanceByDate();
                   });
-                  appointmentController.startPeriodicUpdate();
+                  //  appointmentController.startPeriodicUpdate();
                 }),
             HFilledButton(
                 text: 'choose_date_label'.tr,

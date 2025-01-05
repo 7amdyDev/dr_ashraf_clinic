@@ -1,13 +1,14 @@
 import 'dart:async';
-
 import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/controller/expense_controller.dart';
 import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
 import 'package:dr_ashraf_clinic/db/asset_api.dart';
 import 'package:dr_ashraf_clinic/model/appointment_model.dart';
 import 'package:dr_ashraf_clinic/model/finance_models.dart';
+import 'package:dr_ashraf_clinic/service/socket_service.dart';
 import 'package:dr_ashraf_clinic/utils/formatters/formatter.dart';
 import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class FinanceController extends GetxController {
@@ -29,10 +30,12 @@ class FinanceController extends GetxController {
   RxInt dailyIncome = 0.obs;
   RxInt cash = 0.obs;
   RxBool finaceLoading = false.obs;
+  RxBool dailyIncomeLoading = false.obs;
   final _expenseController = Get.find<ExpenseController>();
   final _patientController = Get.find<PatientController>();
   final _clinicController = Get.find<ClinicController>();
   final _assetApi = Get.find<AssetApi>();
+  final _socketService = Get.find<SocketService>();
 
 // ------------ Account Assets ----------- //
 
@@ -52,29 +55,38 @@ class FinanceController extends GetxController {
 
   @override
   void onInit() {
-    startPeriodicUpdate();
     getCash();
     patientChanged();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getAssetEvents();
+    });
     super.onInit();
   }
 
   Future<void> getFinanceList() async {
-    await getTotalDailyIncome();
     await getDailyIncomeList();
+    await getTotalDailyIncome();
   }
 
-  void startPeriodicUpdate() {
-    // Set the duration for the periodic execution
-    const duration = Duration(seconds: 2);
-
-    // Create a Timer that runs the function periodically
-    Timer.periodic(duration, (Timer timer) {
-      // You can add your periodic task logic here.
+  void getAssetEvents() {
+    getFinanceList();
+    _socketService.socket.on('asset_created', (_) {
+      Future.delayed(Durations.medium4, () {
+        getFinanceList();
+        getAppointsFinanceByDate();
+      });
+    });
+    _socketService.socket.on('asset_deleted', (_) {
       getFinanceList();
-      // Uncomment the following line to stop the timer after a certain condition is met
-      // if (someCondition) {
-      //   timer.cancel();
-      // }
+      getAppointsFinanceByDate();
+    });
+
+    _socketService.socket.on('asset_updated', (_) {
+      Future.delayed(Durations.medium4, () {
+        getFinanceList();
+        getAppointsFinanceByDate();
+      });
     });
   }
 
@@ -83,10 +95,13 @@ class FinanceController extends GetxController {
       return;
     }
     finaceLoading.value = true;
+
     try {
       var response =
           await _assetApi.getDailyIncomeList(_clinicController.clinicId.value);
       if (response.statusCode == 200) {
+        debugPrint(response.body.toString());
+        assetDailyIncomelst.clear();
         assetDailyIncomelst.value = response.body!;
       }
     } finally {
@@ -357,19 +372,20 @@ class FinanceController extends GetxController {
   }
 
   Future<void> getTotalDailyIncome() async {
-    if (finaceLoading.value) {
+    if (dailyIncomeLoading.value) {
       return;
     }
-    finaceLoading.value = true;
+    dailyIncomeLoading.value = true;
+
     try {
       var response =
           await _assetApi.getTotalDailyIncome(_clinicController.clinicId.value);
-
-      if (response.statusCode == 200 && response.body != null) {
-        dailyIncome.value = response.body!.total!;
+      debugPrint(response.body.toString());
+      if (response.statusCode == 200) {
+        dailyIncome.value = response.body?.total ?? 0;
       }
     } finally {
-      finaceLoading.value = false;
+      dailyIncomeLoading.value = false;
     }
     cash.value =
         (dailyIncome.value - _expenseController.totalDailyExpenses.value);

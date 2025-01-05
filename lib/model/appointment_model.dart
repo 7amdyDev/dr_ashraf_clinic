@@ -25,7 +25,6 @@ class AppointmentModel {
     int? statusId,
     int? clinicId,
     String? date,
-    String? mobile,
     String? notes,
     String? referral,
   }) {

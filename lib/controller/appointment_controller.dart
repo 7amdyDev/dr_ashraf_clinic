@@ -4,6 +4,7 @@ import 'package:dr_ashraf_clinic/controller/finance_controller.dart';
 import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
 import 'package:dr_ashraf_clinic/db/appointment_api.dart';
 import 'package:dr_ashraf_clinic/model/appointment_model.dart';
+import 'package:dr_ashraf_clinic/service/socket_service.dart';
 import 'package:dr_ashraf_clinic/utils/formatters/formatter.dart';
 import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class AppointmentController extends GetxController {
   final _financeController = Get.find<FinanceController>();
   final _clinicController = Get.find<ClinicController>();
   final _patientController = Get.find<PatientController>();
+  final _socketService = Get.find<SocketService>();
   RxList<AppointmentModel> appointmentlst = <AppointmentModel>[].obs;
   RxList<AppointmentModel> patientAppointlst = <AppointmentModel>[].obs;
   RxList<AppointmentModel> appointListByDate = <AppointmentModel>[].obs;
@@ -24,35 +26,61 @@ class AppointmentController extends GetxController {
 
   @override
   void onInit() {
-    appointListByDate.clear();
-    startPeriodicUpdate();
+    getAppointmentEvents();
     super.onInit();
   }
 
-  Future<void> startPeriodicUpdate() async {
-    // Set the duration for the periodic execution
-    const duration = Duration(seconds: 2);
-
-    // Create a Timer that runs the function periodically
-    final timer = Timer.periodic(duration, (timer) {
-      // You can add your periodic task logic here.
-      if (!scheduleByDate) {
+  void getAppointmentEvents() {
+    appointListByDate.clear();
+    getAppointsByDate().then((_) {
+      _financeController.getAppointsFinanceByDate();
+    });
+    _socketService.socket.on('appointment_created', (_) {
+      Future.delayed(Durations.medium4, () {
         getAppointsByDate().then((_) {
           _financeController.getAppointsFinanceByDate();
         });
-      }
-
-      // Uncomment the following line to stop the timer after a certain condition is met
-      if (scheduleByDate) {
-        timer.cancel();
-        debugPrint('Timer Cancel');
-      }
+      });
     });
-    while (timer.isActive) {
-      // waiting for the same time duration to check if timer is still active after it
-      await Future.delayed(const Duration(seconds: 2));
-    }
+    _socketService.socket.on('appointment_deleted', (_) {
+      getAppointsByDate().then((_) {
+        _financeController.getAppointsFinanceByDate();
+      });
+    });
+
+    _socketService.socket.on('appointment_updated', (_) {
+      Future.delayed(Durations.medium4, () {
+        getAppointsByDate().then((_) {
+          _financeController.getAppointsFinanceByDate();
+        });
+      });
+    });
   }
+
+  // Future<void> startPeriodicUpdate() async {
+  //   // Set the duration for the periodic execution
+  //   const duration = Duration(seconds: 2);
+
+  //   // Create a Timer that runs the function periodically
+  //   final timer = Timer.periodic(duration, (timer) {
+  //     // You can add your periodic task logic here.
+  //     if (!scheduleByDate) {
+  //       getAppointsByDate().then((_) {
+  //         _financeController.getAppointsFinanceByDate();
+  //       });
+  //     }
+
+  //     // Uncomment the following line to stop the timer after a certain condition is met
+  //     if (scheduleByDate) {
+  //       timer.cancel();
+  //       debugPrint('Timer Cancel');
+  //     }
+  //   });
+  //   while (timer.isActive) {
+  //     // waiting for the same time duration to check if timer is still active after it
+  //     await Future.delayed(const Duration(seconds: 2));
+  //   }
+  // }
 
   Future<void> addAppointment(AppointmentModel appointment) async {
     appointmentsLoading.value = true;
@@ -76,8 +104,8 @@ class AppointmentController extends GetxController {
 
       if (response.statusCode == 201 && response.body != null) {
         // patientId.value = (response.body!.id!);
-        getAppointsByDate();
-        _financeController.getAppointsFinanceByDate();
+        //  getAppointsByDate();
+        //  _financeController.getAppointsFinanceByDate();
         HelperFunctions.showSnackBar('Appointment Updated Successfully');
       }
     } finally {}
@@ -124,7 +152,7 @@ class AppointmentController extends GetxController {
       // Check if the choosen date is today date to start to start the timer
       if (date == DateUtils.dateOnly(DateTime.now())) {
         scheduleByDate = false;
-        startPeriodicUpdate();
+        //  startPeriodicUpdate();
       }
       try {
         var response = await _appointmentApi.getByDate(date);

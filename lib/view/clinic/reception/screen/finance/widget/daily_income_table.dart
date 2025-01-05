@@ -1,4 +1,4 @@
-import 'package:dr_ashraf_clinic/controller/patient_controller.dart';
+import 'package:dr_ashraf_clinic/controller/finance_controller.dart';
 import 'package:dr_ashraf_clinic/model/finance_models.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/formatters/formatter.dart';
@@ -9,14 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DailyIncomeTable extends StatelessWidget {
-  const DailyIncomeTable({
+  DailyIncomeTable({
     super.key,
-    required this.searchResult,
   });
+  final financeController = Get.put(FinanceController());
 
-  final List<AssetAccountsModel> searchResult;
   @override
   Widget build(BuildContext context) {
+    var assetData = financeController.assetDailyIncomelst;
     return Obx(() => SingleChildScrollView(
           child: SizedBox(
             width: double.infinity,
@@ -32,11 +32,11 @@ class DailyIncomeTable extends StatelessWidget {
                 DataColumn(label: TableColumnLabel(text: 'service_type_label')),
                 DataColumn(label: TableColumnLabel(text: 'patient_paid_label')),
               ],
-              source: _DataSource(data: searchResult),
-              rowsPerPage: searchResult.isEmpty
+              source: _DataSource(data: assetData),
+              rowsPerPage: assetData.isEmpty
                   ? 1
-                  : searchResult.length < 8
-                      ? searchResult.length
+                  : assetData.length < 8
+                      ? assetData.length
                       : 8,
               showEmptyRows: false,
             ),
@@ -47,7 +47,7 @@ class DailyIncomeTable extends StatelessWidget {
 
 class _DataSource extends DataTableSource {
   final List<AssetAccountsModel> data;
-  var controller = Get.put(PatientController());
+
   _DataSource({required this.data});
   @override
   DataRow? getRow(int index) {

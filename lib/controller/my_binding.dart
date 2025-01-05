@@ -14,6 +14,7 @@ import 'package:dr_ashraf_clinic/db/expense_api.dart';
 import 'package:dr_ashraf_clinic/db/patient_api.dart';
 import 'package:dr_ashraf_clinic/db/reports_api.dart';
 import 'package:dr_ashraf_clinic/db/revenue_api.dart';
+import 'package:dr_ashraf_clinic/service/socket_service.dart';
 import 'package:get/get.dart';
 
 class MyBinding implements Bindings {
@@ -30,6 +31,7 @@ class MyBinding implements Bindings {
     Get.put(AuthController());
     Get.put(ReportsApi());
     Get.lazyPut(() => AppointmentController());
+    Get.lazyPut(() => SocketService());
     Get.lazyPut(() => ExpenseController());
     Get.lazyPut(() => FinanceController());
     Get.lazyPut(() => PatientController());

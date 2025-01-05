@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/db/expense_api.dart';
 import 'package:dr_ashraf_clinic/model/expense_model.dart';
+import 'package:dr_ashraf_clinic/service/socket_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,10 +14,30 @@ class ExpenseController extends GetxController {
   RxInt totalDailyExpenses = 0.obs;
   RxList<ExpenseModel> expenseslst = <ExpenseModel>[].obs;
   final _clinicController = Get.find<ClinicController>();
+  final _socketService = Get.find<SocketService>();
+
   @override
   void onInit() {
-    startPeriodicUpdate();
+    getExpenseEvents();
     super.onInit();
+  }
+
+  void getExpenseEvents() {
+    getExpensesList();
+    _socketService.socket.on('expense_created', (_) {
+      Future.delayed(Durations.medium4, () {
+        getExpensesList();
+      });
+    });
+    _socketService.socket.on('expense_deleted', (_) {
+      getExpensesList();
+    });
+
+    _socketService.socket.on('expense_updated', (_) {
+      Future.delayed(Durations.medium4, () {
+        getExpensesList();
+      });
+    });
   }
 
   Future<void> getExpensesList() async {
@@ -24,20 +45,20 @@ class ExpenseController extends GetxController {
     await getTotalDailyExpenses();
   }
 
-  void startPeriodicUpdate() {
-    // Set the duration for the periodic execution
-    const duration = Duration(seconds: 2);
+  // void startPeriodicUpdate() {
+  //   // Set the duration for the periodic execution
+  //   const duration = Duration(seconds: 2);
 
-    // Create a Timer that runs the function periodically
-    Timer.periodic(duration, (Timer timer) {
-      // You can add your periodic task logic here.
-      getExpensesList();
-      // Uncomment the following line to stop the timer after a certain condition is met
-      // if (someCondition) {
-      //   timer.cancel();
-      // }
-    });
-  }
+  //   // Create a Timer that runs the function periodically
+  //   Timer.periodic(duration, (Timer timer) {
+  //     // You can add your periodic task logic here.
+  //     getExpensesList();
+  //     // Uncomment the following line to stop the timer after a certain condition is met
+  //     // if (someCondition) {
+  //     //   timer.cancel();
+  //     // }
+  //   });
+  // }
 
   Future<void> getExpensesByDate(DateTime date) async {
     (expensesLoading) {
