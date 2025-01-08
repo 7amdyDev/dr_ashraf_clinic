@@ -30,8 +30,8 @@ class MyBinding implements Bindings {
     Get.put(ClinicController());
     Get.put(AuthController());
     Get.put(ReportsApi());
+    Get.put(SocketService());
     Get.lazyPut(() => AppointmentController());
-    Get.lazyPut(() => SocketService());
     Get.lazyPut(() => ExpenseController());
     Get.lazyPut(() => FinanceController());
     Get.lazyPut(() => PatientController());
