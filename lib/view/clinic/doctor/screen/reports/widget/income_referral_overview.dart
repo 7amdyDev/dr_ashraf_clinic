@@ -155,7 +155,8 @@ class _IncomeReferralOverviewState extends State<IncomeReferralOverview> {
                                                       .incomeReferralByDate
                                                       .length) {
                                             return SideTitleWidget(
-                                              axisSide: meta.axisSide,
+                                              meta: meta,
+                                              // axisSide: meta.axisSide,
                                               child: Text(titleList[index]),
                                             );
                                           }

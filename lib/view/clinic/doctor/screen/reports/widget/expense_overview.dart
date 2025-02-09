@@ -125,7 +125,8 @@ class ExpenseOverview extends StatelessWidget {
                                                       .expenseOverviewByDate
                                                       .length) {
                                             return SideTitleWidget(
-                                              axisSide: meta.axisSide,
+                                              meta: meta,
+                                              //axisSide: meta.axisSide,
                                               child: Text(HValidator
                                                       .expenseCodeValidation(
                                                           reportsController

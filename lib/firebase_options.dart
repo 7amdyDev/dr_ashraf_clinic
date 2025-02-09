@@ -21,15 +21,9 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for android - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -54,11 +48,31 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyCWpix7rKzeDK9Geq0FlP2MhFMeGo9EKhw',
-    appId: "1:1023345209468:web:6fb833ad4aa7df99c6d9f9",
+    appId: '1:1023345209468:web:0549262587251406c6d9f9',
     messagingSenderId: '1023345209468',
     projectId: 'ashrafyehiaclinic',
     authDomain: 'ashrafyehiaclinic.firebaseapp.com',
-    storageBucket: 'ashrafyehiaclinic.appspot.com',
+    databaseURL: 'https://ashrafyehiaclinic-default-rtdb.firebaseio.com',
+    storageBucket: 'ashrafyehiaclinic.firebasestorage.app',
     measurementId: 'G-RQ2QCR2Y9F',
+  );
+
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyAmoBOQZcHrqzoFEYkN3_rrqW1Dh3e-yiE',
+    appId: '1:1023345209468:android:1fc86b8d09ce4573c6d9f9',
+    messagingSenderId: '1023345209468',
+    projectId: 'ashrafyehiaclinic',
+    databaseURL: 'https://ashrafyehiaclinic-default-rtdb.firebaseio.com',
+    storageBucket: 'ashrafyehiaclinic.firebasestorage.app',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyDOFg_NRgFFViPD6z9f2BeF5G_7Vj-E0yc',
+    appId: '1:1023345209468:ios:8a5ea496b7d8fd67c6d9f9',
+    messagingSenderId: '1023345209468',
+    projectId: 'ashrafyehiaclinic',
+    databaseURL: 'https://ashrafyehiaclinic-default-rtdb.firebaseio.com',
+    storageBucket: 'ashrafyehiaclinic.firebasestorage.app',
+    iosBundleId: 'com.example.drAshrafClinic',
   );
 }

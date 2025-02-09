@@ -35,6 +35,9 @@ class _CustomDropDownWidgetState extends State<CustomDropDownWidget> {
               value: 1,
               child: TableDataCell(text: HValidator.statusIdValidation(1).tr)),
           DropdownMenuItem(
+              value: 4,
+              child: TableDataCell(text: HValidator.statusIdValidation(4).tr)),
+          DropdownMenuItem(
               value: 2,
               child: TableDataCell(text: HValidator.statusIdValidation(2).tr)),
           DropdownMenuItem(

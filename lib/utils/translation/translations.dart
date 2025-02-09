@@ -137,6 +137,7 @@ class AppTranslation extends Translations {
           'expense_report_label': 'Expense Report',
           'from_label': 'From',
           'to_label': 'To',
+          'in_consult_label': 'In Consult',
           'number_of_patient_label': 'Number of Patients'
         },
         'ar_EG': {
@@ -189,6 +190,7 @@ class AppTranslation extends Translations {
           'waiting_label': 'إنتظار',
           'canceled_label': 'ملغي',
           'completed_label': 'مكتمل',
+          'in_consult_label': 'بالكشف',
           'patient_name_label': 'أسم المريض',
           'date_label': 'التاريخ',
           'service_type_label': 'نوع الخدمة',

@@ -4,4 +4,6 @@
 const String dBUrl = "https://ashrafyehiaclinic-default-rtdb.firebaseio.com/";
 
 const String apiUrl = "https://ayclinics.hamdy.dev";
+
+const String clientId = "AyClinics";
 //const String apiUrl = "http://localhost:3001";

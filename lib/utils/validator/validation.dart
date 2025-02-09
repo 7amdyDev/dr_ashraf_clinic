@@ -152,6 +152,10 @@ class HValidator {
         result = 'canceled_label';
         break;
 
+      case (4):
+        result = 'in_consult_label';
+        break;
+
       default:
         result = 'no_show_label';
     }

@@ -61,11 +61,14 @@ class HScheduleDataTable extends StatelessWidget {
 
 class _DataSource extends DataTableSource {
   final List<AppointmentFinance> data;
+  final _hoveredIndex = Rxn<int>();
   final _consultationController = Get.find<ConsultationController>();
   final _appointmentController = Get.find<AppointmentController>();
   final _patientController = Get.find<PatientController>();
   final _clinicController = Get.find<ClinicController>();
+
   _DataSource({required this.data});
+
   @override
   DataRow? getRow(int index) {
     if (index >= data.length) {
@@ -74,50 +77,75 @@ class _DataSource extends DataTableSource {
 
     final item = data[index];
 
-    return DataRow(cells: [
-      DataCell(TableDataCell(text: (index + 1).toString())),
-      DataCell(
-        TableDataCell(text: item.name),
-        onTap: () {
-          _patientController.choosePatient(item.patientId);
-          var route = Get.currentRoute;
-          if (route == '/doctor') {
-            _consultationController.getConsultIdByAppointId(item.appointmentId);
-            _consultationController.getConsultationByPatientId(item.patientId);
-            _consultationController.appointId.value = item.appointmentId;
-            _clinicController.pageIndex.value = 7;
-          } else {
-            _clinicController.pageIndex.value = 5;
-          }
-        },
-      ),
-      DataCell(TableDataCell(text: HFormatter.formatStringDate(item.date))),
-      DataCell(TableDataCell(
-          text: HValidator.serviceIdValidation(item.serviceId).tr)),
-      DataCell(TableDataCell(text: item.mobile)),
-      DataCell(TableDataCell(text: item.referral ?? ' ')),
-      DataCell(
-          TableDataCell(text: item.unPaid == '0' ? 'Paid'.tr : item.unPaid)),
-      DataCell(
-        Center(
-          child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: CustomDropDownWidget(
-                statusId: _appointmentController
-                    .getAppointmentStatus(item.appointmentId),
-                onSelected: (value) {
-                  var appointment = _appointmentController.appointListByDate
-                      .firstWhere((record) => record.id == item.appointmentId);
-                  var updatedItem = appointment.copyWith(
-                      statusId: value,
-                      date: HFormatter.formatStringDate(item.date,
-                          reversed: true));
-                  _appointmentController.updateAppointment(updatedItem);
-                },
-              )),
+    return DataRow(
+      color: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
+        if (states.contains(WidgetState.hovered)) {
+          return HColors.primary.withValues(alpha: 0.3);
+        }
+        if (_appointmentController.getAppointmentStatus(item.appointmentId) ==
+            4) {
+          return HColors.darkerGrey.withValues(alpha: 0.3);
+        }
+
+        return null;
+      }),
+      cells: [
+        DataCell(
+          MouseRegion(
+              onEnter: (_) => _hoveredIndex.value = index,
+              onExit: (_) => _hoveredIndex.value = null,
+              child: TableDataCell(text: (index + 1).toString())),
         ),
-      )
-    ]);
+        DataCell(
+          MouseRegion(
+            onEnter: (_) => _hoveredIndex.value = index,
+            onExit: (_) => _hoveredIndex.value = null,
+            child: TableDataCell(text: item.name),
+          ),
+          onTap: () {
+            _patientController.choosePatient(item.patientId);
+            var route = Get.currentRoute;
+            if (route == '/doctor') {
+              _consultationController
+                  .getConsultIdByAppointId(item.appointmentId);
+              _consultationController
+                  .getConsultationByPatientId(item.patientId);
+              _consultationController.appointId.value = item.appointmentId;
+              _clinicController.pageIndex.value = 7;
+            } else {
+              _clinicController.pageIndex.value = 5;
+            }
+          },
+        ),
+        DataCell(TableDataCell(text: HFormatter.formatStringDate(item.date))),
+        DataCell(TableDataCell(
+            text: HValidator.serviceIdValidation(item.serviceId).tr)),
+        DataCell(TableDataCell(text: item.mobile)),
+        DataCell(TableDataCell(text: item.referral ?? ' ')),
+        DataCell(
+            TableDataCell(text: item.unPaid == '0' ? 'Paid'.tr : item.unPaid)),
+        DataCell(
+          Center(
+            child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: CustomDropDownWidget(
+                  statusId: _appointmentController
+                      .getAppointmentStatus(item.appointmentId),
+                  onSelected: (value) {
+                    var appointment = _appointmentController.appointListByDate
+                        .firstWhere(
+                            (record) => record.id == item.appointmentId);
+                    var updatedItem = appointment.copyWith(
+                        statusId: value,
+                        date: HFormatter.formatStringDate(item.date,
+                            reversed: true));
+                    _appointmentController.updateAppointment(updatedItem);
+                  },
+                )),
+          ),
+        )
+      ],
+    );
   }
 
   @override

@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1023345209468",
+    "firebase_url": "https://ashrafyehiaclinic-default-rtdb.firebaseio.com",
+    "project_id": "ashrafyehiaclinic",
+    "storage_bucket": "ashrafyehiaclinic.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1023345209468:android:1fc86b8d09ce4573c6d9f9",
+        "android_client_info": {
+          "package_name": "com.example.dr_ashraf_clinic"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmoBOQZcHrqzoFEYkN3_rrqW1Dh3e-yiE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

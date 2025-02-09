@@ -14,18 +14,7 @@
       }
     ]
   },
-  "flutter": {
-    "platforms": {
-      "dart": {
-        "lib/firebase_options.dart": {
-          "projectId": "ashrafyehiaclinic",
-          "configurations": {
-            "web": "1:1023345209468:web:0549262587251406c6d9f9"
-          }
-        }
-      }
-    }
-  },
+  "flutter":{"platforms":{"android":{"default":{"projectId":"ashrafyehiaclinic","appId":"1:1023345209468:android:1fc86b8d09ce4573c6d9f9","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"ashrafyehiaclinic","appId":"1:1023345209468:ios:8a5ea496b7d8fd67c6d9f9","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"ashrafyehiaclinic","configurations":{"android":"1:1023345209468:android:1fc86b8d09ce4573c6d9f9","ios":"1:1023345209468:ios:8a5ea496b7d8fd67c6d9f9","web":"1:1023345209468:web:0549262587251406c6d9f9"}}}}},
   "database": {
     "rules": "database.rules.json"
   }

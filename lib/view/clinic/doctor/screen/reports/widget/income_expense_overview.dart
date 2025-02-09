@@ -55,7 +55,8 @@ class IncomeExpenseOverview extends StatelessWidget {
                                           reportsController
                                               .incomeExpenseOverview.length) {
                                     return SideTitleWidget(
-                                      axisSide: meta.axisSide,
+                                      meta: meta,
+                                      // axisSide: meta.axisSide,
                                       child: Text(reportsController
                                           .incomeExpenseOverview[index].period),
                                     );
