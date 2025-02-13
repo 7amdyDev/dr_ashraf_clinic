@@ -190,3 +190,68 @@ class MedicineModel {
         json.map((medicine) => MedicineModel.fromJson(medicine)));
   }
 }
+
+class ExaminationModel {
+  String? key;
+  String name;
+  ExaminationModel({
+    required this.name,
+    this.key,
+  });
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+    };
+  }
+
+  factory ExaminationModel.fromJson(dynamic map) {
+    return ExaminationModel(
+      name: map['name'],
+      key: map['key'],
+    );
+  }
+  static List<ExaminationModel> listFromJson(dynamic json) {
+    return List<ExaminationModel>.from(
+        json.map((test) => ExaminationModel.fromJson(test)));
+  }
+}
+
+class ExaminationsResultModel {
+  int? id;
+  int consultationId;
+  String name;
+  String? result;
+  String? notes;
+
+  ExaminationsResultModel({
+    this.id,
+    required this.consultationId,
+    required this.name,
+    this.result,
+    this.notes,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'consultation_id': consultationId,
+      'name': name,
+      'result': result,
+      'notes': notes,
+    };
+  }
+
+  factory ExaminationsResultModel.fromJson(dynamic map) {
+    return ExaminationsResultModel(
+      id: map['id'],
+      consultationId: map['consultation_id'],
+      name: map['name'],
+      result: map['result'],
+      notes: map['notes'],
+    );
+  }
+  static List<ExaminationsResultModel> listFromJson(dynamic json) {
+    return List<ExaminationsResultModel>.from(
+        json.map((result) => ExaminationsResultModel.fromJson(result)));
+  }
+}

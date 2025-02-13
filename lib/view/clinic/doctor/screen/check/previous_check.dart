@@ -2,6 +2,7 @@ import 'package:dr_ashraf_clinic/controller/consultation_controller.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
 import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/diagnosis_table_widget.dart';
+import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/examination_table_widget.dart';
 import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/prescription_table_widget.dart';
 import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/previous_check_table.dart';
 import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/symptoms_table_widget.dart';
@@ -47,19 +48,32 @@ class PreviousCheck extends StatelessWidget {
                         const SizedBox(
                           height: HSizes.spaceBtwItems,
                         ),
+                        ExaminationTableWidget(
+                          width: width,
+                          examainationList:
+                              consultationController.prvCheckExaminationList,
+                          previousCheck: true,
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
                         DiagnosisTableWidget(
                           width: width,
                           diagnosisList:
                               consultationController.prvCheckDiagnosisList,
                           previousCheck: true,
                         ),
+                        const SizedBox(
+                          height: HSizes.spaceBtwItems,
+                        ),
+                        PrescriptionTableWidget(
+                          width: width,
+                          prescriptionList:
+                              consultationController.prvCheckPrescriptionList,
+                          previousCheck: true,
+                        ),
                       ],
-                    ),
-                    PrescriptionTableWidget(
-                      width: width,
-                      prescriptionList:
-                          consultationController.prvCheckPrescriptionList,
-                      previousCheck: true,
                     ),
                   ],
                 ),

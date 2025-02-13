@@ -5,6 +5,8 @@ import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
 import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/diagnosis_data_input.dart';
 import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/diagnosis_table_widget.dart';
 import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/doctor_finance_dialog.dart';
+import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/examination_data_input.dart';
+import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/examination_table_widget.dart';
 import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/prescription_data_input.dart';
 import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/prescription_table_widget.dart';
 import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/print_rouchete.dart';
@@ -21,7 +23,7 @@ class NewCheckPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //  var screenWidth = HelperFunctions.clinicPagesWidth();
-    var width = HelperFunctions.clinicPagesWidth() / 4.5;
+    var width = HelperFunctions.clinicPagesWidth() / 3;
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -39,14 +41,11 @@ class NewCheckPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     SymptomsDataInput(
-                      width: width,
+                      width: width / 1.5,
                     ),
-                    DiagnosisDataInput(
-                      width: width,
-                    ),
-                    PrescriptionDataInput(
-                      width: width,
-                    ),
+                    SymptomsTableWidget(
+                        width: width,
+                        symptomsList: consultationController.symptomsList),
                   ],
                 ),
                 const SizedBox(
@@ -56,12 +55,40 @@ class NewCheckPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    SymptomsTableWidget(
+                    ExaminationDataInput(
+                      width: width / 1.5,
+                    ),
+                    ExaminationTableWidget(
                         width: width,
-                        symptomsList: consultationController.symptomsList),
+                        examainationList:
+                            consultationController.examinationList),
+                  ],
+                ),
+                const SizedBox(
+                  height: HSizes.spaceBtwSections,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    DiagnosisDataInput(
+                      width: width / 1.5,
+                    ),
                     DiagnosisTableWidget(
                         width: width,
                         diagnosisList: consultationController.diagnosisList),
+                  ],
+                ),
+                const SizedBox(
+                  height: HSizes.spaceBtwSections,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    PrescriptionDataInput(
+                      width: width / 1.5,
+                    ),
                     PrescriptionTableWidget(
                       width: width,
                       prescriptionList: consultationController.prescriptionList,

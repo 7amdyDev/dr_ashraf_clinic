@@ -138,7 +138,11 @@ class AppTranslation extends Translations {
           'from_label': 'From',
           'to_label': 'To',
           'in_consult_label': 'In Consult',
-          'number_of_patient_label': 'Number of Patients'
+          'number_of_patient_label': 'Number of Patients',
+          'examinations_label': 'Examinations',
+          'examination_label': 'Examination',
+          'examination_name_label': 'Examination Name',
+          'result_label': 'Result',
         },
         'ar_EG': {
           'app_name': 'عيادات الدكتور أشرف يحيي',
@@ -278,7 +282,11 @@ class AppTranslation extends Translations {
           'expense_report_label': 'تقرير المصروفات',
           'from_label': 'من',
           'to_label': 'إلي',
-          'number_of_patient_label': 'عدد المرضي'
+          'number_of_patient_label': 'عدد المرضي',
+          'examinations_label': 'الفحوصات',
+          'examination_label': 'الفحص',
+          'examination_name_label': 'أسم الفحص',
+          'result_label': 'النتيجة',
         },
       };
 }

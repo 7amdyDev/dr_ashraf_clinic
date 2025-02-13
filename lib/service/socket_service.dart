@@ -1,11 +1,11 @@
 import 'package:dr_ashraf_clinic/utils/constants/api_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:socket_io_client/socket_io_client.dart' as io_socket;
 import 'auth_service.dart';
 
 class SocketService extends GetxService {
-  late IO.Socket socket;
+  late io_socket.Socket socket;
   final AuthService authService = AuthService();
 
   @override
@@ -16,7 +16,7 @@ class SocketService extends GetxService {
 
   Future<void> connectToSocket() async {
     await authService.login(clientId).then((onValue) {
-      socket = IO.io(apiUrl, <String, dynamic>{
+      socket = io_socket.io(apiUrl, <String, dynamic>{
         'transports': ['websocket'],
         'autoConnect': false,
         'auth': {

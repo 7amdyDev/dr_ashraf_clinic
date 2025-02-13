@@ -35,6 +35,11 @@ class ConsultationApi extends GetConnect {
   Future<Response<List<PrescriptionModel>>> getPrescripByConsultId(id) =>
       get('/prescription/consult/$id', decoder: PrescriptionModel.listFromJson);
 
+  Future<Response<List<ExaminationsResultModel>>> getExaminationByConsultId(
+          id) =>
+      get('/examination/consult/$id',
+          decoder: ExaminationsResultModel.listFromJson);
+
   Future<Response<SymptomsModel>> createSymptoms(SymptomsModel symptoms) =>
       post('/symptoms', symptoms.toMap(), decoder: SymptomsModel.fromJson);
 
@@ -46,9 +51,16 @@ class ConsultationApi extends GetConnect {
       post('/prescription', medicine.toMap(),
           decoder: PrescriptionModel.fromJson);
 
+  Future<Response<ExaminationsResultModel>> createExamination(
+          ExaminationsResultModel result) =>
+      post('/examination', result.toMap(),
+          decoder: ExaminationsResultModel.fromJson);
+
   Future<Response> removeSymptoms(int id) => delete('/symptoms/$id');
 
   Future<Response> removeDiagnosis(int id) => delete('/diagnosis/$id');
 
   Future<Response> removePrescription(int id) => delete('/prescription/$id');
+
+  Future<Response> removeExamination(int id) => delete('/examination/$id');
 }

@@ -96,14 +96,17 @@ class PrescriptionTableWidget extends StatelessWidget {
                                       fontSize: 14),
                                 ),
                               ),
-                              subtitle: Text(
-                                prescriptionList[index].dosage ?? '',
-                                //  textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                    fontFamily: 'NotoNaskh',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14),
-                              ),
+                              subtitle:
+                                  prescriptionList[index].dosage!.isNotEmpty
+                                      ? Text(
+                                          prescriptionList[index].dosage ?? '',
+                                          //  textAlign: TextAlign.center,
+                                          style: const TextStyle(
+                                              fontFamily: 'NotoNaskh',
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14),
+                                        )
+                                      : null,
                             ),
                           ),
                         ],

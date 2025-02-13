@@ -19,6 +19,8 @@ class ClinicController extends GetxController {
   RxList<ClinicId> clinicBranches = <ClinicId>[].obs;
   RxInt clinicId = 1.obs;
   RxList<MedicineModel> dbMedicineSearch = <MedicineModel>[].obs;
+  RxList<ExaminationModel> dbExaminationSearch = <ExaminationModel>[].obs;
+
   RxList<String> dosageSuggestion = <String>[].obs;
   final database = FirebaseDatabase.instance;
 
@@ -80,6 +82,38 @@ class ClinicController extends GetxController {
     }
   }
 
+  void addExaminationToDB(String name) {
+    if (name.isEmpty) {
+      return;
+    }
+    _addExaminationNameToDB(
+      'Examinations',
+      {'name': name},
+    ).then((onValue) {
+      dbExaminationSearch.clear();
+      dbExaminationSearch.add(ExaminationModel.fromJson(onValue));
+    });
+  }
+
+  Future<Map<String, dynamic>> _addExaminationNameToDB(
+      String path, Map<String, dynamic> data) async {
+    try {
+      // Push a new record to the specified path
+      DatabaseReference ref = database.ref(path).push();
+      await ref.set(data);
+      HelperFunctions.showSnackBar('Record Added Successfully');
+      // Return the added item along with its unique key
+      return {
+        'key': ref.key,
+        ...data,
+      };
+    } catch (e) {
+      // Handle any errors
+      debugPrint("Error adding record: $e");
+      return {};
+    }
+  }
+
   Future<void> updateFeeList(Fee fee) async {
     try {
       var response = await _clinicApi.updateFee(fee);
@@ -122,6 +156,30 @@ class ClinicController extends GetxController {
     }
   }
 
+  void searchExaminationDatabase(String query) async {
+    if (query.isEmpty) {
+      dbExaminationSearch.clear();
+      return;
+    }
+    database.databaseURL = dBUrl;
+    final DatabaseReference dbRef = database.ref().child('Examinations');
+
+    final snapshot = await dbRef.once();
+    final data = snapshot.snapshot.value as Map<dynamic, dynamic>?;
+
+    if (data != null && query.isNotEmpty) {
+      dbExaminationSearch.clear();
+      data.forEach((key, value) {
+        if (value['name'].toLowerCase().startsWith(query)) {
+          dbExaminationSearch.add(ExaminationModel(
+            name: value["name"],
+            key: key,
+          ));
+        }
+      });
+    }
+  }
+
   void getDosageSuggestionList() async {
     database.databaseURL = dBUrl;
     final DatabaseReference dbRef = database.ref().child('Dosage');
@@ -151,6 +209,18 @@ class ClinicController extends GetxController {
     database.databaseURL = dBUrl;
 
     final DatabaseReference reference = database.ref().child('Medicines/$key');
+    reference.remove().then((_) {
+      HelperFunctions.showSnackBar('Record Deleted Successfully');
+    }).catchError((error) {
+      //  debugPrint('Error removing user: $error');
+    });
+  }
+
+  void deleteExaminationFromDB(String key) {
+    database.databaseURL = dBUrl;
+
+    final DatabaseReference reference =
+        database.ref().child('Examinations/$key');
     reference.remove().then((_) {
       HelperFunctions.showSnackBar('Record Deleted Successfully');
     }).catchError((error) {

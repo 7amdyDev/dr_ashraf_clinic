@@ -11,10 +11,14 @@ class ConsultationController extends GetxController {
   RxList<SymptomsModel> symptomsList = <SymptomsModel>[].obs;
   RxList<DiagnosisModel> diagnosisList = <DiagnosisModel>[].obs;
   RxList<PrescriptionModel> prescriptionList = <PrescriptionModel>[].obs;
+  RxList<ExaminationsResultModel> examinationList =
+      <ExaminationsResultModel>[].obs;
   RxList<SymptomsModel> prvCheckSymptomsList = <SymptomsModel>[].obs;
   RxList<DiagnosisModel> prvCheckDiagnosisList = <DiagnosisModel>[].obs;
   RxList<PrescriptionModel> prvCheckPrescriptionList =
       <PrescriptionModel>[].obs;
+  RxList<ExaminationsResultModel> prvCheckExaminationList =
+      <ExaminationsResultModel>[].obs;
   RxInt patientId = 0.obs;
   RxInt consultId = 0.obs;
   RxInt appointId = 0.obs;
@@ -37,6 +41,7 @@ class ConsultationController extends GetxController {
     prvCheckSymptomsList.clear();
     prvCheckDiagnosisList.clear();
     prvCheckPrescriptionList.clear();
+    prvCheckExaminationList.clear();
   }
 
   void getConsultAllData({
@@ -46,10 +51,12 @@ class ConsultationController extends GetxController {
       getSymptomsList(consultId.value);
       getDiagnosisList(consultId.value);
       getPrescriptionList(consultId.value);
+      getExaminationList(consultId.value);
     } else {
       getSymptomsList(id, previous: true);
       getDiagnosisList(id, previous: true);
       getPrescriptionList(id, previous: true);
+      getExaminationList(id, previous: true);
     }
   }
 
@@ -174,6 +181,20 @@ class ConsultationController extends GetxController {
     }
   }
 
+  Future<void> addExamination(ExaminationsResultModel examination) async {
+    consultLoading.value = true;
+
+    try {
+      var response = await _consultationApi.createExamination(examination);
+      if (response.statusCode == 201) {
+        getExaminationList(consultId.value);
+        HelperFunctions.showSnackBar('added');
+      }
+    } finally {
+      consultLoading.value = false;
+    }
+  }
+
   Future<void> deleteSymptoms(int id) async {
     consultLoading.value = true;
 
@@ -216,6 +237,20 @@ class ConsultationController extends GetxController {
     }
   }
 
+  Future<void> deleteExamination(int id) async {
+    consultLoading.value = true;
+
+    try {
+      var response = await _consultationApi.removeExamination(id);
+      if (response.statusCode == 200) {
+        getExaminationList(consultId.value);
+        HelperFunctions.showSnackBar('Deleted');
+      }
+    } finally {
+      consultLoading.value = false;
+    }
+  }
+
   Future<void> getDiagnosisList(int id, {bool previous = false}) async {
     consultLoading.value = true;
     (previous) ? prvCheckDiagnosisList.clear() : diagnosisList.clear();
@@ -242,6 +277,22 @@ class ConsultationController extends GetxController {
         (previous)
             ? prvCheckPrescriptionList.value = response.body!
             : prescriptionList.value = response.body!;
+      }
+    } finally {
+      consultLoading.value = false;
+    }
+  }
+
+  Future<void> getExaminationList(int id, {bool previous = false}) async {
+    consultLoading.value = true;
+    (previous) ? prvCheckExaminationList.clear() : examinationList.clear();
+    try {
+      var response = await _consultationApi.getExaminationByConsultId(id);
+
+      if (response.statusCode == 200 && response.body != null) {
+        (previous)
+            ? prvCheckExaminationList.value = response.body!
+            : examinationList.value = response.body!;
       }
     } finally {
       consultLoading.value = false;
