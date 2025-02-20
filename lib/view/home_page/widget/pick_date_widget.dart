@@ -50,7 +50,8 @@ class PickDateWidget extends StatelessWidget {
                     surface: HColors.secondary,
                     onSurface: HColors.black,
                   ),
-                  dialogBackgroundColor: Colors.blue[900],
+                  dialogTheme:
+                      DialogThemeData(backgroundColor: Colors.blue[900]),
                 ),
                 child: child!,
               );

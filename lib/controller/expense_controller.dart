@@ -45,21 +45,6 @@ class ExpenseController extends GetxController {
     await getTotalDailyExpenses();
   }
 
-  // void startPeriodicUpdate() {
-  //   // Set the duration for the periodic execution
-  //   const duration = Duration(seconds: 2);
-
-  //   // Create a Timer that runs the function periodically
-  //   Timer.periodic(duration, (Timer timer) {
-  //     // You can add your periodic task logic here.
-  //     getExpensesList();
-  //     // Uncomment the following line to stop the timer after a certain condition is met
-  //     // if (someCondition) {
-  //     //   timer.cancel();
-  //     // }
-  //   });
-  // }
-
   Future<void> getExpensesByDate(DateTime date) async {
     (expensesLoading) {
       return;

@@ -135,8 +135,8 @@ class AppointmentController extends GetxController {
     if (date == null) {
       appointmentsLoading.value = true;
       try {
-        var response =
-            await _appointmentApi.getByDate(DateUtils.dateOnly(DateTime.now()));
+        var response = await _appointmentApi.getByDate(DateUtils.dateOnly(
+            DateTime.now().subtract(const Duration(hours: 2))));
         if (response.statusCode == 200 && response.body != null) {
           appointListByDate.clear();
           appointListByDate.addAll(response.body!);
@@ -150,7 +150,9 @@ class AppointmentController extends GetxController {
       scheduleByDate = true;
 
       // Check if the choosen date is today date to start to start the timer
-      if (date == DateUtils.dateOnly(DateTime.now())) {
+      if (date ==
+          DateUtils.dateOnly(DateTime.now())
+              .subtract(const Duration(hours: 2))) {
         scheduleByDate = false;
         //  startPeriodicUpdate();
       }

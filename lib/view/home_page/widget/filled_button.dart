@@ -16,7 +16,6 @@ class HFilledButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      iconAlignment: IconAlignment.end,
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
           disabledBackgroundColor: HColors.primaryBackground,

@@ -48,9 +48,9 @@ class HScheduleDataTable extends StatelessWidget {
                 source: _DataSource(data: searchResult),
                 rowsPerPage: searchResult.isEmpty
                     ? 1
-                    : searchResult.length < 8
+                    : searchResult.length < 30
                         ? searchResult.length
-                        : 8,
+                        : 30,
                 showEmptyRows: false,
               ),
             ),

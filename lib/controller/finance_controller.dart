@@ -118,7 +118,9 @@ class FinanceController extends GetxController {
       try {
         var response = await _assetApi.getAppointmentFinanceByDate(
             _clinicController.clinicId.value,
-            HFormatter.formatDate(DateTime.now(), reversed: true));
+            HFormatter.formatDate(
+                DateTime.now().subtract(const Duration(hours: 2)),
+                reversed: true));
         if (response.statusCode == 200 && response.body != null) {
           appointmentFinanceByDatelst.clear();
           appointmentFinanceByDatelst.addAll(response.body!);

@@ -20,22 +20,22 @@ import 'package:get/get.dart';
 class MyBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put(ExpenseApi());
-    Get.put(PatientApi());
-    Get.put(ConsultationApi());
-    Get.put(AppointmentApi());
-    Get.put(AssetApi());
-    Get.put(RevenueApi());
-    Get.put(ClinicApi());
-    Get.put(ClinicController());
-    Get.put(AuthController());
-    Get.put(ReportsApi());
-    Get.put(SocketService());
-    Get.lazyPut(() => AppointmentController());
-    Get.lazyPut(() => ExpenseController());
-    Get.lazyPut(() => FinanceController());
-    Get.lazyPut(() => PatientController());
-    Get.lazyPut(() => ConsultationController());
-    Get.lazyPut(() => ReportsController());
+    Get.put(ExpenseApi(), permanent: true);
+    Get.put(PatientApi(), permanent: true);
+    Get.put(ConsultationApi(), permanent: true);
+    Get.put(AppointmentApi(), permanent: true);
+    Get.put(AssetApi(), permanent: true);
+    Get.put(RevenueApi(), permanent: true);
+    Get.put(ClinicApi(), permanent: true);
+    Get.put(ClinicController(), permanent: true);
+    Get.put(AuthController(), permanent: true);
+    Get.put(ReportsApi(), permanent: true);
+    Get.put(SocketService(), permanent: true);
+    Get.lazyPut(() => AppointmentController(), fenix: true);
+    Get.lazyPut(() => ExpenseController(), fenix: true);
+    Get.lazyPut(() => FinanceController(), fenix: true);
+    Get.lazyPut(() => PatientController(), fenix: true);
+    Get.lazyPut(() => ConsultationController(), fenix: true);
+    Get.lazyPut(() => ReportsController(), fenix: true);
   }
 }
