@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:dr_ashraf_clinic/controller/consultation_controller.dart';
 import 'package:dr_ashraf_clinic/model/consultation_model.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
-import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/check/widget/doctor_text_add.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/drop_down_menu.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/label_text_widget.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -29,6 +28,11 @@ class _ExaminationDataInputState extends State<ExaminationDataInput> {
   TextEditingController examinationEditingController = TextEditingController();
   TextEditingController resultController = TextEditingController();
   bool show = false;
+
+  // Define FocusNodes for the TextFields
+  final FocusNode examinationFocusNode = FocusNode();
+  final FocusNode resultFocusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -48,61 +52,108 @@ class _ExaminationDataInputState extends State<ExaminationDataInput> {
       child: Column(
         children: [
           LabelTextWidget(text: 'examinations_label'.tr),
-          DoctorTextAddWidget(
-            textFontSize: 16,
-            onChanged: _onSearchChanged,
-            textEditingController: examinationEditingController,
-            label: 'examination_label'.tr,
-            onPressed: () {
-              addExamination();
-            },
-          ),
-          Stack(
-            alignment: Alignment.center,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              SizedBox(
-                height: 100,
-                child: _buildResultsList(),
-              ),
-              show
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Text(
-                                'result_label'.tr,
-                                style: const TextStyle(
-                                  fontFamily: 'NotoNaskh',
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 200,
-                            child: TextField(
-                              decoration: const InputDecoration(
-                                  labelStyle: TextStyle(
-                                fontSize: 18,
-                                fontFamily: 'NotoNaskh',
-                                fontWeight: FontWeight.bold,
-                              )),
-                              onChanged: (value) =>
-                                  resultController.text = value,
-                              onSubmitted: (value) => addExamination(),
-                            ),
-                          )
-                        ])
-                  : const SizedBox(
-                      height: 105,
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        'examination_label'.tr,
+                        style: const TextStyle(
+                          fontFamily: 'NotoNaskh',
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
+                  ),
+                  SizedBox(
+                    width: widget.width / 2.5,
+                    height: 50,
+                    child: TextField(
+                        controller: examinationEditingController,
+                        textAlign: TextAlign.center,
+                        decoration: const InputDecoration(
+                            labelStyle: TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'NotoNaskh',
+                          fontWeight: FontWeight.bold,
+                        )),
+                        onChanged: _onSearchChanged,
+                        focusNode:
+                            examinationFocusNode, // Assign the focus node
+                        textInputAction:
+                            TextInputAction.next, // Move to the next field
+
+                        onSubmitted: (_) {
+                          clinicController.dbExaminationSearch.clear();
+                          _searchQuery = '';
+                          setState(() {
+                            show = true;
+                          });
+                          // Move focus to the result field when the user submits
+                          FocusScope.of(context).requestFocus(resultFocusNode);
+                        }),
+                  ),
+                  Stack(alignment: Alignment.center, children: [
+                    SizedBox(
+                      height: 100,
+                      width: widget.width / 2.5,
+                      child: _buildResultsList(),
+                    ),
+                  ])
+                ],
+              ),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        'result_label'.tr,
+                        style: const TextStyle(
+                          fontFamily: 'NotoNaskh',
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: widget.width / 2.5,
+                    height: 150,
+                    child: TextFormField(
+                      controller: resultController,
+                      decoration: InputDecoration(
+                          prefixIcon: IconButton(
+                            icon: Icon(
+                              Icons.add_circle,
+                              color: HColors.primary,
+                            ),
+                            onPressed: () {
+                              addExamination();
+                            },
+                          ),
+                          labelStyle: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'NotoNaskh',
+                            fontWeight: FontWeight.bold,
+                          )),
+
+                      // onChanged: (value) => resultController.text = value,
+                      onFieldSubmitted: (value) => addExamination(),
+                      focusNode: resultFocusNode,
+                    ),
+                  )
+                ],
+              ),
             ],
-          )
+          ),
         ],
       ),
     );
@@ -113,13 +164,13 @@ class _ExaminationDataInputState extends State<ExaminationDataInput> {
         resultController.text.isNotEmpty) {
       ExaminationsResultModel record = ExaminationsResultModel(
         consultationId: consultationController.consultId.value,
-        name: examinationEditingController.text,
+        name: examinationEditingController.text.toUpperCase(),
         result: resultController.text,
       );
       consultationController.addExamination(record);
       examinationEditingController.clear();
       resultController.clear();
-
+      FocusScope.of(context).requestFocus(examinationFocusNode);
       setState(() {
         show = false;
       });
@@ -127,10 +178,6 @@ class _ExaminationDataInputState extends State<ExaminationDataInput> {
   }
 
   void _onSearchChanged(String query) {
-    setState(() {
-      show = false;
-    });
-
     if (_debounce?.isActive ?? false) _debounce!.cancel();
 
     _debounce = Timer(const Duration(milliseconds: 300), () {
@@ -159,6 +206,7 @@ class _ExaminationDataInputState extends State<ExaminationDataInput> {
               setState(() {
                 show = true;
               });
+              FocusScope.of(context).requestFocus(resultFocusNode);
             },
           );
         },

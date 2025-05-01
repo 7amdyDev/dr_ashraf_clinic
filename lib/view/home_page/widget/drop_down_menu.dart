@@ -15,11 +15,12 @@ class HDropDownMenu extends StatefulWidget {
 
 final authController = Get.find<AuthController>();
 final clinicController = Get.find<ClinicController>();
+final FocusNode passwordFocusNode = FocusNode();
 
 class _HDropDownMenuState extends State<HDropDownMenu> {
   String _selectedItem = 'Smouha';
   TextEditingController password = TextEditingController();
-  int? selectedBranch;
+  int selectedBranch = 1;
   bool showBranches = false;
   @override
   Widget build(BuildContext context) {
@@ -86,6 +87,10 @@ class _HDropDownMenuState extends State<HDropDownMenu> {
                 ].map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
+                    onTap: () {
+                      // Move focus to the result field when the user submits
+                      FocusScope.of(context).requestFocus(passwordFocusNode);
+                    },
                     child: Center(child: Text(value)),
                   );
                 }).toList(),
@@ -96,6 +101,7 @@ class _HDropDownMenuState extends State<HDropDownMenu> {
               TextField(
                 obscureText: true,
                 controller: password,
+                focusNode: passwordFocusNode,
                 onSubmitted: (value) {
                   authController.signInWithEmailAndPassword(
                       _selectedItem, password.text);

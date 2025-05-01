@@ -16,8 +16,9 @@ class ExpenseApi extends GetConnect {
   Future<Response<ExpenseModel>> getById(int id) =>
       get('/expenses/$id', decoder: ExpenseModel.fromJson);
 
-  Future<Response<TotalExpenses>> getTotalDailyExpenses(int clinicId) =>
-      get('/expenses/totalDailyExpenses/$clinicId',
+  Future<Response<TotalExpenses>> getTotalDailyExpenses(
+          int clinicId, String dateTime) =>
+      get('/expenses/totalDailyExpenses/$clinicId/$dateTime',
           decoder: TotalExpenses.fromJson);
 
   Future<Response<List<ExpenseModel>>> getByDate(int clinicId, DateTime date) =>

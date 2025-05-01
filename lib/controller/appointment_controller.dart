@@ -22,7 +22,6 @@ class AppointmentController extends GetxController {
   RxInt serviceId = 1.obs;
   RxBool paid = false.obs;
   RxBool appointmentsLoading = false.obs;
-  bool scheduleByDate = false;
 
   @override
   void onInit() {
@@ -56,31 +55,6 @@ class AppointmentController extends GetxController {
       });
     });
   }
-
-  // Future<void> startPeriodicUpdate() async {
-  //   // Set the duration for the periodic execution
-  //   const duration = Duration(seconds: 2);
-
-  //   // Create a Timer that runs the function periodically
-  //   final timer = Timer.periodic(duration, (timer) {
-  //     // You can add your periodic task logic here.
-  //     if (!scheduleByDate) {
-  //       getAppointsByDate().then((_) {
-  //         _financeController.getAppointsFinanceByDate();
-  //       });
-  //     }
-
-  //     // Uncomment the following line to stop the timer after a certain condition is met
-  //     if (scheduleByDate) {
-  //       timer.cancel();
-  //       debugPrint('Timer Cancel');
-  //     }
-  //   });
-  //   while (timer.isActive) {
-  //     // waiting for the same time duration to check if timer is still active after it
-  //     await Future.delayed(const Duration(seconds: 2));
-  //   }
-  // }
 
   Future<void> addAppointment(AppointmentModel appointment) async {
     appointmentsLoading.value = true;
@@ -127,51 +101,23 @@ class AppointmentController extends GetxController {
     }
   }
 
-  Future<void> getAppointsByDate({DateTime? date}) async {
+  Future<void> getAppointsByDate() async {
     (appointmentsLoading) {
       return;
     };
 
-    if (date == null) {
-      appointmentsLoading.value = true;
-      try {
-        var response = await _appointmentApi.getByDate(DateUtils.dateOnly(
-            DateTime.now().subtract(const Duration(hours: 2))));
-        if (response.statusCode == 200 && response.body != null) {
-          appointListByDate.clear();
-          appointListByDate.addAll(response.body!);
-        }
-      } finally {
-        appointmentsLoading.value = false;
+    appointmentsLoading.value = true;
+    try {
+      var response = await _appointmentApi
+          .getByDate(DateUtils.dateOnly(_clinicController.selectedDate.value));
+      if (response.statusCode == 200 && response.body != null) {
+        appointListByDate.clear();
+        appointListByDate.addAll(response.body!);
       }
-    } else {
-      appointmentsLoading.value = true;
-
-      scheduleByDate = true;
-
-      // Check if the choosen date is today date to start to start the timer
-      if (date ==
-          DateUtils.dateOnly(DateTime.now())
-              .subtract(const Duration(hours: 2))) {
-        scheduleByDate = false;
-        //  startPeriodicUpdate();
-      }
-      try {
-        var response = await _appointmentApi.getByDate(date);
-
-        if (response.statusCode == 200 && response.body != null) {
-          appointListByDate.clear();
-          appointListByDate.addAll(response.body!);
-        }
-      } finally {
-        appointmentsLoading.value = false;
-      }
+    } finally {
+      appointmentsLoading.value = false;
     }
   }
-
-  // String getAppointmentDateById(int appId) {
-  //   return appointmentlst.firstWhere((element) => element.id == appId).date;
-  // }
 
   Future<AppointmentModel> getAppointmentById(int appId) async {
     appointmentsLoading.value = true;

@@ -1,4 +1,5 @@
 import 'package:dr_ashraf_clinic/view/home_page/widget/copyrights_widget.dart';
+import 'package:dr_ashraf_clinic/view/home_page/widget/drop_down_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dr_ashraf_clinic/controller/auth_controller.dart';
@@ -21,7 +22,9 @@ class ReceptionPage extends StatelessWidget {
     controller.getOnlineReservationData();
     return Obx(() => authController.user.value != null
         ? Scaffold(
-            backgroundColor: HColors.secondary,
+            backgroundColor: !clinicController.scheduleByDate.value
+                ? HColors.secondary
+                : HColors.primary.withValues(alpha: 0.2),
             body: Center(
               heightFactor: 1,
               child: Padding(

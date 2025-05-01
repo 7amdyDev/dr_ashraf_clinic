@@ -29,26 +29,30 @@ class ReceptionSchedulePage extends StatelessWidget {
         const SizedBox(
           height: HSizes.spaceBtwSections,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            HFilledButton(
-                text: 'today_label'.tr,
-                onPressed: () {
-                  appointmentController.scheduleByDate = false;
-                  appointmentController.getAppointsByDate().then((_) {
-                    financeController.getAppointsFinanceByDate();
-                  });
-                  //  appointmentController.startPeriodicUpdate();
-                }),
-            HFilledButton(
-                text: 'choose_date_label'.tr,
-                onPressed: () {
-                  datePickerDialog(
-                      context, financeController, appointmentController);
-                }),
-          ],
-        ),
+        Obx(() => Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                HFilledButton(
+                    text: 'today_label'.tr,
+                    isActivated: !clinicController.scheduleByDate.value,
+                    onPressed: () {
+                      clinicController.selectedDate.value =
+                          DateTime.now().subtract(const Duration(hours: 2));
+                      clinicController.scheduleByDate.value = false;
+                      appointmentController.getAppointsByDate().then((_) {
+                        financeController.getAppointsFinanceByDate();
+                      });
+                      //  appointmentController.startPeriodicUpdate();
+                    }),
+                HFilledButton(
+                    text: 'choose_date_label'.tr,
+                    isActivated: clinicController.scheduleByDate.value,
+                    onPressed: () {
+                      datePickerDialog(context, financeController,
+                          appointmentController, clinicController);
+                    }),
+              ],
+            )),
         Expanded(
           child: SingleChildScrollView(
             primary: true,
@@ -75,8 +79,11 @@ class ReceptionSchedulePage extends StatelessWidget {
   }
 }
 
-void datePickerDialog(context, FinanceController controller,
-    AppointmentController appointmentController) {
+void datePickerDialog(
+    context,
+    FinanceController controller,
+    AppointmentController appointmentController,
+    ClinicController clinicController) {
   final Future<DateTime?> picked = showDatePicker(
     context: context,
     currentDate: DateTime.now(),
@@ -99,8 +106,9 @@ void datePickerDialog(context, FinanceController controller,
     },
   );
   picked.then((onValue) {
-    appointmentController.getAppointsByDate(date: onValue).then((_) {
-      controller.getAppointsFinanceByDate(date: onValue);
+    clinicController.selectedDate.value = onValue!;
+    appointmentController.getAppointsByDate().then((_) {
+      controller.getAppointsFinanceByDate();
     });
     // dateController.text = HFormatter.formatDate(onValue);
   });

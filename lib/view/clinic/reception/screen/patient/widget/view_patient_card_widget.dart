@@ -34,7 +34,7 @@ class _ViewPatientCardWidgetState extends State<ViewPatientCardWidget> {
   TextEditingController allergies = TextEditingController();
   TextEditingController pastMedicalCondition = TextEditingController();
   TextEditingController notes = TextEditingController();
-  int gender = 1;
+  int? gender;
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +116,7 @@ class _ViewPatientCardWidgetState extends State<ViewPatientCardWidget> {
                       width: width / 9,
                       label: 'gender_label'.tr,
                       child: GenderDropdownMenu(
+                        selectedValue: gender.toString(),
                         onSelected: (value) {
                           gender = int.parse(value);
                         },
@@ -236,7 +237,7 @@ class _ViewPatientCardWidgetState extends State<ViewPatientCardWidget> {
                                 HFormatter.convertArabicToEnglishNumbers(
                                     age.text)),
                             address: address.text,
-                            gender: gender,
+                            gender: gender!,
                             pastMedicalHistory: pastMedicalCondition.text,
                             familyMedicalHistory: familyHistory.text,
                             medicine: medicine.text,

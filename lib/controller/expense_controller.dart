@@ -1,9 +1,9 @@
 import 'dart:async';
-
 import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/db/expense_api.dart';
 import 'package:dr_ashraf_clinic/model/expense_model.dart';
 import 'package:dr_ashraf_clinic/service/socket_service.dart';
+import 'package:dr_ashraf_clinic/utils/formatters/formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,6 +18,9 @@ class ExpenseController extends GetxController {
 
   @override
   void onInit() {
+    ever(_clinicController.selectedDate, (value) {
+      getExpensesList();
+    });
     getExpenseEvents();
     super.onInit();
   }
@@ -41,18 +44,19 @@ class ExpenseController extends GetxController {
   }
 
   Future<void> getExpensesList() async {
-    await getExpensesByDate(DateUtils.dateOnly(DateTime.now()));
+    await getExpensesByDate();
     await getTotalDailyExpenses();
   }
 
-  Future<void> getExpensesByDate(DateTime date) async {
+  Future<void> getExpensesByDate() async {
     (expensesLoading) {
       return;
     };
     expensesLoading.value = true;
     try {
-      var response =
-          await _expenseApi.getByDate(_clinicController.clinicId.value, date);
+      var response = await _expenseApi.getByDate(
+          _clinicController.clinicId.value,
+          DateUtils.dateOnly(_clinicController.selectedDate.value));
       if (response.statusCode == 200) {
         expenseslst.value = response.body!;
       }
@@ -67,8 +71,10 @@ class ExpenseController extends GetxController {
     };
     expensesLoading.value = true;
     try {
-      var response = await _expenseApi
-          .getTotalDailyExpenses(_clinicController.clinicId.value);
+      var response = await _expenseApi.getTotalDailyExpenses(
+          _clinicController.clinicId.value,
+          HFormatter.formatDate(_clinicController.selectedDate.value,
+              reversed: true));
       if (response.statusCode == 200 && response.body != null) {
         totalDailyExpenses.value = response.body!.total!;
       } else {

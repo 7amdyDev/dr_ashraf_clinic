@@ -9,17 +9,21 @@ class HFilledButton extends StatelessWidget {
     required this.text,
     this.onPressed,
     this.fontSize = 28,
+    this.isActivated = true,
   });
   final String text;
   final VoidCallback? onPressed;
   final double fontSize;
+  final bool isActivated;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-          disabledBackgroundColor: HColors.primaryBackground,
-          disabledForegroundColor: HColors.primary,
+          backgroundColor: isActivated ? HColors.primary : HColors.darkerGrey,
+          // foregroundColor: isActivated ? HColors.white : HColors.darkerGrey,
+          //  disabledBackgroundColor: HColors.primaryBackground,
+          //  disabledForegroundColor: HColors.primary,
           padding: const EdgeInsets.all(12),
           elevation: 5),
       child: Text(text.tr,

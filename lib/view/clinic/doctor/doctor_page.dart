@@ -21,7 +21,9 @@ class DoctorPage extends StatelessWidget {
     // double maxPageWidth = HSizes.maxPageWidth;
     return Obx(() => authController.user.value != null
         ? Scaffold(
-            backgroundColor: HColors.secondary,
+            backgroundColor: !controller.scheduleByDate.value
+                ? HColors.secondary
+                : HColors.primary.withValues(alpha: 0.2),
             body: Center(
               heightFactor: 1,
               child: Padding(

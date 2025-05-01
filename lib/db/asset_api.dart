@@ -35,11 +35,14 @@ class AssetApi extends GetConnect {
       get('/assets/appointFinanceByDate/$clinicId/$date',
           decoder: AppointmentFinance.listFromJson);
 
-  Future<Response<List<AssetAccountsModel>>> getDailyIncomeList(int clinicId) =>
-      get('/assets/dailyIncomeList/$clinicId',
+  Future<Response<List<AssetAccountsModel>>> getDailyIncomeList(
+          int clinicId, String dateTime) =>
+      get('/assets/dailyIncomeList/$clinicId/$dateTime',
           decoder: AssetAccountsModel.listFromJson);
-  Future<Response<TotalIncome>> getTotalDailyIncome(clinicId) =>
-      get('/assets/totalDailyIncome/$clinicId', decoder: TotalIncome.fromJson);
+  Future<Response<TotalIncome>> getTotalDailyIncome(
+          clinicId, String dateTime) =>
+      get('/assets/totalDailyIncome/$clinicId/$dateTime',
+          decoder: TotalIncome.fromJson);
   Future<Response<AssetAccountsModel>> create(AssetAccountsModel asset) =>
       post('/assets', asset.toJson(), decoder: AssetAccountsModel.fromJson);
 

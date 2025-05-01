@@ -36,7 +36,6 @@ class FinanceController extends GetxController {
   final _clinicController = Get.find<ClinicController>();
   final _assetApi = Get.find<AssetApi>();
   final _socketService = Get.find<SocketService>();
-
 // ------------ Account Assets ----------- //
 
   void onPatientAccountListUpdated({int? appointId}) async {
@@ -57,7 +56,9 @@ class FinanceController extends GetxController {
   void onInit() {
     getCash();
     patientChanged();
-
+    ever(_clinicController.selectedDate, (value) {
+      getFinanceList();
+    });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getAssetEvents();
     });
@@ -97,8 +98,10 @@ class FinanceController extends GetxController {
     finaceLoading.value = true;
 
     try {
-      var response =
-          await _assetApi.getDailyIncomeList(_clinicController.clinicId.value);
+      var response = await _assetApi.getDailyIncomeList(
+          _clinicController.clinicId.value,
+          HFormatter.formatDate(_clinicController.selectedDate.value,
+              reversed: true));
       if (response.statusCode == 200) {
         debugPrint(response.body.toString());
         assetDailyIncomelst.clear();
@@ -112,37 +115,19 @@ class FinanceController extends GetxController {
   }
 
 // reception page schedueled table
-  Future<void> getAppointsFinanceByDate({DateTime? date}) async {
-    if (date == null) {
-      finaceLoading.value = true;
-      try {
-        var response = await _assetApi.getAppointmentFinanceByDate(
-            _clinicController.clinicId.value,
-            HFormatter.formatDate(
-                DateTime.now().subtract(const Duration(hours: 2)),
-                reversed: true));
-        if (response.statusCode == 200 && response.body != null) {
-          appointmentFinanceByDatelst.clear();
-          appointmentFinanceByDatelst.addAll(response.body!);
-        }
-      } finally {
-        finaceLoading.value = false;
+  Future<void> getAppointsFinanceByDate() async {
+    finaceLoading.value = true;
+    try {
+      var response = await _assetApi.getAppointmentFinanceByDate(
+          _clinicController.clinicId.value,
+          HFormatter.formatDate(_clinicController.selectedDate.value,
+              reversed: true));
+      if (response.statusCode == 200 && response.body != null) {
+        appointmentFinanceByDatelst.clear();
+        appointmentFinanceByDatelst.addAll(response.body!);
       }
-    } else {
-      finaceLoading.value = true;
-
-      try {
-        var response = await _assetApi.getAppointmentFinanceByDate(
-            _clinicController.clinicId.value,
-            HFormatter.formatDate(date, reversed: true));
-
-        if (response.statusCode == 200 && response.body != null) {
-          appointmentFinanceByDatelst.clear();
-          appointmentFinanceByDatelst.addAll(response.body!);
-        }
-      } finally {
-        finaceLoading.value = false;
-      }
+    } finally {
+      finaceLoading.value = false;
     }
   }
 
@@ -380,8 +365,10 @@ class FinanceController extends GetxController {
     dailyIncomeLoading.value = true;
 
     try {
-      var response =
-          await _assetApi.getTotalDailyIncome(_clinicController.clinicId.value);
+      var response = await _assetApi.getTotalDailyIncome(
+          _clinicController.clinicId.value,
+          HFormatter.formatDate(_clinicController.selectedDate.value,
+              reversed: true));
       debugPrint(response.body.toString());
       if (response.statusCode == 200) {
         dailyIncome.value = response.body?.total ?? 0;

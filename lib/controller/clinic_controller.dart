@@ -20,7 +20,9 @@ class ClinicController extends GetxController {
   RxInt clinicId = 1.obs;
   RxList<MedicineModel> dbMedicineSearch = <MedicineModel>[].obs;
   RxList<ExaminationModel> dbExaminationSearch = <ExaminationModel>[].obs;
-
+  Rx<DateTime> selectedDate =
+      DateTime.now().subtract(const Duration(hours: 2)).obs;
+  RxBool scheduleByDate = false.obs;
   RxList<String> dosageSuggestion = <String>[].obs;
   final database = FirebaseDatabase.instance;
 
@@ -28,7 +30,18 @@ class ClinicController extends GetxController {
   void onInit() {
     super.onInit();
     getClinicData();
+    dateChanged();
     feeChanged();
+  }
+
+  void dateChanged() {
+    ever(selectedDate, (value) {
+      if (DateTime.now().subtract(const Duration(hours: 2)) != value) {
+        scheduleByDate.value = true;
+      } else {
+        scheduleByDate.value = false;
+      }
+    });
   }
 
   void getOnlineReservationData() {

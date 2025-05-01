@@ -4,8 +4,9 @@ import 'package:get/get.dart';
 
 class GenderDropdownMenu extends StatefulWidget {
   final Function(String) onSelected; // Callback for selection change
-
-  const GenderDropdownMenu({super.key, required this.onSelected});
+  final String? selectedValue; // Optional initial value
+  const GenderDropdownMenu(
+      {super.key, required this.onSelected, this.selectedValue});
 
   @override
   State<GenderDropdownMenu> createState() => _MyDropdownState();
@@ -22,7 +23,7 @@ class _MyDropdownState extends State<GenderDropdownMenu> {
         fontSize: 16,
         fontWeight: FontWeight.bold,
       ),
-      value: _selectedValue, // Currently selected value
+      value: widget.selectedValue ?? _selectedValue, // Currently selected value
       items: [
         DropdownMenuItem<String>(
           value: '1',

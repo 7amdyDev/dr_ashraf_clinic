@@ -1,3 +1,4 @@
+import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
 import 'package:dr_ashraf_clinic/controller/expense_controller.dart';
 import 'package:dr_ashraf_clinic/model/expense_model.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
@@ -25,6 +26,7 @@ class _ExpensesTableState extends State<ExpensesTable> {
   @override
   Widget build(BuildContext context) {
     final expenseController = Get.find<ExpenseController>();
+    final clinicController = Get.find<ClinicController>();
     final List<ExpenseModel> searchResult = expenseController.expenseslst;
 
     return SingleChildScrollView(
@@ -65,23 +67,25 @@ class _ExpensesTableState extends State<ExpensesTable> {
           const SizedBox(
             height: HSizes.spaceBtwItems,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              expenseId != null
-                  ? HFilledButton(
-                      text: 'delete_button',
-                      fontSize: 22,
-                      onPressed: () {
-                        expenseController.removeExpense(expenseId!);
-                        setState(() {
-                          expenseId = null;
-                        });
-                      },
-                    )
-                  : const SizedBox(),
-            ],
-          ),
+          !clinicController.scheduleByDate.value
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    expenseId != null
+                        ? HFilledButton(
+                            text: 'delete_button',
+                            fontSize: 22,
+                            onPressed: () {
+                              expenseController.removeExpense(expenseId!);
+                              setState(() {
+                                expenseId = null;
+                              });
+                            },
+                          )
+                        : const SizedBox(),
+                  ],
+                )
+              : const SizedBox(),
           const SizedBox(
             height: HSizes.spaceBtwItems,
           )
