@@ -136,7 +136,7 @@ class HelperFunctions {
     return drawerWidth;
   }
 
-  static showSnackBar(String message) {
+  static void showSnackBar(String message) {
     Get.snackbar(
       message,
       '',

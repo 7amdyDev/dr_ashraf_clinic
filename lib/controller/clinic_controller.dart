@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 class ClinicController extends GetxController {
   final _clinicApi = Get.find<ClinicApi>();
   RxList<OnlineReservModel> onlineReservData = <OnlineReservModel>[].obs;
+  RxList<ReferralModel> dbReferralsList = <ReferralModel>[].obs;
   RxInt pageIndex = 0.obs;
   RxList<ServicesId> servicesId = <ServicesId>[].obs;
   RxList<AccountsId> expensesId = <AccountsId>[].obs;
@@ -63,6 +64,23 @@ class ClinicController extends GetxController {
     });
   }
 
+  void getReferralsList() {
+    database.databaseURL = dBUrl;
+    final DatabaseReference reference = database.ref().child('Referrals');
+    reference.onValue.listen((DatabaseEvent event) {
+      final data = event.snapshot.value as Map?;
+      if (data != null) {
+        dbReferralsList.clear();
+        data.forEach((key, value) {
+          dbReferralsList.add(ReferralModel(
+            name: value["name"],
+            key: key,
+          ));
+        });
+      }
+    });
+  }
+
   void addMedicineToDB(String name) {
     if (name.isEmpty) {
       return;
@@ -95,6 +113,39 @@ class ClinicController extends GetxController {
     }
   }
 
+// add a new referral to the database
+  void addReferralToDB(String name) {
+    if (name.isEmpty) {
+      return;
+    }
+    _addReferralNameToDB(
+      'Referrals',
+      {'name': name},
+    ).then((onValue) {
+      getReferralsList();
+    });
+  }
+
+  Future<Map<String, dynamic>> _addReferralNameToDB(
+      String path, Map<String, dynamic> data) async {
+    try {
+      // Push a new record to the specified path
+      DatabaseReference ref = database.ref(path).push();
+      await ref.set(data);
+      HelperFunctions.showSnackBar('Record Added Successfully');
+      // Return the added item along with its unique key
+      return {
+        'key': ref.key,
+        ...data,
+      };
+    } catch (e) {
+      // Handle any errors
+      debugPrint("Error adding record: $e");
+      return {};
+    }
+  }
+
+// Add a new examination to the database
   void addExaminationToDB(String name) {
     if (name.isEmpty) {
       return;
@@ -229,6 +280,18 @@ class ClinicController extends GetxController {
     });
   }
 
+  void deleteReferralFromDB(String key) {
+    database.databaseURL = dBUrl;
+
+    final DatabaseReference reference = database.ref().child('Referrals/$key');
+    reference.remove().then((_) {
+      HelperFunctions.showSnackBar('Record Deleted Successfully');
+      getReferralsList();
+    }).catchError((error) {
+      //  debugPrint('Error removing user: $error');
+    });
+  }
+
   void deleteExaminationFromDB(String key) {
     database.databaseURL = dBUrl;
 
@@ -266,6 +329,8 @@ class ClinicController extends GetxController {
     getExpensesList();
 
     getServiceFees();
+
+    getReferralsList();
   }
 
   Future<void> getClinicBranches() async {

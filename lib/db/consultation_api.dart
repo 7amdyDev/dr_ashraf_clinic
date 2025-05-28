@@ -11,34 +11,41 @@ class ConsultationApi extends GetConnect {
   }
 
   Future<Response<ConsultationModel>> update(ConsultationModel consulation) =>
-      put('/consultation/${consulation.id}', consulation.toMap(),
-          decoder: ConsultationModel.fromJson);
+      put(
+        '/consultation/${consulation.id}',
+        consulation.toMap(),
+        decoder: ConsultationModel.fromJson,
+      );
 
   Future<Response<List<ConsultationModel>>> getConsultation() =>
       get('/consultation', decoder: ConsultationModel.listFromJson);
 
-  Future<Response<List<ConsultationModel>>> getConsultationByPatientId(id) =>
+  Future<Response<List<ConsultationModel>>> getConsultationByPatientId(
+    int id,
+  ) =>
       get('/consultation/patient/$id', decoder: ConsultationModel.listFromJson);
 
-  Future<Response<ConsultationModel>> getConsultationByAppointmentId(id) =>
+  Future<Response<ConsultationModel>> getConsultationByAppointmentId(int id) =>
       get('/consultation/appointment/$id', decoder: ConsultationModel.fromJson);
 
-  Future<Response<ConsultationModel>> getConsultationById(id) =>
+  Future<Response<ConsultationModel>> getConsultationById(int id) =>
       get('/consultation/$id', decoder: ConsultationModel.fromJson);
 
-  Future<Response<List<SymptomsModel>>> getSymptomsByConsultId(id) =>
+  Future<Response<List<SymptomsModel>>> getSymptomsByConsultId(int id) =>
       get('/symptoms/consult/$id', decoder: SymptomsModel.listFromJson);
 
-  Future<Response<List<DiagnosisModel>>> getDiagnosisByConsultId(id) =>
+  Future<Response<List<DiagnosisModel>>> getDiagnosisByConsultId(int id) =>
       get('/diagnosis/consult/$id', decoder: DiagnosisModel.listFromJson);
 
-  Future<Response<List<PrescriptionModel>>> getPrescripByConsultId(id) =>
+  Future<Response<List<PrescriptionModel>>> getPrescripByConsultId(int id) =>
       get('/prescription/consult/$id', decoder: PrescriptionModel.listFromJson);
 
   Future<Response<List<ExaminationsResultModel>>> getExaminationByConsultId(
-          id) =>
-      get('/examination/consult/$id',
-          decoder: ExaminationsResultModel.listFromJson);
+    int id,
+  ) => get(
+    '/examination/consult/$id',
+    decoder: ExaminationsResultModel.listFromJson,
+  );
 
   Future<Response<SymptomsModel>> createSymptoms(SymptomsModel symptoms) =>
       post('/symptoms', symptoms.toMap(), decoder: SymptomsModel.fromJson);
@@ -47,14 +54,20 @@ class ConsultationApi extends GetConnect {
       post('/diagnosis', diagnosis.toMap(), decoder: DiagnosisModel.fromJson);
 
   Future<Response<PrescriptionModel>> createPrescription(
-          PrescriptionModel medicine) =>
-      post('/prescription', medicine.toMap(),
-          decoder: PrescriptionModel.fromJson);
+    PrescriptionModel medicine,
+  ) => post(
+    '/prescription',
+    medicine.toMap(),
+    decoder: PrescriptionModel.fromJson,
+  );
 
   Future<Response<ExaminationsResultModel>> createExamination(
-          ExaminationsResultModel result) =>
-      post('/examination', result.toMap(),
-          decoder: ExaminationsResultModel.fromJson);
+    ExaminationsResultModel result,
+  ) => post(
+    '/examination',
+    result.toMap(),
+    decoder: ExaminationsResultModel.fromJson,
+  );
 
   Future<Response> removeSymptoms(int id) => delete('/symptoms/$id');
 

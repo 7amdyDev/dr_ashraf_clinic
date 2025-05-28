@@ -1,6 +1,6 @@
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/settings/widget/clinic_settings_widget.dart';
-import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/settings/widget/examination_settings_widget.dart';
+import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/settings/widget/referral_settings_widget.dart';
 import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/settings/widget/medicine_settings_widget.dart';
 import 'package:dr_ashraf_clinic/view/clinic/doctor/screen/settings/widget/user_change_password.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/page_label_widget.dart';
@@ -23,7 +23,7 @@ class SettingsTabbedPage extends StatelessWidget {
             tabs: const [
               Tab(
                 child: PageLabelWidget(
-                  text: 'examinations_label',
+                  text: 'referral_label',
                   fontSize: 22,
                 ),
               ),
@@ -50,7 +50,7 @@ class SettingsTabbedPage extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            ExaminationSettingsWidget(),
+            ReferallSettingsWidget(),
             MedicineSettingsWidget(),
             const ClinicSettingsWidget(),
             const UserChangePassword()

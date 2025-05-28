@@ -174,6 +174,7 @@ class AppointmentFinance {
   final String name;
   final String mobile;
   final String? referral;
+  final String? notes;
   AppointmentFinance({
     required this.appointmentId,
     required this.patientId,
@@ -186,6 +187,7 @@ class AppointmentFinance {
     required this.name,
     required this.mobile,
     this.referral,
+    this.notes,
   });
 
   Map<String, dynamic> toJson() {
@@ -201,6 +203,7 @@ class AppointmentFinance {
       'name': name,
       'mobile': mobile,
       'referral': referral,
+      'notes': notes,
     };
   }
 
@@ -216,6 +219,7 @@ class AppointmentFinance {
         clinicId: json['clinic_id'],
         name: json['name'],
         mobile: json['mobile'],
+        notes: json['notes'] ?? ' ',
         referral: json['referral'] ?? ' ');
   }
 

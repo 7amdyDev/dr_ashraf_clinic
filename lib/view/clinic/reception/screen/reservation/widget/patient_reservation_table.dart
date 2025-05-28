@@ -49,6 +49,7 @@ class _PatientReservationTableState extends State<PatientReservationTable> {
                     DataColumn(
                         label: TableColumnLabel(text: 'service_type_label')),
                     DataColumn(label: TableColumnLabel(text: 'referral_label')),
+                    DataColumn(label: TableColumnLabel(text: 'notes_label')),
                     DataColumn(label: TableColumnLabel(text: 'clinic_button')),
                     DataColumn(label: TableColumnLabel(text: 'status_label')),
                   ],
@@ -133,6 +134,7 @@ class _DataSource extends DataTableSource {
           DataCell(TableDataCell(
               text: HValidator.serviceIdValidation(item.serviceId).tr)),
           DataCell(TableDataCell(text: item.referral ?? ' ')),
+          DataCell(TableDataCell(text: item.notes ?? ' ')),
           DataCell(TableDataCell(
               text: clinicController.getClinicBranchName(
                   clinicBranchId: item.clinicId))),

@@ -1,27 +1,25 @@
 import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
-import 'package:dr_ashraf_clinic/model/consultation_model.dart';
+import 'package:dr_ashraf_clinic/model/clinic_models.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/table_column_label.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/schedule/widget/table_data_cell.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ExaminationSearchTable extends StatefulWidget {
-  const ExaminationSearchTable({super.key});
+class ReferralsTable extends StatefulWidget {
+  const ReferralsTable({super.key});
   @override
-  State<ExaminationSearchTable> createState() => _ExaminationSearchTableState();
+  State<ReferralsTable> createState() => _ReferralsTableState();
 }
 
-class _ExaminationSearchTableState extends State<ExaminationSearchTable> {
-  String? medicineKey;
+class _ReferralsTableState extends State<ReferralsTable> {
+  String? referralKey;
   final clinicController = Get.find<ClinicController>();
 
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.sizeOf(context).width;
-
-    final List<ExaminationModel> searchResult =
-        clinicController.dbExaminationSearch;
+    final List<ReferralModel> searchResult = clinicController.dbReferralsList;
     return Obx(() => SingleChildScrollView(
           child: Column(
             children: [
@@ -34,15 +32,13 @@ class _ExaminationSearchTableState extends State<ExaminationSearchTable> {
                   columnSpacing: 12,
                   columns: const [
                     DataColumn(label: TableColumnLabel(text: '#')),
-                    DataColumn(
-                        label:
-                            TableColumnLabel(text: 'examination_name_label')),
+                    DataColumn(label: TableColumnLabel(text: 'referral_label')),
                     DataColumn(label: TableColumnLabel(text: ' ')),
                   ],
                   source: _DataSource(
-                      data: searchResult, examinationKey: medicineKey, (value) {
+                      data: searchResult, referralKey: referralKey, (value) {
                     setState(() {
-                      medicineKey = value;
+                      referralKey = value;
                     });
                   }),
                   rowsPerPage: searchResult.isEmpty
@@ -60,12 +56,11 @@ class _ExaminationSearchTableState extends State<ExaminationSearchTable> {
 }
 
 class _DataSource extends DataTableSource {
-  final List<ExaminationModel> data;
+  final List<ReferralModel> data;
   final clinicController = Get.find<ClinicController>();
   final Function(String) onSelected;
-  final String? examinationKey;
-  _DataSource(this.onSelected,
-      {required this.examinationKey, required this.data});
+  final String? referralKey;
+  _DataSource(this.onSelected, {required this.referralKey, required this.data});
   @override
   DataRow? getRow(int index) {
     if (index >= data.length) {
@@ -74,8 +69,8 @@ class _DataSource extends DataTableSource {
 
     final item = data[index];
     return DataRow(
-        selected: examinationKey == item.key,
-        color: examinationKey == item.key
+        selected: referralKey == item.key,
+        color: referralKey == item.key
             ? const WidgetStatePropertyAll<Color>(Colors.black12)
             : null,
         cells: [
@@ -86,7 +81,7 @@ class _DataSource extends DataTableSource {
               onSelected(item.key!);
             },
           ),
-          examinationKey == item.key
+          referralKey == item.key
               ? DataCell(
                   Center(
                     child: InkWell(
@@ -161,8 +156,8 @@ class _DataSource extends DataTableSource {
                                   onPressed: () {
                                     // Perform the action
                                     clinicController
-                                        .deleteExaminationFromDB(item.key!);
-                                    clinicController.dbExaminationSearch
+                                        .deleteReferralFromDB(item.key!);
+                                    clinicController.dbReferralsList
                                         .removeAt(index);
                                     Get.back();
                                   },

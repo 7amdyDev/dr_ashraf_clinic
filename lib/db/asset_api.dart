@@ -26,29 +26,42 @@ class AssetApi extends GetConnect {
       get('/assets/date/$dateTime', decoder: AssetAccountsModel.listFromJson);
 
   Future<Response<List<AppointmentFinance>>> getPatientAppointmentFinance(
-          int id) =>
-      get('/assets/appointFinanceByPatient/$id',
-          decoder: AppointmentFinance.listFromJson);
+    int id,
+  ) => get(
+    '/assets/appointFinanceByPatient/$id',
+    decoder: AppointmentFinance.listFromJson,
+  );
 
   Future<Response<List<AppointmentFinance>>> getAppointmentFinanceByDate(
-          int clinicId, String date) =>
-      get('/assets/appointFinanceByDate/$clinicId/$date',
-          decoder: AppointmentFinance.listFromJson);
+    int clinicId,
+    String date,
+  ) => get(
+    '/assets/appointFinanceByDate/$clinicId/$date',
+    decoder: AppointmentFinance.listFromJson,
+  );
 
   Future<Response<List<AssetAccountsModel>>> getDailyIncomeList(
-          int clinicId, String dateTime) =>
-      get('/assets/dailyIncomeList/$clinicId/$dateTime',
-          decoder: AssetAccountsModel.listFromJson);
+    int clinicId,
+    String dateTime,
+  ) => get(
+    '/assets/dailyIncomeList/$clinicId/$dateTime',
+    decoder: AssetAccountsModel.listFromJson,
+  );
   Future<Response<TotalIncome>> getTotalDailyIncome(
-          clinicId, String dateTime) =>
-      get('/assets/totalDailyIncome/$clinicId/$dateTime',
-          decoder: TotalIncome.fromJson);
+    int clinicId,
+    String dateTime,
+  ) => get(
+    '/assets/totalDailyIncome/$clinicId/$dateTime',
+    decoder: TotalIncome.fromJson,
+  );
   Future<Response<AssetAccountsModel>> create(AssetAccountsModel asset) =>
       post('/assets', asset.toJson(), decoder: AssetAccountsModel.fromJson);
 
-  Future<Response<AssetAccountsModel>> update(AssetAccountsModel asset) =>
-      put('/assets/${asset.id}', asset.toJson(),
-          decoder: AssetAccountsModel.fromJson);
+  Future<Response<AssetAccountsModel>> update(AssetAccountsModel asset) => put(
+    '/assets/${asset.id}',
+    asset.toJson(),
+    decoder: AssetAccountsModel.fromJson,
+  );
 
   Future<Response> remove(int id) => delete('/assets/$id');
 }

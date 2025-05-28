@@ -135,3 +135,28 @@ class Fee {
     );
   }
 }
+
+class ReferralModel {
+  String? key;
+  String name;
+  ReferralModel({
+    required this.name,
+    this.key,
+  });
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+    };
+  }
+
+  factory ReferralModel.fromJson(dynamic map) {
+    return ReferralModel(
+      name: map['name'],
+      key: map['key'],
+    );
+  }
+  static List<ReferralModel> listFromJson(dynamic json) {
+    return List<ReferralModel>.from(
+        json.map((referral) => ReferralModel.fromJson(referral)));
+  }
+}

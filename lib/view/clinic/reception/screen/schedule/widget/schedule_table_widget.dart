@@ -42,6 +42,7 @@ class HScheduleDataTable extends StatelessWidget {
                       label: TableColumnLabel(text: 'service_type_label')),
                   DataColumn(label: TableColumnLabel(text: 'telephone_label')),
                   DataColumn(label: TableColumnLabel(text: 'referral_label')),
+                  DataColumn(label: TableColumnLabel(text: 'notes_label')),
                   DataColumn(label: TableColumnLabel(text: 'finance_label')),
                   DataColumn(label: TableColumnLabel(text: 'status_label')),
                 ],
@@ -122,6 +123,7 @@ class _DataSource extends DataTableSource {
             text: HValidator.serviceIdValidation(item.serviceId).tr)),
         DataCell(TableDataCell(text: item.mobile)),
         DataCell(TableDataCell(text: item.referral ?? ' ')),
+        DataCell(TableDataCell(text: item.notes ?? ' ')),
         DataCell(
             TableDataCell(text: item.unPaid == '0' ? 'Paid'.tr : item.unPaid)),
         DataCell(

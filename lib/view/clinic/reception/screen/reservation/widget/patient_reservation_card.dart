@@ -6,8 +6,10 @@ import 'package:dr_ashraf_clinic/utils/formatters/formatter.dart';
 import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
 import 'package:dr_ashraf_clinic/utils/validator/validation.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/reservation/widget/data_text_widget.dart';
+import 'package:dr_ashraf_clinic/view/clinic/reception/screen/reservation/widget/referral_dropdownmenu_widget.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/reservation/widget/reservation_dropdownmenu_widget.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/widget/checkbox_table_widget.dart';
+import 'package:dr_ashraf_clinic/view/home_page/widget/drop_down_menu.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/filled_button.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/pick_date_widget.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +39,9 @@ class PatientReservationCardWidget extends StatelessWidget {
     final dateKey = GlobalKey<FormState>();
     AppointmentModel appointment;
     TextEditingController referralController = TextEditingController();
-
+    TextEditingController notesTextController = TextEditingController();
+    referralController.text = _clinicController.dbReferralsList[0].name;
+    notesTextController.text = '';
     return Card(
       child: Padding(
           padding: const EdgeInsets.all(HSizes.defaultSpace),
@@ -109,11 +113,30 @@ class PatientReservationCardWidget extends StatelessWidget {
               const SizedBox(
                 height: HSizes.spaceBtwItems,
               ),
-              DataTextWidget(
-                label: 'referral_label'.tr,
-                width: width / 6,
-                textFontSize: 16,
-                textEditingController: referralController,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  DataTextWidget(
+                    label: 'referral_label'.tr,
+                    width: width / 6,
+                    child: ReferralDropDownMenu(
+                      referralIndex: 0,
+                      onSelected: (value) {
+                        referralController.text =
+                            clinicController.dbReferralsList[value].name;
+                      },
+                    ),
+                  ),
+                  DataTextWidget(
+                    label: 'notes_label'.tr,
+                    width: width / 4,
+                    textFontSize: 16,
+                    textEditingController: notesTextController,
+                  ),
+                  SizedBox(
+                    width: width / 4,
+                  ),
+                ],
               ),
               const SizedBox(
                 height: HSizes.spaceBtwSections,
@@ -130,6 +153,7 @@ class PatientReservationCardWidget extends StatelessWidget {
                         clinicId: _clinicController.clinicId.value,
                         serviceId: appointmentController.serviceId.value,
                         date: HFormatter.reverseFormatDate(dateController.text),
+                        notes: notesTextController.text,
                         referral: referralController.text,
                       );
                       if (dateKey.currentState!.validate()) {

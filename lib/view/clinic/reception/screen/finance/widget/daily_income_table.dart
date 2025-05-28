@@ -9,39 +9,39 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DailyIncomeTable extends StatelessWidget {
-  DailyIncomeTable({
-    super.key,
-  });
+  DailyIncomeTable({super.key});
   final financeController = Get.put(FinanceController());
 
   @override
   Widget build(BuildContext context) {
     var assetData = financeController.assetDailyIncomelst;
-    return Obx(() => SingleChildScrollView(
-          child: SizedBox(
-            width: double.infinity,
-            child: PaginatedDataTable(
-              headingRowHeight: 48,
-              horizontalMargin: 12,
-              headingRowColor: const WidgetStatePropertyAll(HColors.accent),
-              columnSpacing: 12,
-              columns: const [
-                DataColumn(label: TableColumnLabel(text: 'id_no_label')),
-                DataColumn(label: TableColumnLabel(text: 'patient_name_label')),
-                DataColumn(label: TableColumnLabel(text: 'date_label')),
-                DataColumn(label: TableColumnLabel(text: 'service_type_label')),
-                DataColumn(label: TableColumnLabel(text: 'patient_paid_label')),
-              ],
-              source: _DataSource(data: assetData),
-              rowsPerPage: assetData.isEmpty
-                  ? 1
-                  : assetData.length < 8
-                      ? assetData.length
-                      : 8,
-              showEmptyRows: false,
-            ),
+    return Obx(
+      () => SingleChildScrollView(
+        child: SizedBox(
+          width: double.infinity,
+          child: PaginatedDataTable(
+            headingRowHeight: 48,
+            horizontalMargin: 12,
+            headingRowColor: const WidgetStatePropertyAll(HColors.accent),
+            columnSpacing: 12,
+            columns: const [
+              DataColumn(label: TableColumnLabel(text: 'id_no_label')),
+              DataColumn(label: TableColumnLabel(text: 'patient_name_label')),
+              DataColumn(label: TableColumnLabel(text: 'date_label')),
+              DataColumn(label: TableColumnLabel(text: 'service_type_label')),
+              DataColumn(label: TableColumnLabel(text: 'patient_paid_label')),
+            ],
+            source: _DataSource(data: assetData),
+            rowsPerPage: assetData.isEmpty
+                ? 1
+                : assetData.length < 30
+                ? assetData.length
+                : 30,
+            showEmptyRows: false,
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
 
@@ -56,14 +56,19 @@ class _DataSource extends DataTableSource {
     }
 
     final item = data[index];
-    return DataRow(cells: [
-      DataCell(TableDataCell(text: item.patientId.toString())),
-      DataCell(TableDataCell(text: item.name!)),
-      DataCell(TableDataCell(text: HFormatter.formatStringDate(item.date))),
-      DataCell(TableDataCell(
-          text: HValidator.serviceIdValidation(item.serviceId).tr)),
-      DataCell(TableDataCell(text: item.debit.toString())),
-    ]);
+    return DataRow(
+      cells: [
+        DataCell(TableDataCell(text: item.patientId.toString())),
+        DataCell(TableDataCell(text: item.name!)),
+        DataCell(TableDataCell(text: HFormatter.formatStringDate(item.date))),
+        DataCell(
+          TableDataCell(
+            text: HValidator.serviceIdValidation(item.serviceId).tr,
+          ),
+        ),
+        DataCell(TableDataCell(text: item.debit.toString())),
+      ],
+    );
   }
 
   @override

@@ -20,56 +20,56 @@ class ReceptionSchedulePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(
-          height: HSizes.spaceBtwItems,
+        const SizedBox(height: HSizes.spaceBtwItems),
+        const PageLabelWidget(text: 'schedule_table_label'),
+        const SizedBox(height: HSizes.spaceBtwSections),
+        Obx(
+          () => Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              HFilledButton(
+                text: 'today_label'.tr,
+                isActivated: !clinicController.scheduleByDate.value,
+                onPressed: () {
+                  clinicController.selectedDate.value = DateTime.now().subtract(
+                    const Duration(hours: 2),
+                  );
+                  clinicController.scheduleByDate.value = false;
+                  appointmentController.getAppointsByDate().then((_) {
+                    financeController.getAppointsFinanceByDate();
+                  });
+                  //  appointmentController.startPeriodicUpdate();
+                },
+              ),
+              HFilledButton(
+                text: 'choose_date_label'.tr,
+                isActivated: clinicController.scheduleByDate.value,
+                onPressed: () {
+                  datePickerDialog(
+                    context,
+                    financeController,
+                    appointmentController,
+                    clinicController,
+                  );
+                },
+              ),
+            ],
+          ),
         ),
-        const PageLabelWidget(
-          text: 'schedule_table_label',
-        ),
-        const SizedBox(
-          height: HSizes.spaceBtwSections,
-        ),
-        Obx(() => Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                HFilledButton(
-                    text: 'today_label'.tr,
-                    isActivated: !clinicController.scheduleByDate.value,
-                    onPressed: () {
-                      clinicController.selectedDate.value =
-                          DateTime.now().subtract(const Duration(hours: 2));
-                      clinicController.scheduleByDate.value = false;
-                      appointmentController.getAppointsByDate().then((_) {
-                        financeController.getAppointsFinanceByDate();
-                      });
-                      //  appointmentController.startPeriodicUpdate();
-                    }),
-                HFilledButton(
-                    text: 'choose_date_label'.tr,
-                    isActivated: clinicController.scheduleByDate.value,
-                    onPressed: () {
-                      datePickerDialog(context, financeController,
-                          appointmentController, clinicController);
-                    }),
-              ],
-            )),
         Expanded(
           child: SingleChildScrollView(
             primary: true,
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                const SizedBox(
-                  height: HSizes.spaceBtwItems,
-                ),
+                const SizedBox(height: HSizes.spaceBtwItems),
                 HScheduleDataTable(
-                    searchResult:
-                        financeController.appointmentFinanceByDatelst),
-                const PageLabelWidget(
-                  text: 'online_table_label',
+                  searchResult: financeController.appointmentFinanceByDatelst,
                 ),
+                const PageLabelWidget(text: 'online_table_label'),
                 HOnlineReservationTable(
-                    onlineReserv: clinicController.onlineReservData)
+                  onlineReserv: clinicController.onlineReservData,
+                ),
               ],
             ),
           ),
@@ -80,10 +80,11 @@ class ReceptionSchedulePage extends StatelessWidget {
 }
 
 void datePickerDialog(
-    context,
-    FinanceController controller,
-    AppointmentController appointmentController,
-    ClinicController clinicController) {
+  BuildContext context,
+  FinanceController controller,
+  AppointmentController appointmentController,
+  ClinicController clinicController,
+) {
   final Future<DateTime?> picked = showDatePicker(
     context: context,
     currentDate: DateTime.now(),
