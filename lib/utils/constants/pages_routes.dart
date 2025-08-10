@@ -8,7 +8,9 @@ import 'package:dr_ashraf_clinic/view/clinic/reception/screen/patient/patient_se
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/reception_page.dart';
 import 'package:dr_ashraf_clinic/view/clinic/reception/screen/reservation/reservation_page.dart';
 import 'package:dr_ashraf_clinic/view/contact_us/contact_us_page.dart';
+import 'package:dr_ashraf_clinic/view/mobile/contact_us/mobile_contact_page.dart';
 import 'package:dr_ashraf_clinic/view/home_page/home_page.dart';
+import 'package:dr_ashraf_clinic/view/mobile/videos/mobile_video_page.dart';
 import 'package:get/get.dart';
 
 final routes = [
@@ -23,4 +25,6 @@ final routes = [
   GetPage(name: '/reserve', page: () => ReservationPage()),
   GetPage(name: '/doctor', page: () => DoctorPage()),
   GetPage(name: '/contact_us', page: () => const ContactUsPage()),
+  GetPage(name: '/mobile_contact_us', page: () => const MobileContactPage()),
+  GetPage(name: '/mobile_video', page: () => const MobileVideoPage()),
 ];

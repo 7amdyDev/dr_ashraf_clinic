@@ -18,18 +18,21 @@ class LabelTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isEnglish = HelperFunctions.isLocalEnglish();
 
-    return Text(
-      text.tr,
-      style: isEnglish
-          ? TextStyle(
-              fontFamily: 'Lato',
-              fontSize: fontSizeEn,
-              fontWeight: FontWeight.bold,
-            )
-          : TextStyle(
-              fontFamily: 'NotoNaskh',
-              fontSize: fontSizeAr,
-              fontWeight: FontWeight.bold),
+    return FittedBox(
+      child: Text(
+        text.tr,
+        style: isEnglish
+            ? TextStyle(
+                fontFamily: 'Lato',
+                fontSize: fontSizeEn,
+                fontWeight: FontWeight.bold,
+              )
+            : TextStyle(
+                fontFamily: 'NotoNaskh',
+                fontSize: fontSizeAr,
+                fontWeight: FontWeight.bold,
+              ),
+      ),
     );
   }
 }

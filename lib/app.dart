@@ -4,6 +4,7 @@ import 'package:dr_ashraf_clinic/utils/constants/text_strings.dart';
 import 'package:dr_ashraf_clinic/utils/theme/theme.dart';
 import 'package:dr_ashraf_clinic/utils/translation/translations.dart';
 import 'package:dr_ashraf_clinic/view/home_page/home_page.dart';
+import 'package:dr_ashraf_clinic/view/mobile/mobile_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,11 +23,21 @@ class App extends StatelessWidget {
       title: HTexts.appName,
       initialRoute: '/',
       getPages: routes,
-      home: const HomePage(), // Set the initial home page
+      home: LayoutBuilder(
+        builder: (context, constraints) {
+          if (constraints.maxWidth < 1100) {
+            return const MobileHomePage();
+          } else {
+            return const HomePage();
+          }
+        },
+      ),
+      // Set the initial home page
       builder: (context, child) {
         return MediaQuery(
-          data: MediaQuery.of(context)
-              .copyWith(textScaler: TextScaler.linear(1.0)),
+          data: MediaQuery.of(
+            context,
+          ).copyWith(textScaler: TextScaler.linear(1.0)),
           child: child!,
         );
       },

@@ -11,6 +11,9 @@ import 'package:get/get.dart';
 class ClinicController extends GetxController {
   final _clinicApi = Get.find<ClinicApi>();
   RxList<OnlineReservModel> onlineReservData = <OnlineReservModel>[].obs;
+  RxList<OnlineReservModel> filteredOnlineReservData =
+      <OnlineReservModel>[].obs;
+
   RxList<ReferralModel> dbReferralsList = <ReferralModel>[].obs;
   RxInt pageIndex = 0.obs;
   RxList<ServicesId> servicesId = <ServicesId>[].obs;
@@ -21,8 +24,9 @@ class ClinicController extends GetxController {
   RxInt clinicId = 1.obs;
   RxList<MedicineModel> dbMedicineSearch = <MedicineModel>[].obs;
   RxList<ExaminationModel> dbExaminationSearch = <ExaminationModel>[].obs;
-  Rx<DateTime> selectedDate =
-      DateTime.now().subtract(const Duration(hours: 2)).obs;
+  Rx<DateTime> selectedDate = DateTime.now()
+      .subtract(const Duration(hours: 2))
+      .obs;
   RxBool scheduleByDate = false.obs;
   RxList<String> dosageSuggestion = <String>[].obs;
   final database = FirebaseDatabase.instance;
@@ -33,6 +37,8 @@ class ClinicController extends GetxController {
     getClinicData();
     dateChanged();
     feeChanged();
+    clinicIdChanged();
+    getOnlineReservationData();
   }
 
   void dateChanged() {
@@ -45,20 +51,36 @@ class ClinicController extends GetxController {
     });
   }
 
+  void clinicIdChanged() {
+    ever(clinicId, (value) {
+      getOnlineReservationData();
+    });
+  }
+
   void getOnlineReservationData() {
     getDosageSuggestionList();
     database.databaseURL = dBUrl;
-    final DatabaseReference reference = database.ref().child('Appointment');
+    final DatabaseReference reference = database.ref().child(
+      'Reservations', // Changed to 'Reservations' for consistency
+    );
     reference.onValue.listen((DatabaseEvent event) {
       final data = event.snapshot.value as Map?;
       onlineReservData.clear();
-      if (data != null) {
+
+      if (data != null && data.isNotEmpty) {
         data.forEach((key, value) {
-          onlineReservData.add(OnlineReservModel(
-              id: key,
-              name: value["name"],
-              mobile: value["mobile"],
-              dateTime: value["date"]));
+          if (value['clinicId'] == clinicId.value) {
+            onlineReservData.add(
+              OnlineReservModel(
+                id: key,
+                name: value["name"],
+                mobile: value["mobile"],
+                dateTime: value["date"],
+                clinicId: value["clinicId"],
+                isScheduled: value["isScheduled"] ?? false,
+              ),
+            );
+          }
         });
       }
     });
@@ -72,10 +94,7 @@ class ClinicController extends GetxController {
       if (data != null) {
         dbReferralsList.clear();
         data.forEach((key, value) {
-          dbReferralsList.add(ReferralModel(
-            name: value["name"],
-            key: key,
-          ));
+          dbReferralsList.add(ReferralModel(name: value["name"], key: key));
         });
       }
     });
@@ -85,27 +104,23 @@ class ClinicController extends GetxController {
     if (name.isEmpty) {
       return;
     }
-    _addMedicineRecordToDB(
-      'Medicines',
-      {'name': name},
-    ).then((onValue) {
+    _addMedicineRecordToDB('Medicines', {'name': name}).then((onValue) {
       dbMedicineSearch.clear();
       dbMedicineSearch.add(MedicineModel.fromJson(onValue));
     });
   }
 
   Future<Map<String, dynamic>> _addMedicineRecordToDB(
-      String path, Map<String, dynamic> data) async {
+    String path,
+    Map<String, dynamic> data,
+  ) async {
     try {
       // Push a new record to the specified path
       DatabaseReference ref = database.ref(path).push();
       await ref.set(data);
       HelperFunctions.showSnackBar('Record Added Successfully');
       // Return the added item along with its unique key
-      return {
-        'key': ref.key,
-        ...data,
-      };
+      return {'key': ref.key, ...data};
     } catch (e) {
       // Handle any errors
       debugPrint("Error adding record: $e");
@@ -113,31 +128,27 @@ class ClinicController extends GetxController {
     }
   }
 
-// add a new referral to the database
+  // add a new referral to the database
   void addReferralToDB(String name) {
     if (name.isEmpty) {
       return;
     }
-    _addReferralNameToDB(
-      'Referrals',
-      {'name': name},
-    ).then((onValue) {
+    _addReferralNameToDB('Referrals', {'name': name}).then((onValue) {
       getReferralsList();
     });
   }
 
   Future<Map<String, dynamic>> _addReferralNameToDB(
-      String path, Map<String, dynamic> data) async {
+    String path,
+    Map<String, dynamic> data,
+  ) async {
     try {
       // Push a new record to the specified path
       DatabaseReference ref = database.ref(path).push();
       await ref.set(data);
       HelperFunctions.showSnackBar('Record Added Successfully');
       // Return the added item along with its unique key
-      return {
-        'key': ref.key,
-        ...data,
-      };
+      return {'key': ref.key, ...data};
     } catch (e) {
       // Handle any errors
       debugPrint("Error adding record: $e");
@@ -145,32 +156,28 @@ class ClinicController extends GetxController {
     }
   }
 
-// Add a new examination to the database
+  // Add a new examination to the database
   void addExaminationToDB(String name) {
     if (name.isEmpty) {
       return;
     }
-    _addExaminationNameToDB(
-      'Examinations',
-      {'name': name},
-    ).then((onValue) {
+    _addExaminationNameToDB('Examinations', {'name': name}).then((onValue) {
       dbExaminationSearch.clear();
       dbExaminationSearch.add(ExaminationModel.fromJson(onValue));
     });
   }
 
   Future<Map<String, dynamic>> _addExaminationNameToDB(
-      String path, Map<String, dynamic> data) async {
+    String path,
+    Map<String, dynamic> data,
+  ) async {
     try {
       // Push a new record to the specified path
       DatabaseReference ref = database.ref(path).push();
       await ref.set(data);
       HelperFunctions.showSnackBar('Record Added Successfully');
       // Return the added item along with its unique key
-      return {
-        'key': ref.key,
-        ...data,
-      };
+      return {'key': ref.key, ...data};
     } catch (e) {
       // Handle any errors
       debugPrint("Error adding record: $e");
@@ -211,10 +218,7 @@ class ClinicController extends GetxController {
       dbMedicineSearch.clear();
       data.forEach((key, value) {
         if (value['name'].toLowerCase().startsWith(query)) {
-          dbMedicineSearch.add(MedicineModel(
-            name: value["name"],
-            key: key,
-          ));
+          dbMedicineSearch.add(MedicineModel(name: value["name"], key: key));
         }
       });
     }
@@ -235,10 +239,9 @@ class ClinicController extends GetxController {
       dbExaminationSearch.clear();
       data.forEach((key, value) {
         if (value['name'].toLowerCase().startsWith(query)) {
-          dbExaminationSearch.add(ExaminationModel(
-            name: value["name"],
-            key: key,
-          ));
+          dbExaminationSearch.add(
+            ExaminationModel(name: value["name"], key: key),
+          );
         }
       });
     }
@@ -251,11 +254,9 @@ class ClinicController extends GetxController {
     final data = snapshot.snapshot.value as Map<dynamic, dynamic>?;
     if (data != null) {
       dosageSuggestion.clear();
-      data.forEach(
-        (key, value) {
-          dosageSuggestion.add(value);
-        },
-      );
+      data.forEach((key, value) {
+        dosageSuggestion.add(value);
+      });
     }
   }
 
@@ -273,35 +274,45 @@ class ClinicController extends GetxController {
     database.databaseURL = dBUrl;
 
     final DatabaseReference reference = database.ref().child('Medicines/$key');
-    reference.remove().then((_) {
-      HelperFunctions.showSnackBar('Record Deleted Successfully');
-    }).catchError((error) {
-      //  debugPrint('Error removing user: $error');
-    });
+    reference
+        .remove()
+        .then((_) {
+          HelperFunctions.showSnackBar('Record Deleted Successfully');
+        })
+        .catchError((error) {
+          //  debugPrint('Error removing user: $error');
+        });
   }
 
   void deleteReferralFromDB(String key) {
     database.databaseURL = dBUrl;
 
     final DatabaseReference reference = database.ref().child('Referrals/$key');
-    reference.remove().then((_) {
-      HelperFunctions.showSnackBar('Record Deleted Successfully');
-      getReferralsList();
-    }).catchError((error) {
-      //  debugPrint('Error removing user: $error');
-    });
+    reference
+        .remove()
+        .then((_) {
+          HelperFunctions.showSnackBar('Record Deleted Successfully');
+          getReferralsList();
+        })
+        .catchError((error) {
+          //  debugPrint('Error removing user: $error');
+        });
   }
 
   void deleteExaminationFromDB(String key) {
     database.databaseURL = dBUrl;
 
-    final DatabaseReference reference =
-        database.ref().child('Examinations/$key');
-    reference.remove().then((_) {
-      HelperFunctions.showSnackBar('Record Deleted Successfully');
-    }).catchError((error) {
-      //  debugPrint('Error removing user: $error');
-    });
+    final DatabaseReference reference = database.ref().child(
+      'Examinations/$key',
+    );
+    reference
+        .remove()
+        .then((_) {
+          HelperFunctions.showSnackBar('Record Deleted Successfully');
+        })
+        .catchError((error) {
+          //  debugPrint('Error removing user: $error');
+        });
   }
 
   String getClinicBranchName({int? clinicBranchId}) {
@@ -387,47 +398,56 @@ class ClinicController extends GetxController {
 
   void createOnlineReserv(OnlineReservModel model) {
     database.databaseURL = dBUrl;
-    final DatabaseReference reference = database.ref().child('Appointment');
+    final DatabaseReference reference = database.ref().child('Reservations');
 
-    final newAppointRef =
-        reference.push(); // Create a new reference for a new appointment
-    newAppointRef.set({
-      'name': model.name,
-      'date': model.dateTime,
-      'mobile': model.mobile,
-    }).then((_) {
-      Get.dialog(
-        AlertDialog(
-          title: const Center(child: Text('Success')),
-          content: Text(
-            'appointment_success'.tr,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 18),
-          ),
-          alignment: Alignment.center,
-          actions: [
-            TextButton(
-              onPressed: () => Get.back(),
-              child: const Center(child: Text('OK')),
+    final newAppointRef = reference
+        .push(); // Create a new reference for a new appointment
+    newAppointRef
+        .set({
+          'name': model.name,
+          'date': model.dateTime,
+          'mobile': model.mobile,
+          'clinicId': model.clinicId,
+          'isScheduled': model.isScheduled,
+        })
+        .then((_) {
+          Get.dialog(
+            AlertDialog(
+              title: const Center(child: Text('Success')),
+              content: Text(
+                'appointment_success'.tr,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 18),
+              ),
+              alignment: Alignment.center,
+              actions: [
+                TextButton(
+                  onPressed: () => Get.back(),
+                  child: const Center(child: Text('OK')),
+                ),
+              ],
             ),
-          ],
-        ),
-      );
-    }).catchError((error) {
-      //debugPrint('Error adding user: $error');
-    });
+          );
+        })
+        .catchError((error) {
+          //debugPrint('Error adding user: $error');
+        });
   }
 
   void deleteOnlineReserv(String appointId) {
     database.databaseURL = dBUrl;
 
-    final DatabaseReference reference =
-        database.ref().child('Appointment/$appointId');
-    reference.remove().then((_) {
-      // debugPrint('User removed successfully');
-      // Get.snackbar('Title', 'Checked', snackPosition: SnackPosition.BOTTOM);
-    }).catchError((error) {
-      //  debugPrint('Error removing user: $error');
-    });
+    final DatabaseReference reference = database.ref().child(
+      'Reservations/$appointId',
+    );
+    reference
+        .update({'isScheduled': true})
+        .then((_) {
+          // debugPrint('User removed successfully');
+          // Get.snackbar('Title', 'Checked', snackPosition: SnackPosition.BOTTOM);
+        })
+        .catchError((error) {
+          //  debugPrint('Error removing user: $error');
+        });
   }
 }

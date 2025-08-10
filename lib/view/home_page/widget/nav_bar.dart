@@ -11,33 +11,45 @@ class HNavBar extends StatelessWidget {
     var width = MediaQuery.sizeOf(context).width;
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
-      child: Row(children: [
-        const ClinicNameLogo(),
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              NavBarButton(
-                text: 'main_button',
-                fontSize: width > 700 ? 20 : 10,
-              ),
-              width > 750
-                  ? const NavBarButton(
-                      text: 'clinic_button',
-                      fontSize: 20,
-                      route: '/clinic',
-                    )
-                  : Container(),
-              NavBarButton(
-                text: 'contact_button',
-                fontSize: width > 700 ? 20 : 10,
-                route: '/contact_us',
-              ),
-              const ChangeLangButton(),
-            ],
+      child: Row(
+        children: [
+          const ClinicNameLogo(),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                NavBarButton(
+                  text: 'main_button',
+                  fontSize: width > 700 ? 20 : 10,
+                ),
+                width > 750
+                    ? const NavBarButton(
+                        text: 'clinic_button',
+                        fontSize: 20,
+                        route: '/clinic',
+                      )
+                    : Container(),
+                NavBarButton(
+                  text: 'blog_button',
+                  fontSize: width > 700 ? 20 : 10,
+                  route: '/blog',
+                ),
+                NavBarButton(
+                  text: 'videos_button',
+                  fontSize: width > 700 ? 20 : 10,
+                  route: '/videos',
+                ),
+                NavBarButton(
+                  text: 'contact_button',
+                  fontSize: width > 700 ? 20 : 10,
+                  route: '/contact_us',
+                ),
+                const ChangeLangButton(),
+              ],
+            ),
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }

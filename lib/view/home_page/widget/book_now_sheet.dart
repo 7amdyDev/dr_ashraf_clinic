@@ -1,5 +1,3 @@
-import 'package:dr_ashraf_clinic/controller/clinic_controller.dart';
-import 'package:dr_ashraf_clinic/model/online_reserv_model.dart';
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
@@ -24,7 +22,7 @@ class BookNowSheet extends StatelessWidget {
     var mobileKey = GlobalKey<FormState>();
     var dateKey = GlobalKey<FormState>();
 
-    var controller = Get.put(ClinicController());
+    // var controller = Get.put(ClinicController());
     return Container(
       constraints: const BoxConstraints(maxWidth: 1024),
       padding: const EdgeInsets.all(HSizes.defaultSpace),
@@ -35,13 +33,9 @@ class BookNowSheet extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            const PageTitleWidget(
-              text: 'book_sheet_label',
-            ),
+            const PageTitleWidget(text: 'book_sheet_label'),
             const Divider(),
-            const SizedBox(
-              height: HSizes.spaceBtwSections,
-            ),
+            const SizedBox(height: HSizes.spaceBtwSections),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -49,74 +43,55 @@ class BookNowSheet extends StatelessWidget {
                 const Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    LabelTextWidget(
-                      text: 'name_label',
-                    ),
-                    SizedBox(
-                      height: HSizes.spaceBtwSections,
-                    ),
-                    LabelTextWidget(
-                      text: 'mobile_label',
-                    ),
-                    SizedBox(
-                      height: HSizes.spaceBtwSections,
-                    ),
-                    LabelTextWidget(
-                      text: 'book_date_label',
-                    ),
-                    SizedBox(
-                      height: HSizes.spaceBtwItems,
-                    ),
+                    LabelTextWidget(text: 'name_label'),
+                    SizedBox(height: HSizes.spaceBtwSections),
+                    LabelTextWidget(text: 'mobile_label'),
+                    SizedBox(height: HSizes.spaceBtwSections),
+                    LabelTextWidget(text: 'book_date_label'),
+                    SizedBox(height: HSizes.spaceBtwItems),
                   ],
                 ),
                 Column(
                   children: [
                     SizedBox(
-                        width: size.width / 4,
-                        child: Form(
-                          key: nameKey,
-                          child: TextFormField(
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            validator: HValidator.validateText,
-                            textAlign: TextAlign.center,
-                            controller: nameController,
-                          ),
-                        )),
-                    const SizedBox(
-                      height: HSizes.spaceBtwItems,
+                      width: size.width / 4,
+                      child: Form(
+                        key: nameKey,
+                        child: TextFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: HValidator.validateText,
+                          textAlign: TextAlign.center,
+                          controller: nameController,
+                        ),
+                      ),
                     ),
+                    const SizedBox(height: HSizes.spaceBtwItems),
                     SizedBox(
-                        width: size.width / 4,
-                        child: Form(
-                          key: mobileKey,
-                          child: TextFormField(
-                            textAlign: TextAlign.center,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            validator: HValidator.validateText,
-                            controller: mobileController,
-                          ),
-                        )),
-                    const SizedBox(
-                      height: HSizes.spaceBtwItems,
+                      width: size.width / 4,
+                      child: Form(
+                        key: mobileKey,
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: HValidator.validateText,
+                          controller: mobileController,
+                        ),
+                      ),
                     ),
+                    const SizedBox(height: HSizes.spaceBtwItems),
                     Form(
                       key: dateKey,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       child: PickDateWidget(
-                          validator: HValidator.validateText,
-                          width: size.width / 4,
-                          dateController: dateController),
+                        validator: HValidator.validateText,
+                        width: size.width / 4,
+                        dateController: dateController,
+                      ),
                     ),
-                    const SizedBox(
-                      height: HSizes.spaceBtwItems,
-                    ),
+                    const SizedBox(height: HSizes.spaceBtwItems),
                   ],
                 ),
-                const SizedBox(
-                  width: HSizes.spaceBtwSections,
-                ),
+                const SizedBox(width: HSizes.spaceBtwSections),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -126,17 +101,17 @@ class BookNowSheet extends StatelessWidget {
                         if (nameKey.currentState!.validate() &&
                             mobileKey.currentState!.validate() &&
                             dateKey.currentState!.validate()) {
-                          var reservation = OnlineReservModel(
-                              name: nameController.text,
-                              mobile: mobileController.text,
-                              dateTime: dateController.text);
-                          controller.createOnlineReserv(reservation);
+                          // var reservation = OnlineReservModel(
+                          //     name: nameController.text,
+                          //     mobile: mobileController.text,
+                          //     dateTime: dateController.text);
+                          // controller.createOnlineReserv(reservation);
                           Get.back();
                         }
                       },
-                    )
+                    ),
                   ],
-                )
+                ),
               ],
             ),
           ],

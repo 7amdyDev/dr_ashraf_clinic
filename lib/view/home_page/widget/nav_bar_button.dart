@@ -21,55 +21,65 @@ class NavBarButton extends StatelessWidget {
     bool currentPage = Get.currentRoute == route;
     return FittedBox(
       fit: BoxFit.scaleDown,
-      child: OverflowBar(children: [
-        TextButton(
-          onPressed: () {
-            switch (route) {
-              case '/':
-                Get.toNamed('/');
-                break;
-              case '/clinic':
-                Get.toNamed(route);
-                break;
-              case '/contact_us':
-                Get.toNamed(route);
-                break;
-            }
-          },
-          child: Text(
-            text.tr,
-            style: Get.locale == const Locale('en', 'US')
-                ? TextStyle(
-                    fontFamily: 'Oswald',
-                    fontWeight: currentPage ? FontWeight.bold : null,
-                    shadows: withShadow
-                        ? [
-                            const Shadow(
-                              color: Colors.black38,
-                              blurRadius: 4.0,
-                              offset: Offset(0.0, 2.0),
-                            ),
-                          ]
-                        : null,
-                    fontSize: fontSize,
-                    color: color)
-                : TextStyle(
-                    fontFamily: 'ElMessiri',
-                    fontWeight: currentPage ? FontWeight.bold : null,
-                    shadows: withShadow
-                        ? [
-                            const Shadow(
-                              color: Colors.black38,
-                              blurRadius: 4.0,
-                              offset: Offset(0.0, 2.0),
-                            ),
-                          ]
-                        : null,
-                    fontSize: fontSize,
-                    color: color),
+      child: OverflowBar(
+        children: [
+          TextButton(
+            onPressed: () {
+              switch (route) {
+                case '/':
+                  Get.toNamed('/');
+                  break;
+                case '/clinic':
+                  Get.toNamed(route);
+                  break;
+                case '/contact_us':
+                  Get.toNamed(route);
+                  break;
+                case '/mobile_contact_us':
+                  Get.toNamed(route);
+                  break;
+                case '/mobile_video':
+                  Get.toNamed(route);
+                  break;
+              }
+            },
+            child: Text(
+              text.tr,
+              style: Get.locale == const Locale('en', 'US')
+                  ? TextStyle(
+                      fontFamily: 'Oswald',
+                      fontWeight: currentPage ? FontWeight.bold : null,
+                      shadows: withShadow
+                          ? [
+                              const Shadow(
+                                color: Colors.black38,
+                                blurRadius: 4.0,
+                                offset: Offset(0.0, 2.0),
+                              ),
+                            ]
+                          : null,
+                      fontSize: fontSize,
+                      color: currentPage ? HColors.textTitle : color,
+                    )
+                  : TextStyle(
+                      fontFamily: 'ElMessiri',
+                      fontWeight: currentPage ? FontWeight.bold : null,
+                      shadows: withShadow
+                          ? [
+                              const Shadow(
+                                color: Colors.black38,
+                                blurRadius: 4.0,
+                                offset: Offset(0.0, 2.0),
+                              ),
+                            ]
+                          : null,
+                      fontSize: fontSize,
+                      color: currentPage ? HColors.textTitle : color,
+                    ),
+            ),
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }

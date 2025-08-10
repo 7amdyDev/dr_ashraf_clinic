@@ -15,21 +15,20 @@ class HomePage extends StatelessWidget {
     final size = HelperFunctions.screenSize();
     double maxPageWidth = HelperFunctions.clinicPagesWidth();
     return Scaffold(
-        backgroundColor: HColors.primaryBackground,
-        body: Center(
-          heightFactor: 1,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Container(
-              constraints: BoxConstraints(maxWidth: maxPageWidth),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const HNavBar(),
-                    const SizedBox(
-                      height: HSizes.spaceBtwSections * 2,
-                    ),
-                    LayoutBuilder(builder: (context, constraint) {
+      backgroundColor: HColors.primaryBackground,
+      body: Center(
+        heightFactor: 1,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Container(
+            constraints: BoxConstraints(maxWidth: maxPageWidth),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  HNavBar(),
+                  const SizedBox(height: HSizes.spaceBtwSections * 2),
+                  LayoutBuilder(
+                    builder: (context, constraint) {
                       if (constraint.maxWidth > 450) {
                         return Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -46,17 +45,17 @@ class HomePage extends StatelessWidget {
                           ),
                         );
                       }
-                    }),
-                    const SizedBox(
-                      height: HSizes.spaceBtwSections,
-                    ),
-                    const FilledButtonWithIcon()
-                  ],
-                ),
+                    },
+                  ),
+                  const SizedBox(height: HSizes.spaceBtwSections),
+                  const FilledButtonWithIcon(),
+                ],
               ),
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
 
@@ -73,16 +72,18 @@ List<Widget> _buildChildren(double maxPageWidth, Size size) {
               textAlign: TextAlign.center,
               'doctor_details'.tr,
               style: TextStyle(
-                  fontFamily: 'Tajawal',
-                  fontSize: maxPageWidth * 0.03,
-                  color: HColors.textTitle,
-                  shadows: const [
-                    BoxShadow(
-                        color: Colors.black38,
-                        blurRadius: 2.0,
-                        offset: Offset(0, 2))
-                  ],
-                  fontWeight: FontWeight.bold),
+                fontFamily: 'Tajawal',
+                fontSize: maxPageWidth * 0.03,
+                color: HColors.textTitle,
+                shadows: const [
+                  BoxShadow(
+                    color: Colors.black38,
+                    blurRadius: 2.0,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           FittedBox(
@@ -103,15 +104,14 @@ List<Widget> _buildChildren(double maxPageWidth, Size size) {
                       fontFamily: 'Tajawal',
                       fontSize: maxPageWidth * 0.02,
                       color: HColors.black,
-                      fontWeight: FontWeight.bold),
+                      fontWeight: FontWeight.bold,
+                    ),
             ),
           ),
         ],
       ),
     ),
-    const SizedBox(
-      width: HSizes.spaceBtwItems,
-    ),
+    const SizedBox(width: HSizes.spaceBtwItems),
     RectangleImage(
       imagePath: 'assets/images/banner.jpg',
       width: size.width / 2.5,

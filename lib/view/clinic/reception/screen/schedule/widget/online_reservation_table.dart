@@ -9,10 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HOnlineReservationTable extends StatelessWidget {
-  const HOnlineReservationTable({
-    super.key,
-    required this.onlineReserv,
-  });
+  const HOnlineReservationTable({super.key, required this.onlineReserv});
 
   final List<OnlineReservModel> onlineReserv;
 
@@ -35,14 +32,15 @@ class HOnlineReservationTable extends StatelessWidget {
                 DataColumn(label: TableColumnLabel(text: 'date_label')),
                 DataColumn(label: TableColumnLabel(text: 'telephone_label')),
                 DataColumn(
-                    label: TableColumnLabel(text: 'request_checkbox_label')),
+                  label: TableColumnLabel(text: 'request_checkbox_label'),
+                ),
               ],
               source: _DataSource(data: onlineReserv),
               rowsPerPage: onlineReserv.isEmpty
                   ? 1
                   : onlineReserv.length < 8
-                      ? onlineReserv.length
-                      : 8,
+                  ? onlineReserv.length
+                  : 8,
               showEmptyRows: false,
             ),
           ),
@@ -63,13 +61,15 @@ class _DataSource extends DataTableSource {
     }
 
     final item = data[index];
-    return DataRow(cells: [
-      DataCell(TableDataCell(text: (index + 1).toString())),
-      DataCell(TableDataCell(text: item.name)),
-      DataCell(TableDataCell(text: (item.dateTime))),
-      DataCell(TableDataCell(text: item.mobile)),
-      DataCell(Center(child: ReserveCheckboxWidget(appointId: item.id!)))
-    ]);
+    return DataRow(
+      cells: [
+        DataCell(TableDataCell(text: (index + 1).toString())),
+        DataCell(TableDataCell(text: item.name)),
+        DataCell(TableDataCell(text: (item.dateTime))),
+        DataCell(TableDataCell(text: item.mobile)),
+        DataCell(Center(child: ReserveCheckboxWidget(appointId: item.id!))),
+      ],
+    );
   }
 
   @override
