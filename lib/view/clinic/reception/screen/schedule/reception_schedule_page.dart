@@ -68,7 +68,7 @@ class ReceptionSchedulePage extends StatelessWidget {
                 ),
                 const PageLabelWidget(text: 'online_table_label'),
                 HOnlineReservationTable(
-                  onlineReserv: clinicController.onlineReservData,
+                  onlineReserv: clinicController.filteredOnlineReservData,
                 ),
               ],
             ),

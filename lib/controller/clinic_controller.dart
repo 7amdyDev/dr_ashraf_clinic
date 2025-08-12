@@ -66,11 +66,23 @@ class ClinicController extends GetxController {
     reference.onValue.listen((DatabaseEvent event) {
       final data = event.snapshot.value as Map?;
       onlineReservData.clear();
-
+      filteredOnlineReservData.clear();
       if (data != null && data.isNotEmpty) {
         data.forEach((key, value) {
           if (value['clinicId'] == clinicId.value) {
             onlineReservData.add(
+              OnlineReservModel(
+                id: key,
+                name: value["name"],
+                mobile: value["mobile"],
+                dateTime: value["date"],
+                clinicId: value["clinicId"],
+                isScheduled: value["isScheduled"] ?? false,
+              ),
+            );
+          }
+          if (value['isScheduled'] == false) {
+            filteredOnlineReservData.add(
               OnlineReservModel(
                 id: key,
                 name: value["name"],
