@@ -2,6 +2,7 @@ import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/calender_widget.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/clinic_contact_widget.dart';
+import 'package:dr_ashraf_clinic/view/home_page/widget/copyrights_widget.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/facebook_video_widget.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/page_title_widget.dart';
 import 'package:dr_ashraf_clinic/view/mobile/Widget/doctor_profile_widget.dart';
@@ -30,7 +31,7 @@ class MobileHomePage extends StatelessWidget {
               children: [
                 MobileAppbar(),
                 SizedBox(height: HSizes.spaceBtwSections),
-                DoctorProfile(),
+                MobileDoctorProfile(),
                 SizedBox(height: HSizes.spaceBtwSections),
                 Divider(color: HColors.darkGrey, thickness: 1),
                 SizedBox(height: HSizes.spaceBtwSections),
@@ -53,6 +54,8 @@ class MobileHomePage extends StatelessWidget {
                 const ClinicContactWidget(),
                 SizedBox(height: HSizes.spaceBtwItems),
                 Divider(color: HColors.darkGrey, thickness: 1),
+                SizedBox(height: HSizes.spaceBtwSections),
+                const CopyrightsWidget(),
                 SizedBox(height: HSizes.spaceBtwSections),
               ],
             ),

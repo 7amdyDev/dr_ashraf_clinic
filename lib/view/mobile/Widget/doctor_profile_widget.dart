@@ -4,8 +4,8 @@ import 'package:dr_ashraf_clinic/utils/helper/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class DoctorProfile extends StatelessWidget {
-  const DoctorProfile({super.key});
+class MobileDoctorProfile extends StatelessWidget {
+  const MobileDoctorProfile({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CopyrightsWidget extends StatelessWidget {
-  const CopyrightsWidget({
-    super.key,
-  });
+  const CopyrightsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,22 +15,16 @@ class CopyrightsWidget extends StatelessWidget {
           textDirection: TextDirection.ltr,
           text: TextSpan(
             children: [
-              TextSpan(
-                text: '© ${DateTime.now().year} ',
-              ),
+              TextSpan(text: '© ${DateTime.now().year} '),
               TextSpan(
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
-                    openMailto();
+                    openWebsite();
                   },
-                text: 'info@hamdy.dev ',
-                style: const TextStyle(
-                  color: HColors.primary,
-                ),
+                text: ' hamdy.dev ',
+                style: const TextStyle(color: HColors.primary),
               ),
-              const TextSpan(
-                text: ' All rights reserved.',
-              ),
+              const TextSpan(text: ' All rights reserved.'),
             ],
           ),
         ),
@@ -41,12 +33,12 @@ class CopyrightsWidget extends StatelessWidget {
   }
 }
 
-Future<void> openMailto() async {
-  const String email = "info@hamdy.dev";
+Future<void> openWebsite() async {
+  const String website = "hamdy.dev";
 
   final Uri mailtoUri = Uri(
-    scheme: 'mailto',
-    path: email,
+    scheme: 'https',
+    path: website,
     query: Uri.encodeFull(''),
   );
 
