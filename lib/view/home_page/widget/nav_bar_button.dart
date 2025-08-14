@@ -41,6 +41,9 @@ class NavBarButton extends StatelessWidget {
                 case '/mobile_video':
                   Get.toNamed(route);
                   break;
+                case '/video_page':
+                  Get.toNamed(route);
+                  break;
               }
             },
             child: Text(

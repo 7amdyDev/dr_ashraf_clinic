@@ -1,6 +1,7 @@
 import 'package:dr_ashraf_clinic/utils/constants/colors.dart';
 import 'package:dr_ashraf_clinic/utils/constants/sizes.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/clinic_contact_widget.dart';
+import 'package:dr_ashraf_clinic/view/home_page/widget/copyrights_widget.dart';
 import 'package:dr_ashraf_clinic/view/home_page/widget/page_title_widget.dart';
 import 'package:dr_ashraf_clinic/view/mobile/Widget/mobile_app_bar.dart';
 import 'package:dr_ashraf_clinic/view/mobile/Widget/mobile_drawer.dart';
@@ -41,8 +42,9 @@ class MobileContactPage extends StatelessWidget {
                 SizedBox(height: HSizes.spaceBtwSections),
 
                 // SizedBox(height: 300, child: Image.network(staticMapUrl)),
-                ClinicContactWidget(),
+                ClinicContactWidget(desktopView: false),
                 SizedBox(height: HSizes.spaceBtwSections),
+                const CopyrightsWidget(),
               ],
             ),
           ),

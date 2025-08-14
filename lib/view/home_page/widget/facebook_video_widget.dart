@@ -9,8 +9,12 @@ import 'package:get/get.dart';
 class FacebookvideoWidget extends StatelessWidget {
   // Add a boolean parameter to choose between showing all or the last two videos.
   final bool showAllVideos;
-
-  const FacebookvideoWidget({super.key, this.showAllVideos = true});
+  final bool desktopView;
+  const FacebookvideoWidget({
+    super.key,
+    this.showAllVideos = true,
+    required this.desktopView,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -47,73 +51,145 @@ class FacebookvideoWidget extends StatelessWidget {
         final sortedVideos = List.from(videoController.videos)
           ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
-        return ListView.builder(
-          padding: const EdgeInsets.all(16.0),
-          controller: scrollController,
-          itemCount: itemCount,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) {
-            final video = sortedVideos[index];
-
-            return Card(
-              margin: const EdgeInsets.only(bottom: 20),
-              elevation: 6,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: Text(
-                        video.title,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: HColors.textTitle,
-                        ),
-                      ),
+        return desktopView
+            ? GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                ),
+                padding: const EdgeInsets.all(16.0),
+                controller: scrollController,
+                itemCount: itemCount,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final video = sortedVideos[index];
+                  return Card(
+                    margin: const EdgeInsets.all(20),
+                    elevation: 6,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
                     ),
-                    const SizedBox(height: 15),
-                    if (video.videoLink.isNotEmpty)
-                      Center(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            border: Border.all(
-                              color: Colors.grey.shade300,
-                              width: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Center(
+                            child: Text(
+                              video.title,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: HColors.textTitle,
+                              ),
                             ),
                           ),
-                          clipBehavior: Clip.hardEdge,
-                          height: video.height,
-                          width: video.width,
-                          child: FacebookVideoEmbedder(
-                            scrollController: scrollController,
-                            height: video.height,
-                            videoUrl: video.videoLink,
-                            uniqueId: video.id.toString(),
+                          const SizedBox(height: 15),
+                          if (video.videoLink.isNotEmpty)
+                            Expanded(
+                              child: Center(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    border: Border.all(
+                                      color: Colors.grey.shade300,
+                                      width: 1,
+                                    ),
+                                  ),
+                                  clipBehavior: Clip.hardEdge,
+                                  height: video.height,
+                                  width: video.width,
+                                  child: FacebookVideoEmbedder(
+                                    scrollController: scrollController,
+                                    height: video.height,
+                                    videoUrl: video.videoLink,
+                                    uniqueId: video.id.toString(),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          if (video.videoLink.isEmpty)
+                            const Text(
+                              'No video link available.',
+                              style: TextStyle(
+                                fontStyle: FontStyle.italic,
+                                color: Colors.grey,
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              )
+            : ListView.builder(
+                padding: const EdgeInsets.all(16.0),
+                controller: scrollController,
+                itemCount: itemCount,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final video = sortedVideos[index];
+
+                  return Card(
+                    margin: const EdgeInsets.only(bottom: 20),
+                    elevation: 6,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Center(
+                            child: Text(
+                              video.title,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: HColors.textTitle,
+                              ),
+                            ),
                           ),
-                        ),
+                          const SizedBox(height: 15),
+                          if (video.videoLink.isNotEmpty)
+                            Center(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  border: Border.all(
+                                    color: Colors.grey.shade300,
+                                    width: 1,
+                                  ),
+                                ),
+                                clipBehavior: Clip.hardEdge,
+                                height: video.height,
+                                width: video.width,
+                                child: FacebookVideoEmbedder(
+                                  scrollController: scrollController,
+                                  height: video.height,
+                                  videoUrl: video.videoLink,
+                                  uniqueId: video.id.toString(),
+                                ),
+                              ),
+                            ),
+                          if (video.videoLink.isEmpty)
+                            const Text(
+                              'No video link available.',
+                              style: TextStyle(
+                                fontStyle: FontStyle.italic,
+                                color: Colors.grey,
+                              ),
+                            ),
+                        ],
                       ),
-                    if (video.videoLink.isEmpty)
-                      const Text(
-                        'No video link available.',
-                        style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          color: Colors.grey,
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-            );
-          },
-        );
+                    ),
+                  );
+                },
+              );
       }
     });
   }

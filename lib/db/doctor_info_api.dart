@@ -61,7 +61,7 @@ class DoctorInfoApi extends GetConnect {
 
       return clinicData.map((json) => Clinic.fromJson(json)).toList();
     } else {
-      throw Exception('Failed to load social buttons');
+      throw Exception('Failed to load contacts');
     }
   }
 

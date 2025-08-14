@@ -3,7 +3,7 @@ import 'package:dr_ashraf_clinic/utils/constants/pages_routes.dart';
 import 'package:dr_ashraf_clinic/utils/constants/text_strings.dart';
 import 'package:dr_ashraf_clinic/utils/theme/theme.dart';
 import 'package:dr_ashraf_clinic/utils/translation/translations.dart';
-import 'package:dr_ashraf_clinic/view/home_page/home_page.dart';
+import 'package:dr_ashraf_clinic/view/home_page/home.dart';
 import 'package:dr_ashraf_clinic/view/mobile/mobile_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,7 +28,7 @@ class App extends StatelessWidget {
           if (constraints.maxWidth < 1100) {
             return const MobileHomePage();
           } else {
-            return const HomePage();
+            return const Home();
           }
         },
       ),

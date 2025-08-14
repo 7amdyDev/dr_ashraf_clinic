@@ -8,7 +8,6 @@ class HNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.sizeOf(context).width;
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Row(
@@ -17,34 +16,25 @@ class HNavBar extends StatelessWidget {
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
+              children: const [
+                NavBarButton(text: 'main_button', fontSize: 20),
                 NavBarButton(
-                  text: 'main_button',
-                  fontSize: width > 700 ? 20 : 10,
+                  text: 'clinic_button',
+                  fontSize: 20,
+                  route: '/clinic',
                 ),
-                width > 750
-                    ? const NavBarButton(
-                        text: 'clinic_button',
-                        fontSize: 20,
-                        route: '/clinic',
-                      )
-                    : Container(),
-                NavBarButton(
-                  text: 'blog_button',
-                  fontSize: width > 700 ? 20 : 10,
-                  route: '/blog',
-                ),
+
                 NavBarButton(
                   text: 'videos_button',
-                  fontSize: width > 700 ? 20 : 10,
-                  route: '/videos',
+                  fontSize: 20,
+                  route: '/video_page',
                 ),
                 NavBarButton(
                   text: 'contact_button',
-                  fontSize: width > 700 ? 20 : 10,
+                  fontSize: 20,
                   route: '/contact_us',
                 ),
-                const ChangeLangButton(),
+                ChangeLangButton(),
               ],
             ),
           ),

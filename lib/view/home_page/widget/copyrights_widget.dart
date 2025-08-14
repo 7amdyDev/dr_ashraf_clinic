@@ -21,10 +21,10 @@ class CopyrightsWidget extends StatelessWidget {
                   ..onTap = () {
                     openWebsite();
                   },
-                text: ' hamdy.dev ',
+                text: ' Hamdy.dev ',
                 style: const TextStyle(color: HColors.primary),
               ),
-              const TextSpan(text: ' All rights reserved.'),
+              const TextSpan(text: ' All Rights Reserved.'),
             ],
           ),
         ),

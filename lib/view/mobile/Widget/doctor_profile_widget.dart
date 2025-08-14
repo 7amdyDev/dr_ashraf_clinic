@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MobileDoctorProfile extends StatelessWidget {
-  const MobileDoctorProfile({super.key});
-
+  const MobileDoctorProfile({super.key, required this.isDesktopView});
+  final bool isDesktopView;
   @override
   Widget build(BuildContext context) {
     var width = HelperFunctions.screenSize().width;
@@ -21,8 +21,12 @@ class MobileDoctorProfile extends StatelessWidget {
             // Display the doctor's image if it exists
             if (state!.imageUrl != null)
               Container(
-                width: width * 0.4,
-                height: width * 0.5,
+                width: isDesktopView
+                    ? (width * 0.25).clamp(300, 600)
+                    : width * 0.4,
+                height: isDesktopView
+                    ? (width * 0.35).clamp(400, 700)
+                    : width * 0.5,
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: HColors.primary, // Choose your border color
